@@ -1,0 +1,64 @@
+name: garden-diego-perf
+
+director_uuid: (( merge ))
+
+releases:
+- name: diego-perf-release
+  version: latest
+
+networks:
+- name: default
+  subnets:
+  - range: 10.244.24.0/30
+    reserved:
+    - 10.244.24.1
+    cloud_properties: {}
+- name: compilation
+  subnets:
+  - range: 10.244.25.0/30
+    reserved:
+    - 10.244.25.1
+    cloud_properties: {}
+
+resource_pools:
+- name: default
+  network: default
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+  cloud_properties: {}
+
+compilation:
+  network: compilation
+  workers: 1
+  cloud_properties: {}
+
+jobs:
+- name: stress_tests
+  templates:
+  - name: caddy
+    release: diego-perf-release
+  instances: 1
+  networks:
+  - name: default
+  resource_pool: default
+
+properties:
+  stress_tests:
+    api: api.10.244.0.34.xip.io
+    apps_domain: 10.244.0.34.xip.io
+    admin_user: admin
+    admin_password: admin
+    skip_ssl_validation: true
+    ginkgo_nodes: 1
+    ginkgo_verbose: true
+  fezzik:
+    num_cells: 1
+    publicly_accessible_ip: 10.244.24.2
+    receptor_address: http://10.244.17.6:8888
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
