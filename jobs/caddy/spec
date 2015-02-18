@@ -32,7 +32,5 @@ properties:
 
   fezzik.receptor_address:
     description: Receptor address
-  fezzik.publicly_accessible_ip:
-    description: IP accessible by Cell containers to test egress rules
   fezzik.num_cells:
     description: Number of Cells in Diego deployment to control scale of Fezzik tests

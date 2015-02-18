@@ -54,7 +54,6 @@ properties:
     ginkgo_verbose: true
   fezzik:
     num_cells: 1
-    publicly_accessible_ip: 10.244.24.2
     receptor_address: http://10.244.17.6:8888
 
 update:
