@@ -1,0 +1,38 @@
+---
+name: caddy
+templates:
+  noop_ctl.erb: bin/noop_ctl
+  1_fezzik.erb: bin/1_fezzik
+  2_stress_tests.erb: bin/2_stress_tests
+  config.json.erb: config/config.json
+
+packages:
+- golang_1.4
+- cf-cli
+- ginkgo
+- fezzik
+- stress_tests
+
+properties:
+  stress_tests.api:
+    description: The Elastic Runtime API endpoint URL
+  stress_tests.apps_domain:
+    description: The Elastic Runtime Appliction Domain
+  stress_tests.admin_user:
+    description: The Elastic Runtime API admin user
+  stress_tests.admin_password:
+    description: The Elastic Runtime API admin user's password
+  stress_tests.skip_ssl_validation:
+    default: false
+    description: Toggles cli verification of the Elastic Runtime API SSL certificate
+  stress_tests.ginkgo_nodes:
+    description: Number of parallel Ginkgo nodes to run
+  stress_tests.ginkgo_verbose:
+    description: Whether or not to run Ginkgo in verbose mode
+
+  fezzik.receptor_address:
+    description: Receptor address
+  fezzik.publicly_accessible_ip:
+    description: IP accessible by Cell containers to test egress rules
+  fezzik.num_cells:
+    description: Number of Cells in Diego deployment to control scale of Fezzik tests

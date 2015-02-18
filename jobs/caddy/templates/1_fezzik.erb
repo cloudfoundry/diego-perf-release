@@ -1,0 +1,20 @@
+#!/bin/bash -l
+
+set -e -x
+
+LOG_DIR=/var/vcap/sys/log/fezzik
+
+export GOROOT=/var/vcap/packages/golang_1.4
+export GOPATH=/var/vcap/packages/fezzik
+
+export PATH=$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
+export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+export PATH=/var/vcap/packages/ginkgo/bin:$PATH
+
+cd /var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik
+
+ginkgo -- --receptor-address="<%= properties.fezzik.receptor_address %>" \
+          --publicly-accessible-ip=<%= properties.fezzik.publicly_accessible_ip %> \
+          --num-cells=<%= properties.fezzik.num_cells %>
+

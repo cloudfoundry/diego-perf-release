@@ -1,0 +1,60 @@
+[submodule "src/github.com/cloudfoundry-incubator/diego-stress-tests"]
+	path = src/github.com/cloudfoundry-incubator/diego-stress-tests
+	url = https://github.com/cloudfoundry-incubator/diego-stress-tests
+	branch = master
+[submodule "src/github.com/cloudfoundry-incubator/fezzik"]
+	path = src/github.com/cloudfoundry-incubator/fezzik
+	url = https://github.com/cloudfoundry-incubator/fezzik
+	branch = master
+[submodule "src/github.com/cloudfoundry-incubator/runtime-schema"]
+	path = src/github.com/cloudfoundry-incubator/runtime-schema
+	url = https://github.com/cloudfoundry-incubator/runtime-schema
+	branch = master
+[submodule "src/github.com/vito/go-sse"]
+	path = src/github.com/vito/go-sse
+	url = https://github.com/vito/go-sse
+	branch = master
+[submodule "src/github.com/cloudfoundry-incubator/receptor"]
+	path = src/github.com/cloudfoundry-incubator/receptor
+	url = https://github.com/cloudfoundry-incubator/receptor
+	branch = master
+[submodule "src/github.com/pivotal-cf-experimental/veritas"]
+	path = src/github.com/pivotal-cf-experimental/veritas
+	url = https://github.com/pivotal-cf-experimental/veritas
+	branch = master
+[submodule "src/github.com/bmizerany/pat"]
+	path = src/github.com/bmizerany/pat
+	url = https://github.com/bmizerany/pat
+	branch = master
+[submodule "src/github.com/GaryBoone/GoStats"]
+	path = src/github.com/GaryBoone/GoStats
+	url = https://github.com/GaryBoone/GoStats
+	branch = master
+[submodule "src/github.com/cloudfoundry-incubator/cf_http"]
+	path = src/github.com/cloudfoundry-incubator/cf_http
+	url = https://github.com/cloudfoundry-incubator/cf_http
+	branch = master
+[submodule "src/github.com/nu7hatch/gouuid"]
+	path = src/github.com/nu7hatch/gouuid
+	url = https://github.com/nu7hatch/gouuid
+	branch = master
+[submodule "src/github.com/onsi/ginkgo"]
+	path = src/github.com/onsi/ginkgo
+	url = https://github.com/onsi/ginkgo
+	branch = master
+[submodule "src/github.com/cloudfoundry/gunk"]
+	path = src/github.com/cloudfoundry/gunk
+	url = https://github.com/cloudfoundry/gunk
+	branch = master
+[submodule "src/github.com/cloudfoundry-incubator/cf-test-helpers"]
+	path = src/github.com/cloudfoundry-incubator/cf-test-helpers
+	url = https://github.com/cloudfoundry-incubator/cf-test-helpers
+	branch = master
+[submodule "src/github.com/onsi/gomega"]
+	path = src/github.com/onsi/gomega
+	url = https://github.com/onsi/gomega
+	branch = master
+[submodule "src/github.com/tedsuo/rata"]
+	path = src/github.com/tedsuo/rata
+	url = https://github.com/tedsuo/rata
+	branch = master

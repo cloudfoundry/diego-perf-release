@@ -1,0 +1,10 @@
+set -e
+
+mkdir -p ${BOSH_INSTALL_TARGET}/src
+cp -a . ${BOSH_INSTALL_TARGET}/src
+
+APPS_DIR=${BOSH_INSTALL_TARGET}/src/github.com/cloudfoundry-incubator/diego-stress-tests/assets/apps
+dd if=/dev/zero of=${APPS_DIR}/westley/deadweight bs=1048576 count=1
+dd if=/dev/zero of=${APPS_DIR}/max/deadweight bs=1048576 count=10
+dd if=/dev/zero of=${APPS_DIR}/princess/deadweight bs=1048576 count=200
+dd if=/dev/zero of=${APPS_DIR}/humperdink/deadweight bs=1048576 count=1

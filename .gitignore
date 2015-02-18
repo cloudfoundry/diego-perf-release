@@ -1,0 +1,16 @@
+# BOSH
+.dev_builds/
+dev_releases/
+blobs/
+config/
+
+# direnv
+.envrc
+
+# GOPATH
+bin/
+pkg/
+
+# gosub
+src/github.com/vito/gosub
+src/github.com/codegangsta/cli
