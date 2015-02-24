@@ -5,6 +5,9 @@ set -e -x
 LOG_DIR=/var/vcap/sys/log/stress_tests
 mkdir -p $LOG_DIR
 
+# for cf CLI to not run out of space when building zips to upload
+export TMPDIR=/var/vcap/data/tmp
+
 export GOROOT=/var/vcap/packages/golang_1.4
 export GOPATH=/var/vcap/packages/stress_tests
 
