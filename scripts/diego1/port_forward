@@ -1,0 +1,59 @@
+function activate_pws_jumpbox_keys {
+    echo "activating PWS jumpbox keys"
+    $HOME/workspace/prod-keys/scripts/activate-key $PWS_USER
+}
+
+function forward_receptor {
+  if [ -z "$3" ]; then
+    echo "must provide receptor_ip, jb_user, and jb_address"
+  else
+    receptor_ip=$1
+    jb_user=$2
+    jb_address=$3
+    echo "Mapping receptor address to localhost:22222"
+    echo "Opening chrome"
+    echo "open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://localhost:22222 --args --disable-web-security"
+    open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://localhost:22222 --args --disable-web-security
+    ssh -N -L 22222:$receptor_ip:8888 $jb_user@$jb_address
+  fi
+}
+
+function forward_pws_receptor {
+  if [ -z "$PWS_USER" ]; then
+    echo "must set PWS_USER environment variable"
+  else
+    forward_receptor 10.10.114.28 $PWS_USER jb.run.pivotal.io
+  fi
+}
+
+function forward_diego1_receptor {
+  forward_receptor 10.10.5.72 vcap micro.diego-1.cf-app.com
+}
+
+function forward_etcd {
+  if [ -z "$3" ]; then
+    echo "must provide etcd_ip, jb_user, and jb_address"
+  else
+    etcd_ip=$1
+    jb_user=$2
+    jb_address=$3
+    echo "Mapping etcd address to localhost:33333"
+    echo "To run veritas:"
+    echo "    > export ETCD_CLUSTER=http://localhost:33333"
+    echo "    > veritas dump-store"
+    ssh -N -L 33333:$etcd_ip:4001 $jb_user@$jb_address
+  fi
+}
+
+function forward_pws_etcd {
+  if [ -z "$PWS_USER" ]; then
+    echo "must set PWS_USER environment variable"
+  else
+    forward_etcd 10.10.114.10 $PWS_USER jb.run.pivotal.io
+  fi
+}
+
+function forward_diego1_etcd {
+  forward_etcd 10.10.5.10 vcap micro.diego-1.cf-app.com
+}
+

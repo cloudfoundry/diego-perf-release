@@ -1,0 +1,4 @@
+set -x -e -u
+
+ssh-add ~/workspace/deployments-runtime/diego-1/keypair/id_rsa_bosh
+ssh -A vcap@micro.diego-1.cf-app.com
