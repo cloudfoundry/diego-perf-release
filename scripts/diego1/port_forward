@@ -4,16 +4,18 @@ function activate_pws_jumpbox_keys {
 }
 
 function forward_receptor {
-  if [ -z "$3" ]; then
-    echo "must provide receptor_ip, jb_user, and jb_address"
+  if [ -z "$5" ]; then
+    echo "must provide receptor_ip, jb_user, jb_address, basic_auth_user, and basic_auth_password"
   else
     receptor_ip=$1
     jb_user=$2
     jb_address=$3
+    basic_auth_user=$4
+    basic_auth_password=$5
     echo "Mapping receptor address to localhost:22222"
     echo "Opening chrome"
-    echo "open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://localhost:22222 --args --disable-web-security"
-    open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://localhost:22222 --args --disable-web-security
+    echo "open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://\$basic_auth_user:\$basic_auth_password@localhost:22222 --args --disable-web-security"
+    open -a Google\ Chrome http://xray.ketchup.cf-app.com/?receptor=http://$basic_auth_user:$basic_auth_password@localhost:22222 --args --disable-web-security
     ssh -N -L 22222:$receptor_ip:8888 $jb_user@$jb_address
   fi
 }
@@ -22,12 +24,12 @@ function forward_pws_receptor {
   if [ -z "$PWS_USER" ]; then
     echo "must set PWS_USER environment variable"
   else
-    forward_receptor 10.10.114.28 $PWS_USER jb.run.pivotal.io
+    forward_receptor 10.10.114.28 $PWS_USER jb.run.pivotal.io WRONG WRONG
   fi
 }
 
 function forward_diego1_receptor {
-  forward_receptor 10.10.5.72 vcap micro.diego-1.cf-app.com
+  forward_receptor 10.10.6.65 vcap micro.diego-1.cf-app.com diego horse2thbrush
 }
 
 function forward_etcd {
