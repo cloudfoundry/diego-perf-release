@@ -14,7 +14,7 @@ testing.
 
 1. `bosh ssh stress_tests 0`
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
-1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/results.json`
+1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
 ### To Run Stress Tests
 
