@@ -26,13 +26,12 @@ testing.
 #### Structure of the Stress Tests' Output
 
 ```
-|- total_time                     # time taken to execute all rounds
 |- round-a-0/
-|   |- all_pushes                 # time taken to do all pushes per round
-|   |- all_curls                  # time taken to do all curls per round
 |   |- push-westley-someguid      # all output from pushing the app, success/failure and duration
 |   |- ...
 |   |- curl-westley-someguid      # all output from curling the app, success/failure and duration
+|   |- ...
+|   |- log-westley-someguid      # all output from curling the app, success/failure and duration
 |   |- ...
 |- round-b-0/
 |   |- ...
