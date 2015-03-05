@@ -1,6 +1,4 @@
-scripts_dir=$(dirname $0)
-
 function fast_bosh () {
-  BUNDLE_GEMFILE=$scripts_dir/bosh.Gemfile bundle exec bosh $@
+  BUNDLE_GEMFILE=/Users/pivotal/workspace/perf-release-diego/scripts/diego1/bosh.Gemfile bundle exec bosh $@
 }
 
