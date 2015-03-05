@@ -23,10 +23,11 @@ for job in cell_z1 cell_z2; do
   for i in $(seq 0 $((${num_cells} / 10 - 1))); do
     for index in $(seq $(($i * 5)) $(($i * 5 + 4))); do
       (
-        mkdir -p ${download_dir}/${job}-${index} && \
-          fast_bosh logs $job $index --only 'garden-linux/garden-linux.stdout*,executor/executor.stdout*,rep/rep.stdout*,receptor/receptor.stdout*' --dir ${download_dir}/${job}-${index} && \
-          cd ${download_dir}/${job}-${index} && \
-          tar -xzvf *
+        mkdir -p ${download_dir}/${job}-${index}
+        fast_bosh logs $job $index --only 'garden-linux/garden-linux.stdout*,executor/executor.stdout*,rep/rep.stdout*,receptor/receptor.stdout*' --dir ${download_dir}/${job}-${index}
+        cd ${download_dir}/${job}-${index}
+        tar -xzvf *
+        gunzip -r .
       ) &
     done
     wait
