@@ -17,7 +17,7 @@ cd /var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik
 # not guaranteed to work on non-Ubuntu stemcells
 publicly_accessible_ip=`hostname -I`
 
-ginkgo -- --receptor-address="<%= properties.fezzik.receptor_address %>" \
-          --publicly-accessible-ip=$publicly_accessible_ip \
-          --num-cells=<%= properties.fezzik.num_cells %>
+ginkgo -v -progress -- --receptor-address="<%= properties.fezzik.receptor_address %>" \
+                    --publicly-accessible-ip=$publicly_accessible_ip \
+                    --num-cells=<%= properties.fezzik.num_cells %>
 
