@@ -26,5 +26,5 @@ else
 fi
 
 fast_bosh create release --force
-fast_bosh -n upload release
+fast_bosh -n upload release --rebase
 fast_bosh -n deploy
