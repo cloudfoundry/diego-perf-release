@@ -14,7 +14,7 @@ files:
   - github.com/onsi/ginkgo/*.go # gosub
   - github.com/onsi/gomega/*.go # gosub
   - github.com/onsi/gomega/ghttp/*.go # gosub
-  - github.com/pivotal-cf-experimental/veritas/say/*.go # gosub
+  - github.com/onsi/say/*.go # gosub
   - github.com/GaryBoone/GoStats/stats/*.go # gosub
   - github.com/bmizerany/pat/*.go # gosub
   - github.com/cloudfoundry-incubator/cf_http/*.go # gosub
