@@ -10,9 +10,6 @@ set -x -e -u
 
 num_cells=$1
 download_dir=$2
-start_timestamp=$3
-end_timestamp=$4
-output_file=$5
 
 fast_bosh target diego1
 fast_bosh deployment ~/workspace/deployments-runtime/diego-1/deployments/diego-${num_cells}-cell.yml
