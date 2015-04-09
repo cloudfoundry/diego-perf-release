@@ -15,16 +15,9 @@ job=$3
 index=$4
 
 fast_bosh target diego1
-
-if [ "$deployment" == "perf" ]; then
-  manifest=~/workspace/deployments-runtime/diego-1/deployments/diego-perf-${num_cells}-cell.yml
-elif [ "$deployment" == "diego" ]; then
-  manifest=~/workspace/deployments-runtime/diego-1/deployments/diego-${num_cells}-cell.yml
-elif [ "$deployment" == "cf" ]; then
-  manifest=~/workspace/deployments-runtime/diego-1/deployments/cf-$(($num_cells / 5))-cc.yml
-else
-  echo "Unrecognized deployment ${deployment}"
-  exit 1
-fi
-
-fast_bosh -d $manifest ssh $job $index --gateway_user vcap --gateway_host micro.diego-1.cf-app.com --public_key ~/workspace/deployments-runtime/diego-1/keypair/id_rsa_bosh.pub
+fast_bosh \
+  -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml \
+  ssh $job $index \
+  --gateway_user vcap \
+  --gateway_host micro.diego-1.cf-app.com \
+  --public_key ~/workspace/deployments-runtime/diego-1/keypair/id_rsa_bosh.pub

@@ -12,7 +12,7 @@ num_cells=$1
 download_dir=$2
 
 fast_bosh target diego1
-fast_bosh deployment ~/workspace/deployments-runtime/diego-1/deployments/diego-${num_cells}-cell.yml
+fast_bosh deployment ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/diego.yml
 
 mkdir ${download_dir}
 
