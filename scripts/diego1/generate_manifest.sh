@@ -35,6 +35,7 @@ case "${deployment}" in
       ~/workspace/deployments-runtime/diego-1/stubs/diego/${num_cells}-cell-experiment/instance-count-overrides.yml \
       ~/workspace/deployments-runtime/diego-1/stubs/diego/persistent-disk-overrides.yml \
       ${tmpdir}/iaas-settings.yml \
+      ~/workspace/deployments-runtime/diego-1/stubs/diego/additional-jobs.yml \
       ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment \
       > ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/diego.yml
     popd
