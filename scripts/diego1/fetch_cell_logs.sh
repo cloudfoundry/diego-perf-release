@@ -14,7 +14,7 @@ download_dir=$2
 fast_bosh target diego1
 fast_bosh deployment ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/diego.yml
 
-mkdir ${download_dir}
+mkdir -p ${download_dir}
 
 for job in cell_z1 cell_z2; do
   for i in $(seq 0 $((${num_cells} / 10 - 1))); do
