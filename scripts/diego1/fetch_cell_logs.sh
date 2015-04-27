@@ -20,11 +20,16 @@ for job in cell_z1 cell_z2; do
   for i in $(seq 0 $((${num_cells} / 10 - 1))); do
     for index in $(seq $(($i * 5)) $(($i * 5 + 4))); do
       (
-        mkdir -p ${download_dir}/${job}-${index}
-        fast_bosh logs $job $index --only 'garden-linux/garden-linux.stdout*,executor/executor.stdout*,rep/rep.stdout*,receptor/receptor.stdout*' --dir ${download_dir}/${job}-${index}
-        cd ${download_dir}/${job}-${index}
-        tar -xzvf *
-        gunzip -r .
+        vm_log_dir="${download_dir}/${job}-${index}"
+        mkdir -p ${vm_log_dir}
+        if [ "$(ls -A ${vm_log_dir})" ]; then
+          echo "Already populated ${vm_log_dir}, skipping..."
+        else
+          fast_bosh logs $job $index --only 'garden-linux/garden-linux.stdout*,executor/executor.stdout*,rep/rep.stdout*,receptor/receptor.stdout*' --dir ${vm_log_dir}
+          cd ${vm_log_dir}
+          tar -xzvf *
+          gunzip -r .
+        fi
       ) &
     done
     wait
