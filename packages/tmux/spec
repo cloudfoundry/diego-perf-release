@@ -1,0 +1,5 @@
+---
+name: tmux
+
+files:
+  - tmux/tmux

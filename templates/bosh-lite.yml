@@ -53,8 +53,9 @@ properties:
     ginkgo_nodes: 1
     ginkgo_verbose: true
   fezzik:
-    num_cells: 1
     receptor_address: http://10.244.17.6:8888
+  performance_tests:
+    num_cells: 1
 
 update:
   canaries: 1

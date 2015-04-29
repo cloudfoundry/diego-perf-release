@@ -4,7 +4,9 @@ templates:
   noop_ctl.erb: bin/noop_ctl
   1_fezzik.erb: bin/1_fezzik
   2_stress_tests.erb: bin/2_stress_tests
+  stress_tests.sh.erb: scripts/stress_tests.sh
   config.json.erb: config/config.json
+  warm_buildpack_cache.sh.erb: scripts/warm_buildpack_cache.sh
 
 packages:
 - golang_1.4
@@ -12,6 +14,7 @@ packages:
 - ginkgo
 - fezzik
 - stress_tests
+- tmux
 
 properties:
   stress_tests.api:
@@ -32,5 +35,6 @@ properties:
 
   fezzik.receptor_address:
     description: Receptor address
-  fezzik.num_cells:
-    description: Number of Cells in Diego deployment to control scale of Fezzik tests
+
+  performance_tests.num_cells:
+    description: Number of Cells in Diego deployment for performance tests

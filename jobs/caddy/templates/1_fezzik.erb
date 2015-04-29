@@ -21,5 +21,5 @@ ulimit -n 16384
 
 ginkgo -v -progress -- --receptor-address="<%= properties.fezzik.receptor_address %>" \
                     --publicly-accessible-ip=$publicly_accessible_ip \
-                    --num-cells=<%= properties.fezzik.num_cells %>
+                    --num-cells=<%= properties.performance_tests.num_cells %>
 

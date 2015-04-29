@@ -2,27 +2,4 @@
 
 set -e -x
 
-LOG_DIR=/var/vcap/sys/log/stress_tests
-mkdir -p $LOG_DIR
-
-# for cf CLI to not run out of space when building zips to upload
-export TMPDIR=/var/vcap/data/tmp
-
-export GOROOT=/var/vcap/packages/golang_1.4
-export GOPATH=/var/vcap/packages/stress_tests
-
-export PATH=$GOROOT/bin:$PATH
-export PATH=$GOPATH/bin:$PATH
-export PATH=/var/vcap/packages/cf-cli/bin:$PATH
-export PATH=/var/vcap/packages/ginkgo/bin:$PATH
-
-export CONFIG=/var/vcap/jobs/caddy/config/config.json
-export CF_APPS_DOMAIN='<%= properties.stress_tests.apps_domain %>'
-export STRESS_TEST_DATA_DIR='/var/vcap/data/stress_tests'
-
-cd /var/vcap/packages/stress_tests/src/github.com/cloudfoundry-incubator/diego-stress-tests
-
-nodes=<%= properties.stress_tests.ginkgo_nodes %>
-verbose=<%= properties.stress_tests.ginkgo_verbose ? "-v" : "" %>
-ginkgo -nodes=$nodes $verbose diego 2>$LOG_DIR/stress_tests.stderr.log 1>$LOG_DIR/stress_tests.stdout.log
-
+/var/vcap/pacakges/tmux/bin/tmux new-session -s stress-tests 'bash /var/vcap/jobs/caddy/scripts/stress_tests.sh'
