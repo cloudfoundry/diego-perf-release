@@ -2,7 +2,8 @@
 .dev_builds/
 dev_releases/
 blobs/
-config/
+config/private.yml
+config/dev.yml
 
 # direnv
 .envrc
