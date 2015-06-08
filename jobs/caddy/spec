@@ -1,7 +1,6 @@
 ---
 name: caddy
 templates:
-  noop_ctl.erb: bin/noop_ctl
   1_fezzik.erb: bin/1_fezzik
   2_stress_tests.erb: bin/2_stress_tests
   stress_tests.sh.erb: scripts/stress_tests.sh
