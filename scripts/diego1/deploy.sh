@@ -29,4 +29,6 @@ fi
 
 fast_bosh create release --force
 fast_bosh -t diego1 -n upload release ${rebase}
-fast_bosh -t diego1 -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml -n deploy
+while ! fast_bosh -t diego1 -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml -n deploy; do
+  echo "*** RETRYING DEPLOY ***"
+done
