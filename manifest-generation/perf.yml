@@ -1,0 +1,73 @@
+name: (( config_from_cf.cf_deployment_name "-diego-perf" ))
+
+releases:
+  - name: diego-perf-release
+    version: latest
+  - name: cf
+    version: latest
+
+compilation:
+  workers: 6
+  network: perf
+  reuse_compilation_vms: true
+  cloud_properties: (( iaas_settings.compilation_cloud_properties ))
+
+update:
+  canaries: 1
+  canary_watch_time: 5000-120000
+  update_watch_time: 5000-120000
+  max_in_flight: 1
+  serial: false
+
+networks:
+  - name: perf
+    type: manual
+    subnets: (( iaas_settings.subnet_configs.perf.subnets ))
+
+resource_pools:
+  - name: stress_tests
+    network: perf
+    stemcell: (( iaas_settings.stemcell ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.stress_tests.cloud_properties ))
+
+jobs:
+  - name: stress_tests
+    templates:
+      - name: consul_agent
+        release: cf
+      - name: caddy
+        release: diego-perf-release
+    instances: (( instance_count_overrides.stress_tests.instances || 1 ))
+    resource_pool: stress_tests
+    networks:
+      - name: perf
+    update:
+      serial: false
+      max_in_flight: (( instance_count_overrides.stress_tests.max_in_flight || 1 ))
+
+properties:
+  # -- Property below is used by the consul_agent job from cf-release --
+  consul:
+    agent:
+      log_level: (( config_from_cf.consul.log_level ))
+      servers:
+        lan: (( config_from_cf.consul.lan_servers ))
+
+  # -- Proerties below are used by the stress_tests job from diego-perf-release --
+  stress_tests:
+    api: (( config_from_cf.cc.api_uri ))
+    apps_domain: (( config_from_cf.first_app_domain ))
+    admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
+    admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
+    skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
+  fezzik:
+    receptor_address: (( config_from_diego.receptor_address ))
+  performance_tests:
+    num_cells: (( property_overrides.num_cells ))
+
+# The keys below should not be included in the final stub
+config_from_cf: (( merge ))
+config_from_diego: (( merge ))
+property_overrides: (( merge ))
+iaas_settings: (( merge ))
+instance_count_overrides: (( merge ))

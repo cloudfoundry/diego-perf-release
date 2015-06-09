@@ -1,0 +1,5 @@
+---
+property_overrides:
+  cc_admin_user: admin
+  cc_admin_password: admin
+  num_cells: 1

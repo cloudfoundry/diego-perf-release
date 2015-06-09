@@ -22,8 +22,7 @@ export STRESS_TEST_DATA_DIR='/var/vcap/data/stress_tests'
 
 cd /var/vcap/packages/stress_tests/src/github.com/cloudfoundry-incubator/diego-stress-tests
 
-nodes=<%= properties.stress_tests.ginkgo_nodes %>
 verbose=<%= properties.stress_tests.ginkgo_verbose ? "-v" : "" %>
 
-ginkgo -nodes=$nodes $verbose diego 2>$LOG_DIR/stress_tests.stderr.log 1>$LOG_DIR/stress_tests.stdout.log
+ginkgo $verbose diego 2>$LOG_DIR/stress_tests.stderr.log 1>$LOG_DIR/stress_tests.stdout.log
 

@@ -1,0 +1,2 @@
+config_from_diego:
+  receptor_address: (( merge ))

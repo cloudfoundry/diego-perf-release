@@ -27,10 +27,9 @@ properties:
   stress_tests.skip_ssl_validation:
     default: false
     description: Toggles cli verification of the Elastic Runtime API SSL certificate
-  stress_tests.ginkgo_nodes:
-    description: Number of parallel Ginkgo nodes to run
   stress_tests.ginkgo_verbose:
     description: Whether or not to run Ginkgo in verbose mode
+    default: true
 
   fezzik.receptor_address:
     description: Receptor address

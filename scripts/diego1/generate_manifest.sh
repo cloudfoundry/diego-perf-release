@@ -1,6 +1,6 @@
 if [ -z "$2" ]; then
   echo "Usage: $0 <deployment> <num_cells>"
-  echo "        <deployment> must be one of 'cf', 'diego'"
+  echo "        <deployment> must be one of 'cf', 'diego', or 'perf'"
   echo "        <num_cells> must be one of '10', '20', '50', or '100'"
   exit 1
 fi
@@ -38,6 +38,23 @@ case "${deployment}" in
       ~/workspace/deployments-runtime/diego-1/stubs/diego/additional-jobs.yml \
       ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment \
       > ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/diego.yml
+    popd
+    ;;
+  perf)
+    tmpdir=$(mktemp -d /tmp/deploy-perf.XXXXX)
+    pushd ~/workspace/perf-diego-release
+    spiff merge \
+      ~/workspace/perf-diego-release/manifest-generation/misc-templates/iaas-settings.yml \
+      ~/workspace/deployments-runtime/diego-1/templates/perf/iaas-settings-internal.yml \
+      ~/workspace/deployments-runtime/diego-1/stubs/aws-resources.yml \
+      > ${tmpdir}/iaas-settings.yml
+    ./scripts/generate-deployment-manifest \
+      ~/workspace/deployments-runtime/diego-1/stubs/director-uuid.yml \
+      ~/workspace/deployments-runtime/diego-1/stubs/perf/property-overrides.yml \
+      ~/workspace/deployments-runtime/diego-1/stubs/perf/${num_cells}-cell-experiment/instance-count-overrides.yml \
+      ${tmpdir}/iaas-settings.yml \
+      ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment \
+      > ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/perf.yml
     popd
     ;;
   *)

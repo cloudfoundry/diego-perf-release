@@ -1,0 +1,9 @@
+config_from_cf:
+  cf_deployment_name: (( merge ))
+  first_app_domain: (( merge ))
+  skip_ssl_validation: (( merge ))
+  cc:
+    api_uri: (( merge ))
+  consul:
+    log_level: (( merge ))
+    lan_servers: (( merge ))

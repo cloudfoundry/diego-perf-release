@@ -1,0 +1,11 @@
+iaas_settings:
+  stemcell:
+    name: (( merge ))
+    version: (( merge ))
+  subnet_configs:
+    - name: perf
+      subnets: (( merge ))
+  compilation_cloud_properties: (( merge ))
+  resource_pool_cloud_properties:
+    - name: stress_tests
+      cloud_properties: (( merge ))
