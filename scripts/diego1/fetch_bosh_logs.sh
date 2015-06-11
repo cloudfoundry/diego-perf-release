@@ -1,3 +1,21 @@
+fetch_logs() {
+  download_dir=$1
+  job=$2
+  index=$3
+  log_filter_pattern=$4
+
+  vm_log_dir="${download_dir}/${job}-${index}"
+  mkdir -p ${vm_log_dir}
+  if [ "$(ls -A ${vm_log_dir})" ]; then
+    echo "Already populated ${vm_log_dir}, skipping..."
+  else
+    fast_bosh logs $job $index --only "${log_filter_pattern}" --dir ${vm_log_dir}
+    cd ${vm_log_dir}
+    tar -xzvf *
+    gunzip -r .
+  fi
+}
+
 source $(dirname $0)/bosh_wrapper.sh
 
 if [ -z "$2" ]; then
@@ -19,21 +37,13 @@ mkdir -p ${download_dir}
 # Get receptor logs, 2 VMs at a time
 # Assuming there are num_cells/5 access VMs split evenly across 2 zones
 num_access_per_zone=$((${num_cells} / 10))
-for index in $(sec 0 $((${num_access_per_zone} - 1))); do
+for index in $(seq 0 $((${num_access_per_zone} - 1))); do
   for job in access_z1 access_z2; do
     (
-      vm_log_dir="${download_dir}/${job}-${index}"
-      mkdir -p ${vm_log_dir}
-      if [ "$(ls -A ${vm_log_dir})" ]; then
-        echo "Already populated ${vm_log_dir}, skipping..."
-      else
-        fast_bosh logs $job $index --only 'receptor/receptor.stdout*' --dir ${vm_log_dir}
-        cd ${vm_log_dir}
-        tar -xzvf *
-        gunzip -r .
-      fi
+      fetch_logs $download_dir $job $index 'receptor/receptor.stdout*'
     ) &
   done
+  wait
 done
 
 # Get rep and garden-linux logs, 5 VMs at a time
@@ -42,16 +52,7 @@ for job in cell_z1 cell_z2; do
   for i in $(seq 0 $((${num_cells} / 10 - 1))); do
     for index in $(seq $(($i * 5)) $(($i * 5 + 4))); do
       (
-        vm_log_dir="${download_dir}/${job}-${index}"
-        mkdir -p ${vm_log_dir}
-        if [ "$(ls -A ${vm_log_dir})" ]; then
-          echo "Already populated ${vm_log_dir}, skipping..."
-        else
-          fast_bosh logs $job $index --only 'garden-linux/garden-linux.stdout*,rep/rep.stdout*' --dir ${vm_log_dir}
-          cd ${vm_log_dir}
-          tar -xzvf *
-          gunzip -r .
-        fi
+        fetch_logs $download_dir $job $index 'garden-linux/garden-linux.stdout*,rep/rep.stdout*'
       ) &
     done
     wait
