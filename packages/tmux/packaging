@@ -2,3 +2,4 @@ set -e -x
 
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
 cp tmux/tmux ${BOSH_INSTALL_TARGET}/bin
+chmod +x ${BOSH_INSTALL_TARGET}/bin/tmux
