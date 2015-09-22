@@ -72,18 +72,11 @@ spiff merge \
   > ${tmpdir}/config-from-cf.yml
 
 spiff merge \
-  ${manifest_generation}/config-from-diego.yml \
-  ${manifest_generation}/config-from-diego-internal.yml \
-  ${deployments}/diego.yml \
-  > ${tmpdir}/config-from-diego.yml
-
-spiff merge \
   ${manifest_generation}/perf.yml \
   ${properties} \
   ${instance_counts} \
   ${iaas_settings} \
   ${tmpdir}/config-from-cf.yml \
-  ${tmpdir}/config-from-diego.yml \
   > ${tmpdir}/perf.yml
 
 spiff merge \

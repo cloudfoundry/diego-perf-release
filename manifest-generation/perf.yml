@@ -52,6 +52,13 @@ properties:
       log_level: (( config_from_cf.consul.log_level ))
       servers:
         lan: (( config_from_cf.consul.lan_servers ))
+    ca_cert: (( config_from_cf.consul.ca_cert ))
+    agent_cert: (( config_from_cf.consul.agent_cert ))
+    agent_key: (( config_from_cf.consul.agent_key ))
+    encrypt_keys: (( config_from_cf.consul.encrypt_keys ))
+    require_ssl: (( config_from_cf.consul.require_ssl ))
+    server_cert: (( config_from_cf.consul.server_cert ))
+    server_key: (( config_from_cf.consul.server_key ))
 
   # -- Proerties below are used by the stress_tests job from diego-perf-release --
   stress_tests:
@@ -61,13 +68,17 @@ properties:
     admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
     skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
   fezzik:
-    receptor_address: (( config_from_diego.receptor_address ))
+    bbs:
+      api_location: (( "bbs.service.cf.internal:8889" ))
+      ca_cert: (( property_overrides.bbs.ca_cert ))
+      client_cert: (( property_overrides.bbs.client_cert ))
+      client_key: (( property_overrides.bbs.client_key ))
+      require_ssl: (( property_overrides.bbs.require_ssl || nil ))
   performance_tests:
     num_cells: (( property_overrides.num_cells ))
 
 # The keys below should not be included in the final stub
 config_from_cf: (( merge ))
-config_from_diego: (( merge ))
 property_overrides: (( merge ))
 iaas_settings: (( merge ))
 instance_count_overrides: (( merge ))

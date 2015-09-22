@@ -14,8 +14,8 @@ num_cells=$2
 job=$3
 index=$4
 
-fast_bosh target diego1
 fast_bosh \
+  -t micro.diego-1.cf-app.com \
   -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml \
   ssh $job $index \
   --gateway_user vcap \

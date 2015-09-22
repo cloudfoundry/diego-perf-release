@@ -36,6 +36,8 @@ compilation:
 jobs:
 - name: stress_tests
   templates:
+  - name: consul_agent
+    release: cf-release
   - name: caddy
     release: diego-perf-release
   instances: 1

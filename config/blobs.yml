@@ -1,8 +1,8 @@
 ---
 cf-cli/cf-linux-amd64.tgz:
-  object_id: 2a28bdcc-f8a6-406b-a865-0eae4fca4b60
-  sha: a5296502c3258d6e1701adfcce5f33b091f6d018
-  size: 4939902
+  object_id: 06b4e9e2-a59d-4de5-a95a-ae5c85c87ab2
+  sha: c8002433d3fc3260cc68b2d012caba2bb162799b
+  size: 5012747
 golang/go1.4.linux-amd64.tar.gz:
   object_id: 9cac4e5d-a0c1-4b44-9373-fd7428c0d986
   sha: cd82abcb0734f82f7cf2d576c9528cebdafac4c6

@@ -1,9 +1,0 @@
-config_from_diego:
-  receptor_address: (( "http://" properties.diego.receptor.username ":" properties.diego.receptor.password "@receptor.service.consul:8888" ))
-
-# The keys below should not be included in the final stub
-properties:
-  diego:
-    receptor:
-      username: (( merge ))
-      password: (( merge ))

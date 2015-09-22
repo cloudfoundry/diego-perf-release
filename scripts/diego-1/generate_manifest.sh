@@ -13,7 +13,7 @@ num_cells=$2
 case "${deployment}" in
   cf)
     pushd ~/workspace/cf-release
-    ./generate_deployment_manifest \
+    ./scripts/generate_deployment_manifest \
       aws \
       ~/workspace/deployments-runtime/diego-1/stubs/director-uuid.yml \
       ~/workspace/deployments-runtime/diego-1/stubs/cf/*.yml \
@@ -42,9 +42,9 @@ case "${deployment}" in
     ;;
   perf)
     tmpdir=$(mktemp -d /tmp/deploy-perf.XXXXX)
-    pushd ~/workspace/perf-diego-release
+    pushd ~/workspace/diego-perf-release
     spiff merge \
-      ~/workspace/perf-diego-release/manifest-generation/misc-templates/iaas-settings.yml \
+      ~/workspace/diego-perf-release/manifest-generation/misc-templates/iaas-settings.yml \
       ~/workspace/deployments-runtime/diego-1/templates/perf/iaas-settings-internal.yml \
       ~/workspace/deployments-runtime/diego-1/stubs/aws-resources.yml \
       > ${tmpdir}/iaas-settings.yml

@@ -21,14 +21,15 @@ if [ "$deployment" == "cf" ]; then
 elif [ "$deployment" == "diego" ]; then
   cd ~/workspace/diego-release
 elif [ "$deployment" == "perf" ]; then
-  cd ~/workspace/perf-diego-release
+  cd ~/workspace/diego-perf-release
 else
   echo "Unrecognized deployment '${deployment}'"
   exit 1
 fi
 
 fast_bosh create release --force
-fast_bosh -t diego1 -n upload release ${rebase}
-while ! fast_bosh -t diego1 -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml -n deploy; do
-  echo "*** RETRYING DEPLOY ***"
-done
+fast_bosh -t micro.diego-1.cf-app.com -n upload release ${rebase}
+fast_bosh -t micro.diego-1.cf-app.com -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml -n deploy
+# while ! bosh -t micro.diego-1.cf-app.com -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml -n deploy; do
+#   echo "*** RETRYING DEPLOY ***"
+# done

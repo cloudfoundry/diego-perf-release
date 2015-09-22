@@ -19,7 +19,26 @@ publicly_accessible_ip=`hostname -I`
 
 ulimit -n 16384
 
-ginkgo -v -progress -- --receptor-address="<%= properties.fezzik.receptor_address %>" \
-                    --publicly-accessible-ip=$publicly_accessible_ip \
-                    --num-cells=<%= properties.performance_tests.num_cells %>
+CONF_DIR=/var/vcap/jobs/caddy/config
+
+<% if p("fezzik.bbs.require_ssl") %>
+  bbs_sec_flags=" \
+   --bbs-client-cert=${CONF_DIR}/certs/bbs/client.crt \
+   --bbs-client-key=${CONF_DIR}/certs/bbs/client.key \
+   --bbs-ca=${CONF_DIR}/certs/bbs/ca.crt"
+
+  bbs_api_url="<%= "https://" + p("fezzik.bbs.api_location") %>"
+<% else %>
+  bbs_sec_flags=""
+  bbs_api_url="<%= "http://" + p("fezzik.bbs.api_location") %>"
+<% end %>
+
+consul_address=http://127.0.0.1:8500 
+
+ginkgo -v -progress -- \
+  ${bbs_sec_flags} \
+  --bbs-address=${bbs_api_url} \
+  --consul-address=${consul_address} \
+  --publicly-accessible-ip=$publicly_accessible_ip \
+  --num-cells=<%= properties.performance_tests.num_cells %>
 

@@ -6,6 +6,9 @@ templates:
   stress_tests.sh.erb: scripts/stress_tests.sh
   config.json.erb: config/config.json
   warm_buildpack_cache.sh.erb: scripts/warm_buildpack_cache.sh
+  bbs_ca.crt.erb: config/certs/bbs/ca.crt
+  bbs_client.crt.erb: config/certs/bbs/client.crt
+  bbs_client.key.erb: config/certs/bbs/client.key
 
 packages:
 - golang_1.4
@@ -31,8 +34,17 @@ properties:
     description: Whether or not to run Ginkgo in verbose mode
     default: true
 
-  fezzik.receptor_address:
-    description: Receptor address
+  fezzik.bbs.api_location:
+    description: The address of the BBS
+  fezzik.bbs.ca_cert:
+    description: "PEM-encoded CA certificate"
+  fezzik.bbs.client_cert:
+    description: "PEM-encoded client certificate"
+  fezzik.bbs.client_key:
+    description: "PEM-encoded client key"
+  fezzik.bbs.require_ssl:
+    description: "enable ssl for all communication with the bbs"
+    default: true
 
   performance_tests.num_cells:
     description: Number of Cells in Diego deployment for performance tests
