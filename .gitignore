@@ -6,9 +6,6 @@ blobs/
 config/private.yml
 config/dev.yml
 
-# direnv
-.envrc
-
 # GOPATH
 bin/
 pkg/
