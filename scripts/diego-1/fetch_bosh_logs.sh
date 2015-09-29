@@ -24,23 +24,29 @@ if [ -z "$2" ]; then
   exit 1
 fi
 
-set -x -e -u
+set -e -u
 
 num_cells=$1
 download_dir=$2
 
-fast_bosh target diego1
+fast_bosh target micro.diego-1.cf-app.com
 fast_bosh deployment ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/diego.yml
 
 mkdir -p ${download_dir}
 
-# Get receptor logs, 2 VMs at a time
-# Assuming there are num_cells/5 access VMs split evenly across 2 zones
-num_access_per_zone=$((${num_cells} / 10))
-for index in $(seq 0 $((${num_access_per_zone} - 1))); do
-  for job in access_z1 access_z2; do
+for index in $(seq 0 0); do
+  for job in database_z1 database_z2 database_z3; do
     (
-      fetch_logs $download_dir $job $index 'receptor/receptor.stdout*'
+      fetch_logs $download_dir $job $index 'bbs/bbs.stdout*'
+    ) &
+  done
+  wait
+done
+
+for index in $(seq 0 0); do
+  for job in brain_z1 brain_z2; do
+    (
+      fetch_logs $download_dir $job $index 'auctioneer/auctioneer*,converger/converger*'
     ) &
   done
   wait
@@ -52,7 +58,7 @@ for job in cell_z1 cell_z2; do
   for i in $(seq 0 $((${num_cells} / 10 - 1))); do
     for index in $(seq $(($i * 5)) $(($i * 5 + 4))); do
       (
-        fetch_logs $download_dir $job $index 'garden-linux/garden-linux.stdout*,rep/rep.stdout*'
+        fetch_logs $download_dir $job $index 'garden/garden*,rep/rep.stdout*'
       ) &
     done
     wait
