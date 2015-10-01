@@ -18,6 +18,8 @@ fast_bosh \
   -t micro.diego-1.cf-app.com \
   -d ~/workspace/deployments-runtime/diego-1/deployments/${num_cells}-cell-experiment/${deployment}.yml \
   ssh $job $index \
-  --gateway_user vcap \
-  --gateway_host micro.diego-1.cf-app.com \
+  --default_password=p \
+  --gateway_user=vcap \
+  --gateway_host=micro.diego-1.cf-app.com \
   --public_key ~/workspace/deployments-runtime/diego-1/keypair/id_rsa_bosh.pub
+
