@@ -44,6 +44,18 @@ jobs:
     update:
       serial: false
       max_in_flight: (( instance_count_overrides.stress_tests.max_in_flight || 1 ))
+  - name: garden_container_creation_tests
+    templates:
+      - name: garden_container_creation_tests
+        release: diego-perf-release
+    instances: (( instance_count_overrides.stress_tests.instances || 1 ))
+    lifecycle: errand
+    resource_pool: stress_tests
+    networks:
+      - name: perf
+    update:
+      serial: false
+      max_in_flight: (( instance_count_overrides.stress_tests.max_in_flight || 1 ))
 
 properties:
   # -- Property below is used by the consul_agent job from cf-release --
@@ -74,6 +86,12 @@ properties:
       client_cert: (( property_overrides.bbs.client_cert ))
       client_key: (( property_overrides.bbs.client_key ))
       require_ssl: (( property_overrides.bbs.require_ssl || nil ))
+  garden_tests:
+    org_name: (( property_overrides.org_name || nil ))
+    space_name: (( property_overrides.space_name || nil ))
+    app_name_suffix: (( property_overrides.app_name_suffix || nil ))
+    num_runs: (( property_overrides.num_runs || nil ))
+    num_cells: (( property_overrides.num_cells ))
   performance_tests:
     num_cells: (( property_overrides.num_cells ))
 

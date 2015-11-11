@@ -1,0 +1,47 @@
+#!/bin/bash -l
+
+cleanup() {
+  cf delete-org -f $ORG_NAME
+  cf delete-quota -f $QUOTA_NAME
+}
+
+set -e -x
+
+RUN_DIR=/var/vcap/jobs/garden_container_creation_tests
+LOG_DIR=/var/vcap/sys/log/container_creation_tests
+mkdir -p $LOG_DIR
+
+# for cf CLI to not run out of space when building zips to upload
+export TMPDIR=/var/vcap/data/tmp
+
+export CF_API_URL='<%= properties.stress_tests.api %>'
+export CF_ADMIN_USER='<%= properties.stress_tests.admin_user %>'
+export CF_ADMIN_PASSWORD='<%= properties.stress_tests.admin_password %>'
+export CF_SKIP_SSL_VALIDATION='<%= properties.stress_tests.admin_password ? '--skip-ssl-validation' : '' %>'
+export ORG_NAME='<%= properties.garden_tests.org_name %>'
+export SPACE_NAME='<%= properties.garden_tests.space_name %>'
+export SUFFIX='<%= properties.garden_tests.app_name_suffix %>'
+export NUM_RUNS='<%= properties.garden_tests.num_runs %>'
+export NUM_CELLS='<%= properties.garden_tests.num_cells %>'
+
+export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+
+cd /var/vcap/packages/stress_tests/src/github.com/cloudfoundry-incubator/diego-stress-tests
+
+export CF_HOME=`mktemp -d`
+
+cf api $CF_API_URL $CF_SKIP_SSL_VALIDATION
+cf auth $CF_ADMIN_USER $CF_ADMIN_PASSWORD 
+
+trap cleanup 0
+
+export QUOTA_NAME=quota-${ORG_NAME}-${SPACE_NAME}
+
+cf create-org $ORG_NAME
+cf create-space $SPACE_NAME -o $ORG_NAME
+cf target -o $ORG_NAME -s $SPACE_NAME
+
+cf create-quota $QUOTA_NAME -m 100000GB -r 10000
+cf set-quota $ORG_NAME $QUOTA_NAME
+
+bash $RUN_DIR/scripts/deploy_repeat.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 4)) $LOG_DIR/results.log
