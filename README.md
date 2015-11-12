@@ -38,6 +38,35 @@ testing.
 |- ...
 ```
 
+### To Run Container Creation Tests
+
+You need a CF and a Diego manifest from your deployment in the same directory,
+they have to be named `cf-deployment.yml` and `diego-deployment.yml`
+respectively. BOSH should already be targeted at your director.
+
+```bash
+git clone git@github.com:cloudfoundry-incubator/diego-perf-release ~/workspace/diego-perf-release
+cd ~/workspace/diego-perf-release
+./scripts/generate-deployment-manifest <stubs-path>/director-uuid.yml <stubs-path>/perf/property-overrides.yml <stubs-path>/perf/instance-count-overrides.yml <stubs-path>/perf/iaas-settings.yml <path-to-deployment-manifests> > <path-to-deployment-manifests>/perf-deployment.yml
+bosh deployment <path-to-deployment-manifests>/perf-deployment.yml
+bosh create release --force && bosh upload release && bosh -n deploy
+bosh run errand garden_container_creation_tests --keep-alive
+bosh logs garden_container_creation_tests # this will download results.csv.log, which is a csv file containing the timestamps for the pushes and scales.
+```
+
+In `stubs/perf/property-overrides.yml` you can set a few properties,
+in particular `num_runs`. This tells the test how many times to repeat the cycle
+of pushing and scaling the apps.
+
+If you need extra info about your test run, check out `stdout.log`,
+`stderr.log`, and `cf.log` from the `bosh logs` download.
+
+You can also watch all of those files while running the errand by ssh'ing into
+the errand VM.
+
+Worth noting that there is a tmux binary installed on the errand VM at
+`/var/vcap/packages/tmux/bin/tmux` if you need fancier shelling.
+
 ## Development
 
 These tests are meant to be run against a real IaaS. However, it is possible to

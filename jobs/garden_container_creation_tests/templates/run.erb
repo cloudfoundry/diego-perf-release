@@ -1,15 +1,27 @@
 #!/bin/bash -l
 
+export RUN_DIR=/var/vcap/jobs/garden_container_creation_tests
+export LOG_DIR=/var/vcap/sys/log/container_creation_tests
+mkdir -p $LOG_DIR
+
+exec 1> >(tee -a $LOG_DIR/stdout.log >&1)
+exec 2> >(tee -a $LOG_DIR/stderr.log >&2)
+
+echo "------------------------------------------------------------------------"
+echo "Starting new test run: $(date)"
+echo "------------------------------------------------------------------------"
+
+echo "------------------------------------------------------------------------" >&2
+echo "Starting new test run: $(date)" >&2
+echo "------------------------------------------------------------------------" >&2
+
 cleanup() {
-  cf delete-org -f $ORG_NAME
-  cf delete-quota -f $QUOTA_NAME
+  cf delete-org -f $ORG_NAME >> $cf_logs
+  cf delete-quota -f $QUOTA_NAME >> $cf_logs
 }
 
 set -e -x
 
-RUN_DIR=/var/vcap/jobs/garden_container_creation_tests
-LOG_DIR=/var/vcap/sys/log/container_creation_tests
-mkdir -p $LOG_DIR
 
 # for cf CLI to not run out of space when building zips to upload
 export TMPDIR=/var/vcap/data/tmp
@@ -30,18 +42,23 @@ cd /var/vcap/packages/stress_tests/src/github.com/cloudfoundry-incubator/diego-s
 
 export CF_HOME=`mktemp -d`
 
-cf api $CF_API_URL $CF_SKIP_SSL_VALIDATION
-cf auth $CF_ADMIN_USER $CF_ADMIN_PASSWORD 
+cf_logs=$LOG_DIR/cf.log
+echo "------------------------------------------------------------------------" >> $cf_logs
+echo "Starting new test run: $(date)" >> $cf_logs
+echo "------------------------------------------------------------------------" >> $cf_logs
+
+cf api $CF_API_URL $CF_SKIP_SSL_VALIDATION >> $cf_logs
+cf auth $CF_ADMIN_USER $CF_ADMIN_PASSWORD  >> $cf_logs
 
 trap cleanup 0
 
 export QUOTA_NAME=quota-${ORG_NAME}-${SPACE_NAME}
 
-cf create-org $ORG_NAME
-cf create-space $SPACE_NAME -o $ORG_NAME
-cf target -o $ORG_NAME -s $SPACE_NAME
+cf create-org $ORG_NAME >> $cf_logs
+cf create-space $SPACE_NAME -o $ORG_NAME >> $cf_logs
+cf target -o $ORG_NAME -s $SPACE_NAME >> $cf_logs
 
-cf create-quota $QUOTA_NAME -m 100000GB -r 10000
-cf set-quota $ORG_NAME $QUOTA_NAME
+cf create-quota $QUOTA_NAME -m 100000GB -r 10000 >> $cf_logs
+cf set-quota $ORG_NAME $QUOTA_NAME >> $cf_logs
 
-bash $RUN_DIR/scripts/deploy_repeat.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 4)) $LOG_DIR/results.log
+bash $RUN_DIR/scripts/deploy_repeat.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 3)) $LOG_DIR
