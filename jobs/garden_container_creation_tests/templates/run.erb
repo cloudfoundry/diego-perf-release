@@ -61,4 +61,12 @@ cf target -o $ORG_NAME -s $SPACE_NAME >> $cf_logs
 cf create-quota $QUOTA_NAME -m 100000GB -r 10000 >> $cf_logs
 cf set-quota $ORG_NAME $QUOTA_NAME >> $cf_logs
 
-bash $RUN_DIR/scripts/deploy_repeat.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 3)) $LOG_DIR
+experiment='<%= properties.garden_tests.experiment %>'
+case "$experiment" in
+  baseline_and_staging)
+    bash $RUN_DIR/scripts/baseline_and_staging.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 24)) $LOG_DIR
+    ;;
+  deployments_and_scaling)
+    bash $RUN_DIR/scripts/deployments_and_scaling.sh $SUFFIX $NUM_RUNS $((NUM_CELLS * 3)) $LOG_DIR
+    ;;
+esac

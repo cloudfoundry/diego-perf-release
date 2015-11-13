@@ -2,7 +2,8 @@
 name: garden_container_creation_tests
 templates:
   run.erb: bin/run
-  deploy_repeat.sh: scripts/deploy_repeat.sh
+  baseline_and_staging.sh: scripts/baseline_and_staging.sh
+  deployments_and_scaling.sh: scripts/deployments_and_scaling.sh
 
 packages:
 - cf-cli
@@ -34,3 +35,6 @@ properties:
     default: 1
   garden_tests.num_cells:
     description: Number of cells in the environment
+  garden_tests.experiment:
+    description: Which experiment to run
+    default: deployments_and_scaling
