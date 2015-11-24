@@ -5,7 +5,7 @@ export LOG_DIR=/var/vcap/sys/log/container_creation_tests
 mkdir -p $LOG_DIR
 
 exec 1> >(tee -a $LOG_DIR/stdout.log >&1)
-exec 2> >(tee -a $LOG_DIR/stderr.log >&2)
+exec 2>> $LOG_DIR/stderr.log
 
 echo "------------------------------------------------------------------------"
 echo "Starting new test run: $(date)"
@@ -21,7 +21,6 @@ cleanup() {
 }
 
 set -e -x
-
 
 # for cf CLI to not run out of space when building zips to upload
 export TMPDIR=/var/vcap/data/tmp
