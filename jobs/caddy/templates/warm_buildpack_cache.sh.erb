@@ -8,7 +8,7 @@ cells=<%= properties.performance_tests.num_cells %>
 
 api_url=<%= properties.stress_tests.api %>
 api_user=<%= properties.stress_tests.admin_user %>
-api_password=<%= properties.stress_tests.admin_password %>
+api_password='<%= properties.stress_tests.admin_password %>'
 cf login -a $api_url -u $api_user -p $api_password <%= properties.stress_tests.skip_ssl_validation ? "--skip-ssl-validation" : "" %>
 
 cleanup() {
