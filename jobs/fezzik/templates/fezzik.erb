@@ -12,14 +12,14 @@ export PATH=$GOPATH/bin:$PATH
 export PATH=/var/vcap/packages/cf-cli/bin:$PATH
 export PATH=/var/vcap/packages/ginkgo/bin:$PATH
 
-cd /var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik
+cd /var/vcap/packages/fezzik/src/code.cloudfoundry.org/fezzik
 
 # not guaranteed to work on non-Ubuntu stemcells
 publicly_accessible_ip=`hostname -I`
 
 ulimit -n 16384
 
-CONF_DIR=/var/vcap/jobs/caddy/config
+CONF_DIR=/var/vcap/jobs/fezzik/config
 
 <% if p("fezzik.bbs.require_ssl") %>
   bbs_sec_flags=" \
