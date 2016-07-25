@@ -2,9 +2,10 @@
 name: ginkgo
 
 dependencies:
-  - golang_1.4
+  - golang
 
 files:
+  - github.com/onsi/ginkgo/config/*.go # gosub
   - github.com/onsi/ginkgo/ginkgo/*.go # gosub
   - github.com/onsi/ginkgo/ginkgo/convert/*.go # gosub
   - github.com/onsi/ginkgo/ginkgo/interrupthandler/*.go # gosub
@@ -12,7 +13,6 @@ files:
   - github.com/onsi/ginkgo/ginkgo/testrunner/*.go # gosub
   - github.com/onsi/ginkgo/ginkgo/testsuite/*.go # gosub
   - github.com/onsi/ginkgo/ginkgo/watch/*.go # gosub
-  - github.com/onsi/ginkgo/config/*.go # gosub
   - github.com/onsi/ginkgo/internal/remote/*.go # gosub
   - github.com/onsi/ginkgo/reporters/*.go # gosub
   - github.com/onsi/ginkgo/reporters/stenographer/*.go # gosub

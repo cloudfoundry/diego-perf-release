@@ -1,0 +1,62 @@
+#!/bin/bash
+
+set -x
+set -e
+
+export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+export PATH=/var/vcap/packages/pusher/bin:$PATH
+export APP_PATH=/var/vcap/packages/pusher/stress-app
+
+RUN_DIR=/var/vcap/sys/run/pusher
+LOG_DIR=/var/vcap/sys/log/pusher
+
+PIDFILE=$RUN_DIR/pusher.pid
+
+source /var/vcap/packages/pid_utils/pid_utils.sh
+
+cd /var/vcap/packages/pusher
+
+ulimit -n 16384
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "pusher"
+
+    mkdir -p $RUN_DIR
+    chown -R vcap:vcap $RUN_DIR
+
+    mkdir -p $LOG_DIR
+    chown -R vcap:vcap $LOG_DIR
+
+    # Enable maximum OS thread concurrency
+    export GOMAXPROCS=$(nproc)
+
+    # Work around for GOLANG 1.5.3 DNS bug
+    export GODEBUG=netdns=cgo
+
+    pusher -api=<%= p("pusher.api") %> \
+      -admin-user=<%= p("pusher.admin_user") %> \
+      -admin-password=<%= p("pusher.admin_password") %> \
+      -apps-domain=<%= p("pusher.apps_domain") %> \
+      -batch-size=<%= p("pusher.batch_size") %> \
+      -batches=<%= p("pusher.batches") %> \
+      -skip-ssl-validation=<%= p("pusher.skip_ssl_validation") %> \
+      -app-path=${APP_PATH} \
+      -cf-logs-directory=${LOG_DIR} \
+      2> >(tee -a $LOG_DIR/pusher.stderr.log | logger -p user.error -t vcap.pusher) \
+      1> >(tee -a $LOG_DIR/pusher.stdout.log | logger -p user.info -t vcap.pusher) &
+
+    echo $! > $PIDFILE
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: pusher_ctl {start|stop}"
+
+    ;;
+esac

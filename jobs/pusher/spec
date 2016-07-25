@@ -1,0 +1,31 @@
+---
+name: pusher
+templates:
+  pusher_ctl.erb: bin/pusher_ctl
+
+packages:
+- cf-cli
+- pusher
+- pid_utils
+
+properties:
+  pusher.api:
+    description: The Elastic Runtime API endpoint URL
+  pusher.apps_domain:
+    description: The Elastic Runtime Appliction Domain
+  pusher.admin_user:
+    description: The Elastic Runtime API admin user
+  pusher.admin_password:
+    description: The Elastic Runtime API admin user's password
+  pusher.skip_ssl_validation:
+    description: Toggles cli verification of the Elastic Runtime API SSL certificate
+    default: false
+  pusher.batch_size:
+    description: Number of parallel pushes to run
+    default: 10
+  pusher.batches:
+    description: Number of push batches to run
+    default: 10
+  pusher.log_level:
+    description: Lager log level
+    default: debug

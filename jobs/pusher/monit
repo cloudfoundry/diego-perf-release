@@ -1,0 +1,5 @@
+check process pusher
+  with pidfile /var/vcap/sys/run/pusher/pusher.pid
+  start program "/var/vcap/jobs/pusher/bin/pusher_ctl start"
+  stop program "/var/vcap/jobs/pusher/bin/pusher_ctl stop"
+  group vcap

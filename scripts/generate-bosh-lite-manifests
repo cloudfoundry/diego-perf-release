@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+scripts_path=./$(dirname $0)
+eval $($scripts_path/get_paths.sh)
+
+if [ ! -f ${CF_MANIFESTS_DIR}/cf.yml ]; then
+  ${CF_RELEASE_DIR}/scripts/generate-bosh-lite-dev-manifest
+fi
+
+if [ ! -f ${DIEGO_MANIFESTS_DIR}/diego.yml ]; then
+  ${DIEGO_RELEASE_DIR}/scripts/generate-bosh-lite-manifests
+fi
+
+mkdir -p ${DIEGO_PERF_MANIFESTS_DIR}
+
+pushd ${DIEGO_PERF_RELEASE_DIR}
+	$scripts_path/generate-deployment-manifest \
+			-c ${CF_MANIFESTS_DIR}/cf.yml \
+			-d ${DIEGO_MANIFESTS_DIR}/diego.yml \
+			-i manifest-generation/bosh-lite-stubs/iaas-settings.yml \
+			-p manifest-generation/bosh-lite-stubs/property-overrides.yml \
+			-n manifest-generation/bosh-lite-stubs/instance-count-overrides.yml \
+			"$@" \
+			> ${DIEGO_PERF_MANIFESTS_DIR}/perf.yml
+popd
+
+echo "Diego Perf Release Manifest at ${DIEGO_PERF_MANIFESTS_DIR}/perf.yml"

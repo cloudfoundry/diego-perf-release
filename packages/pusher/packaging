@@ -6,7 +6,12 @@ export GOPATH=$BOSH_INSTALL_TARGET
 
 export GOROOT=$(readlink -nf /var/vcap/packages/golang)
 export PATH=$GOROOT/bin:$PATH
-go install github.com/onsi/ginkgo/ginkgo
+go install code.cloudfoundry.org/diego-stress-tests/pusher
+
+cp -a \
+  $GOPATH/src/code.cloudfoundry.org/diego-stress-tests/assets/stress-app \
+  $BOSH_INSTALL_TARGET/stress-app
 
 # clean up source artifacts
 rm -rf ${BOSH_INSTALL_TARGET}/src ${BOSH_INSTALL_TARGET}/pkg
+

@@ -4,62 +4,109 @@ set -e
 
 manifest_generation=$(dirname $0)/../manifest-generation
 
-function usage() {
-  >&2 echo "    Usage:
-    $0 /path/to/stub/director-uuid.yml \\
-       /path/to/stub/property-overrides.yml \\
-       /path/to/stub/instance-count-overrides.yml \\
-       /path/to/stub/iaas-settings.yml \\
-       /path/to/deployment-manifests
+usage() {
+  >&2 cat <<EOF
+SYNOPSIS:
+    Generate a manifest for a Diego Perf deployment to accompany an existing CF/Diego deployment.
 
-    Ex:
-    $0 ~/deployments/bosh-lite/director.yml \\
-       manifest-generation/bosh-lite-stubs/property-overrides.yml \\
-       manifest-generation/bosh-lite-stubs/instance-count-overrides.yml \\
-       manifest-generation/bosh-lite-stubs/iaas-settings.yml \\
-       ~/deployments/bosh-lite
-"
+USAGE:
+    $0 <MANDATORY ARGUMENTS> [OPTIONAL ARGUMENTS]
+
+MANDATORY ARGUMENTS:
+    -c <cf-path>        Path to CF manifest file.
+    -d <diego-path>     Path to Diego manifest file.
+    -i <iaas-path>      Path to IaaS-settings stub file.
+    -p <property-path>  Path to property-overrides stub file.
+
+OPTIONAL ARGUMENTS:
+    -n <count-path>     Path to instance-count-overrides stub file.
+
+EXAMPLE:
+    $0 \\
+      -c ../cf-release/bosh-lite/deployments/cf.yml \\
+      -d ../diego-release/bosh-lite/deployments/diego.yml \\
+      -i manifest-generation/bosh-lite-stubs/iaas-settings.yml \\
+      -p manifest-generation/bosh-lite-stubs/property-overrides.yml \\
+      -n manifest-generation/bosh-lite-stubs/instance-count-overrides.yml
+EOF
   exit 1
 }
 
-director_uuid=$1
-properties=$2
-instance_counts=$3
-iaas_settings=$4
-deployments=$5
+base_releases="${manifest_generation}/base-releases.yml"
+instance_counts=""
 
-if [ -z "${deployments}" ]; then
-  >&2 echo "Not enough arguments"
-  usage
+while getopts "c:i:p:n:k:v:s:d:krbgx" opt; do
+  case $opt in
+    c)
+      cf_deployment_manifest=$OPTARG
+      ;;
+    d)
+      diego_deployment_manifest=$OPTARG
+      ;;
+    i)
+      iaas_settings=$OPTARG
+      ;;
+    p)
+      property_overrides=$OPTARG
+      ;;
+    n)
+      instance_counts=$OPTARG
+      ;;
+    *)
+      echo "Unknown arguments"
+      usage
+      ;;
+  esac
+done
+
+if [ -z ${cf_deployment_manifest} ]; then
+  >&2 echo "ERROR: CF manifest file is missing"
+  argument_error=true
+else
+  if [ ! -f "${cf_deployment_manifest}" ]; then
+    >&2 echo "ERROR: CF manifest '${cf_deployment_manifest}' is not a regular file"
+    argument_error=true
+  fi
 fi
 
-if [ ! -z "$6" ]; then
-  >&2 echo "Too many arguments"
-  usage
+if [ -z ${diego_deployment_manifest} ]; then
+  >&2 echo "ERROR: Diego manifest file is missing"
+  argument_error=true
+else
+  if [ ! -f "${diego_deployment_manifest}" ]; then
+    >&2 echo "ERROR: CF manifest '${diego_deployment_manifest}' is not a regular file"
+    argument_error=true
+  fi
 fi
 
-if [ ! -f "${director_uuid}" ]; then
-  >&2 echo "Director UUID stub '${director_uuid}' is not a regular file"
-  usage
+if [ -z ${iaas_settings} ]; then
+  >&2 echo "ERROR: IaaS-settings stub file is missing"
+  argument_error=true
+else
+  if [ ! -f "${iaas_settings}" ]; then
+    >&2 echo "ERROR: IaaS Setting stub '${iaas_settings}' is not a regular file"
+    argument_error=true
+  fi
 fi
 
-if [ ! -f "${properties}" ]; then
-  >&2 echo "Property Overrides stub '${properties}' is not a regular file"
-  usage
+if [ -z ${property_overrides} ]; then
+  >&2 echo "ERROR: Property-overrides stub file is missing"
+  argument_error=true
+
+else
+  if [ ! -f "${property_overrides}" ]; then
+    >&2 echo "ERROR: Property-overrides stub '${property_overrides}' is not a regular file"
+    argument_error=true
+  fi
 fi
 
-if [ ! -f "${instance_counts}" ]; then
-  >&2 echo "Instance Count Overrides stub '${instance_counts}' is not a regular file"
-  usage
+if [[ ! -z "${instance_counts}" && ! -f "${instance_counts}" ]]; then
+  >&2 echo "ERROR: Instance-count-overrides stub '${instance_counts}' is not a regular file"
+  argument_error=true
 fi
 
-if [ ! -f "${iaas_settings}" ]; then
-  >&2 echo "IaaS Setting stub '${iaas_settings}' is not a regular file"
-  usage
-fi
-
-if [ ! -d "${deployments}" ]; then
-  >&2 echo "Deployments directory '${deployments}' is not a directory"
+if [ ! -z $argument_error ]; then
+  echo
   usage
 fi
 
@@ -68,18 +115,24 @@ tmpdir=$(mktemp -d /tmp/diego-manifest.XXXXX)
 spiff merge \
   ${manifest_generation}/config-from-cf.yml \
   ${manifest_generation}/config-from-cf-internal.yml \
-  ${deployments}/cf.yml \
+  ${cf_deployment_manifest} \
   > ${tmpdir}/config-from-cf.yml
 
 spiff merge \
+  ${manifest_generation}/config-from-diego.yml \
+  ${manifest_generation}/config-from-diego-internal.yml \
+  ${diego_deployment_manifest} \
+  > ${tmpdir}/config-from-diego.yml
+
+spiff merge \
   ${manifest_generation}/perf.yml \
-  ${properties} \
+  ${property_overrides} \
   ${instance_counts} \
   ${iaas_settings} \
   ${tmpdir}/config-from-cf.yml \
+  ${tmpdir}/config-from-diego.yml \
   > ${tmpdir}/perf.yml
 
 spiff merge \
   ${manifest_generation}/misc-templates/bosh.yml \
-  ${director_uuid} \
   ${tmpdir}/perf.yml

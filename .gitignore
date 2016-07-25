@@ -5,6 +5,7 @@ dev_releases/
 blobs/
 config/private.yml
 config/dev.yml
+bosh-lite/deployments/perf.yml
 
 # GOPATH
 bin/

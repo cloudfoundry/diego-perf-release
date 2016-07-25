@@ -1,4 +1,5 @@
 name: (( config_from_cf.cf_deployment_name "-diego-perf" ))
+director_uuid: (( config_from_cf.cf_director_uuid ))
 
 releases:
   - name: diego-perf-release
@@ -25,42 +26,43 @@ networks:
     subnets: (( iaas_settings.subnet_configs.perf.subnets ))
 
 resource_pools:
-  - name: stress_tests
+  - name: pusher
     network: perf
     stemcell: (( iaas_settings.stemcell ))
-    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.stress_tests.cloud_properties ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.pusher.cloud_properties ))
+
+  - name: orchestrator
+    network: perf
+    stemcell: (( iaas_settings.stemcell ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.orchestrator.cloud_properties ))
 
 jobs:
-  - name: stress_tests
+  - name: pusher
     templates:
       - name: consul_agent
         release: cf
-      - name: caddy
+      - name: pusher
         release: diego-perf-release
-    instances: (( instance_count_overrides.stress_tests.instances || 1 ))
-    resource_pool: stress_tests
+    instances: (( instance_count_overrides.pusher.instances || 1 ))
+    persistent_disk: 4096
+    resource_pool: pusher
     networks:
       - name: perf
-    update:
-      serial: false
-      max_in_flight: (( instance_count_overrides.stress_tests.max_in_flight || 1 ))
-  - name: garden_container_creation_tests
+  - name: orchestrator
     templates:
-      - name: garden_container_creation_tests
+      - name: consul_agent
+        release: cf
+      - name: fezzik
         release: diego-perf-release
-    instances: (( instance_count_overrides.stress_tests.instances || 1 ))
-    lifecycle: errand
-    resource_pool: stress_tests
+    instances: 1
+    resource_pool: orchestrator
     networks:
       - name: perf
-    update:
-      serial: false
-      max_in_flight: (( instance_count_overrides.stress_tests.max_in_flight || 1 ))
 
 properties:
-  # -- Property below is used by the consul_agent job from cf-release --
   consul:
     agent:
+      domain: (( config_from_cf.consul.domain ))
       log_level: (( config_from_cf.consul.log_level ))
       servers:
         lan: (( config_from_cf.consul.lan_servers ))
@@ -72,31 +74,26 @@ properties:
     server_cert: (( config_from_cf.consul.server_cert ))
     server_key: (( config_from_cf.consul.server_key ))
 
-  # -- Proerties below are used by the stress_tests job from diego-perf-release --
-  stress_tests:
+  pusher:
     api: (( config_from_cf.cc.api_uri ))
     apps_domain: (( config_from_cf.first_app_domain ))
     admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
     admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
     skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
+    batch_size: (( property_overrides.pusher.batch_size || nil ))
+    batches: (( property_overrides.pusher.batches || nil ))
+
   fezzik:
     bbs:
       api_location: (( "bbs.service.cf.internal:8889" ))
-      ca_cert: (( property_overrides.bbs.ca_cert ))
-      client_cert: (( property_overrides.bbs.client_cert ))
-      client_key: (( property_overrides.bbs.client_key ))
-      require_ssl: (( property_overrides.bbs.require_ssl || nil ))
-  garden_tests:
-    org_name: (( property_overrides.org_name || nil ))
-    space_name: (( property_overrides.space_name || nil ))
-    app_name_suffix: (( property_overrides.app_name_suffix || nil ))
-    num_runs: (( property_overrides.num_runs || nil ))
-    num_cells: (( property_overrides.num_cells ))
-  performance_tests:
-    num_cells: (( property_overrides.num_cells ))
+      ca_cert: (( config_from_diego.bbs.ca_cert ))
+      client_cert: (( config_from_diego.bbs.client_cert ))
+      client_key: (( config_from_diego.bbs.client_key ))
+      require_ssl: (( config_from_diego.bbs.require_ssl || nil ))
 
 # The keys below should not be included in the final stub
 config_from_cf: (( merge ))
+config_from_diego: (( merge ))
 property_overrides: (( merge ))
 iaas_settings: (( merge ))
 instance_count_overrides: (( merge ))

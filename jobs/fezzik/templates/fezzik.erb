@@ -1,0 +1,44 @@
+#!/bin/bash -l
+
+set -e -x
+
+LOG_DIR=/var/vcap/sys/log/fezzik
+
+export GOROOT=/var/vcap/packages/golang
+export GOPATH=/var/vcap/packages/fezzik
+
+export PATH=$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
+export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+export PATH=/var/vcap/packages/ginkgo/bin:$PATH
+
+cd /var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik
+
+# not guaranteed to work on non-Ubuntu stemcells
+publicly_accessible_ip=`hostname -I`
+
+ulimit -n 16384
+
+CONF_DIR=/var/vcap/jobs/caddy/config
+
+<% if p("fezzik.bbs.require_ssl") %>
+  bbs_sec_flags=" \
+   --bbs-client-cert=${CONF_DIR}/certs/bbs/client.crt \
+   --bbs-client-key=${CONF_DIR}/certs/bbs/client.key \
+   --bbs-ca=${CONF_DIR}/certs/bbs/ca.crt"
+
+  bbs_api_url="<%= "https://" + p("fezzik.bbs.api_location") %>"
+<% else %>
+  bbs_sec_flags=""
+  bbs_api_url="<%= "http://" + p("fezzik.bbs.api_location") %>"
+<% end %>
+
+consul_address=http://127.0.0.1:8500
+
+ginkgo -v -progress -- \
+  ${bbs_sec_flags} \
+  --bbs-address=${bbs_api_url} \
+  --consul-address=${consul_address} \
+  --publicly-accessible-ip=$publicly_accessible_ip \
+  --num-cells=<%= properties.performance_tests.num_cells %>
+

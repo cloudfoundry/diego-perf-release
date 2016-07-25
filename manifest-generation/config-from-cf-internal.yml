@@ -1,10 +1,12 @@
 config_from_cf:
+  cf_director_uuid: (( director_uuid ))
   cf_deployment_name: (( name ))
   first_app_domain: (( properties.app_domains.[0] ))
   skip_ssl_validation: (( properties.ssl.skip_cert_verify ))
   cc:
     api_uri: (( properties.cc.srv_api_uri ))
   consul:
+    domain: (( properties.consul.agent.domain ))
     log_level: (( properties.consul.agent.log_level ))
     lan_servers: (( properties.consul.agent.servers.lan ))
     ca_cert: (( properties.consul.ca_cert ))
@@ -17,11 +19,13 @@ config_from_cf:
 
 # The keys below should not be included in the final stub
 name: (( merge ))
+director_uuid: (( merge ))
 properties:
   cc:
     srv_api_uri: (( merge ))
   consul:
     agent:
+      domain: (( merge ))
       log_level: (( merge ))
       servers:
         lan: (( merge ))

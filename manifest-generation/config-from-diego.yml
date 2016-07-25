@@ -1,0 +1,9 @@
+config_from_diego:
+  bbs:
+    api_location: (( merge ))
+    ca_cert: (( merge ))
+    client_cert: (( merge ))
+    client_key: (( merge ))
+    require_ssl: (( merge ))
+    client_session_cache_size: (( merge ))
+    max_idle_conns_per_host: (( merge ))

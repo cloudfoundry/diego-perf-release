@@ -1,10 +1,12 @@
 config_from_cf:
   cf_deployment_name: (( merge ))
+  cf_director_uuid: (( merge ))
   first_app_domain: (( merge ))
   skip_ssl_validation: (( merge ))
   cc:
     api_uri: (( merge ))
   consul:
+    domain: (( merge ))
     log_level: (( merge ))
     lan_servers: (( merge ))
     ca_cert: (( merge ))

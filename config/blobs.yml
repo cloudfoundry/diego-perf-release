@@ -1,13 +1,13 @@
 ---
-cf-cli/cf-linux-amd64.tgz:
-  object_id: 06b4e9e2-a59d-4de5-a95a-ae5c85c87ab2
-  sha: c8002433d3fc3260cc68b2d012caba2bb162799b
-  size: 5012747
-golang/go1.4.linux-amd64.tar.gz:
-  object_id: 9cac4e5d-a0c1-4b44-9373-fd7428c0d986
-  sha: cd82abcb0734f82f7cf2d576c9528cebdafac4c6
-  size: 63289725
 tmux/tmux:
   object_id: 68680215-7c66-43cc-9a52-2c89c7419b96
   sha: 000afb1c43feec5924b09cbad0419f30411e8cff
   size: 467144
+golang/go1.6.2.linux-amd64.tar.gz:
+  object_id: af9a022d-423c-46f8-81da-dd153ab0d60d
+  sha: b8318b09de06076d5397e6ec18ebef3b45cd315d
+  size: 84840658
+cf-cli/cf-cli_6.20.0_linux_x86-64.tgz:
+  object_id: 796c09e4-12b5-4bf4-9aff-0fcdf7d681f1
+  sha: 6abdf962082329939008b77176b8a57d3ae4f884
+  size: 6461018

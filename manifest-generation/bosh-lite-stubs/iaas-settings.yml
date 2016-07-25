@@ -70,5 +70,7 @@ iaas_settings:
         - 10.244.17.46
   compilation_cloud_properties: {}
   resource_pool_cloud_properties:
-    - name: stress_tests
+    - name: pusher
+      cloud_properties: {}
+    - name: orchestrator
       cloud_properties: {}

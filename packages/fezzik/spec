@@ -2,49 +2,37 @@
 name: fezzik
 
 dependencies:
-  - golang_1.4
+  - golang
 
 files:
-  - github.com/cloudfoundry-incubator/fezzik/*.go # gosub
-  - github.com/cloudfoundry-incubator/fezzik/matryoshka/*.go # gosub
-  - github.com/cloudfoundry-incubator/fezzik/viz/*.go # gosub
-  - github.com/cloudfoundry-incubator/bbs/*.go # gosub
-  - github.com/cloudfoundry-incubator/bbs/models/*.go # gosub
-  - github.com/cloudfoundry-incubator/consuladapter/*.go # gosub
-  - github.com/cloudfoundry-incubator/locket/*.go # gosub
-  - github.com/cloudfoundry/gunk/workpool/*.go # gosub
-  - github.com/onsi/ginkgo/*.go # gosub
-  - github.com/onsi/gomega/*.go # gosub
-  - github.com/onsi/gomega/ghttp/*.go # gosub
-  - github.com/onsi/say/*.go # gosub
-  - github.com/pivotal-golang/clock/*.go # gosub
-  - github.com/pivotal-golang/lager/lagertest/*.go # gosub
+  - code.cloudfoundry.org/bbs/*.go # gosub
+  - code.cloudfoundry.org/bbs/encryption/*.go # gosub
+  - code.cloudfoundry.org/bbs/events/*.go # gosub
+  - code.cloudfoundry.org/bbs/format/*.go # gosub
+  - code.cloudfoundry.org/bbs/models/*.go # gosub
+  - code.cloudfoundry.org/cfhttp/*.go # gosub
+  - code.cloudfoundry.org/cfhttp/unix_transport/*.go # gosub
+  - code.cloudfoundry.org/clock/*.go # gosub
+  - code.cloudfoundry.org/consuladapter/*.go # gosub
+  - code.cloudfoundry.org/fezzik/*.go # gosub
+  - code.cloudfoundry.org/fezzik/matryoshka/*.go # gosub
+  - code.cloudfoundry.org/fezzik/viz/*.go # gosub
+  - code.cloudfoundry.org/lager/*.go # gosub
+  - code.cloudfoundry.org/lager/lagertest/*.go # gosub
+  - code.cloudfoundry.org/locket/*.go # gosub
+  - code.cloudfoundry.org/runtimeschema/metric/*.go # gosub
   - github.com/GaryBoone/GoStats/stats/*.go # gosub
-  - github.com/cloudfoundry-incubator/bbs/encryption/*.go # gosub
-  - github.com/cloudfoundry-incubator/bbs/format/*.go # gosub
-  - github.com/cloudfoundry-incubator/locket/presence/*.go # gosub
-  - github.com/gogo/protobuf/proto/*.go # gosub
-  - github.com/gogo/protobuf/sortkeys/*.go # gosub
-  - github.com/nu7hatch/gouuid/*.go # gosub
-  - github.com/onsi/gomega/format/*.go # gosub
-  - github.com/onsi/gomega/internal/assertion/*.go # gosub
-  - github.com/onsi/gomega/internal/asyncassertion/*.go # gosub
-  - github.com/onsi/gomega/internal/testingtsupport/*.go # gosub
-  - github.com/onsi/gomega/matchers/*.go # gosub
-  - github.com/onsi/gomega/matchers/support/goraph/bipartitegraph/*.go # gosub
-  - github.com/onsi/gomega/matchers/support/goraph/edge/*.go # gosub
-  - github.com/onsi/gomega/matchers/support/goraph/node/*.go # gosub
-  - github.com/onsi/gomega/matchers/support/goraph/util/*.go # gosub
-  - github.com/onsi/gomega/types/*.go # gosub
-  - github.com/pivotal-golang/lager/*.go # gosub
   - github.com/bmizerany/pat/*.go # gosub
-  - github.com/cloudfoundry-incubator/bbs/events/*.go # gosub
-  - github.com/cloudfoundry-incubator/cf_http/*.go # gosub
-  - github.com/tedsuo/rata/*.go # gosub
-  - github.com/vito/go-sse/sse/*.go # gosub
+  - github.com/cloudfoundry/dropsonde/metric_sender/*.go # gosub
+  - github.com/cloudfoundry/dropsonde/metrics/*.go # gosub
+  - github.com/cloudfoundry/sonde-go/events/*.go # gosub
+  - github.com/gogo/protobuf/gogoproto/*.go # gosub
+  - github.com/gogo/protobuf/proto/*.go # gosub
+  - github.com/gogo/protobuf/protoc-gen-gogo/descriptor/*.go # gosub
+  - github.com/gogo/protobuf/sortkeys/*.go # gosub
   - github.com/hashicorp/consul/api/*.go # gosub
-  - github.com/cloudfoundry-incubator/locket/maintainer/*.go # gosub
-  - github.com/tedsuo/ifrit/*.go # gosub
+  - github.com/nu7hatch/gouuid/*.go # gosub
+  - github.com/onsi/ginkgo/*.go # gosub
   - github.com/onsi/ginkgo/config/*.go # gosub
   - github.com/onsi/ginkgo/internal/codelocation/*.go # gosub
   - github.com/onsi/ginkgo/internal/containernode/*.go # gosub
@@ -59,4 +47,20 @@ files:
   - github.com/onsi/ginkgo/reporters/*.go # gosub
   - github.com/onsi/ginkgo/reporters/stenographer/*.go # gosub
   - github.com/onsi/ginkgo/types/*.go # gosub
+  - github.com/onsi/gomega/*.go # gosub
+  - github.com/onsi/gomega/format/*.go # gosub
   - github.com/onsi/gomega/gbytes/*.go # gosub
+  - github.com/onsi/gomega/ghttp/*.go # gosub
+  - github.com/onsi/gomega/internal/assertion/*.go # gosub
+  - github.com/onsi/gomega/internal/asyncassertion/*.go # gosub
+  - github.com/onsi/gomega/internal/testingtsupport/*.go # gosub
+  - github.com/onsi/gomega/matchers/*.go # gosub
+  - github.com/onsi/gomega/matchers/support/goraph/bipartitegraph/*.go # gosub
+  - github.com/onsi/gomega/matchers/support/goraph/edge/*.go # gosub
+  - github.com/onsi/gomega/matchers/support/goraph/node/*.go # gosub
+  - github.com/onsi/gomega/matchers/support/goraph/util/*.go # gosub
+  - github.com/onsi/gomega/types/*.go # gosub
+  - github.com/onsi/say/*.go # gosub
+  - github.com/tedsuo/ifrit/*.go # gosub
+  - github.com/tedsuo/rata/*.go # gosub
+  - github.com/vito/go-sse/sse/*.go # gosub
