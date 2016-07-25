@@ -20,6 +20,7 @@ MANDATORY ARGUMENTS:
 
 OPTIONAL ARGUMENTS:
     -n <count-path>     Path to instance-count-overrides stub file.
+    -l                  Use the softlayer-specific YAML template.
 
 EXAMPLE:
     $0 \\
@@ -35,7 +36,7 @@ EOF
 base_releases="${manifest_generation}/base-releases.yml"
 instance_counts=""
 
-while getopts "c:i:p:n:k:v:s:d:krbgx" opt; do
+while getopts "c:i:p:n:d:l" opt; do
   case $opt in
     c)
       cf_deployment_manifest=$OPTARG
@@ -51,6 +52,9 @@ while getopts "c:i:p:n:k:v:s:d:krbgx" opt; do
       ;;
     n)
       instance_counts=$OPTARG
+      ;;
+    l)
+      use_softlayer=1
       ;;
     *)
       echo "Unknown arguments"
@@ -110,6 +114,12 @@ if [ ! -z $argument_error ]; then
   usage
 fi
 
+if [[ ${use_softlayer} ]]; then
+  template_file=${manifest_generation}/perf-softlayer.yml
+else
+  template_file=${manifest_generation}/perf.yml
+fi
+
 tmpdir=$(mktemp -d /tmp/diego-manifest.XXXXX)
 
 spiff merge \
@@ -125,7 +135,7 @@ spiff merge \
   > ${tmpdir}/config-from-diego.yml
 
 spiff merge \
-  ${manifest_generation}/perf.yml \
+  ${template_file} \
   ${property_overrides} \
   ${instance_counts} \
   ${iaas_settings} \

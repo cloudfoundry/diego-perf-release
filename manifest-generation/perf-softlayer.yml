@@ -1,0 +1,107 @@
+name: (( config_from_cf.cf_deployment_name "-diego-perf" ))
+director_uuid: (( config_from_cf.cf_director_uuid ))
+
+releases:
+  - name: diego-perf-release
+    version: latest
+  - name: cf
+    version: latest
+
+compilation:
+  workers: 6
+  network: perf
+  reuse_compilation_vms: true
+  cloud_properties: (( iaas_settings.compilation_cloud_properties ))
+
+update:
+  canaries: 1
+  canary_watch_time: 5000-120000
+  update_watch_time: 5000-120000
+  max_in_flight: 1
+  serial: false
+
+networks:
+- name: perf
+  type: dynamic
+  cloud_properties:
+    security_groups:
+    - default
+    - cf
+  dns:
+  - 10.110.217.170
+  - 8.8.8.8
+  - 10.0.80.11
+  - 10.0.80.12
+
+resource_pools:
+  - name: pusher
+    network: perf
+    stemcell: (( iaas_settings.stemcell ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.pusher.cloud_properties ))
+
+  - name: orchestrator
+    network: perf
+    stemcell: (( iaas_settings.stemcell ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.orchestrator.cloud_properties ))
+
+jobs:
+  - name: pusher
+    templates:
+      - name: consul_agent
+        release: cf
+      - name: pusher
+        release: diego-perf-release
+    instances: (( instance_count_overrides.pusher.instances || 1 ))
+    persistent_disk: 4096
+    resource_pool: pusher
+    networks:
+      - name: perf
+  - name: orchestrator
+    templates:
+      - name: consul_agent
+        release: cf
+      - name: fezzik
+        release: diego-perf-release
+    instances: 1
+    resource_pool: orchestrator
+    networks:
+      - name: perf
+
+properties:
+  consul:
+    agent:
+      domain: (( config_from_cf.consul.domain ))
+      log_level: (( config_from_cf.consul.log_level ))
+      servers:
+        lan: (( config_from_cf.consul.lan_servers ))
+    ca_cert: (( config_from_cf.consul.ca_cert ))
+    agent_cert: (( config_from_cf.consul.agent_cert ))
+    agent_key: (( config_from_cf.consul.agent_key ))
+    encrypt_keys: (( config_from_cf.consul.encrypt_keys ))
+    require_ssl: (( config_from_cf.consul.require_ssl ))
+    server_cert: (( config_from_cf.consul.server_cert ))
+    server_key: (( config_from_cf.consul.server_key ))
+
+  pusher:
+    api: (( config_from_cf.cc.api_uri ))
+    apps_domain: (( config_from_cf.first_app_domain ))
+    admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
+    admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
+    skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
+    batch_size: (( property_overrides.pusher.batch_size || nil ))
+    batches: (( property_overrides.pusher.batches || nil ))
+
+  fezzik:
+    bbs:
+      api_location: (( "bbs.service.cf.internal:8889" ))
+      ca_cert: (( config_from_diego.bbs.ca_cert ))
+      client_cert: (( config_from_diego.bbs.client_cert ))
+      client_key: (( config_from_diego.bbs.client_key ))
+      require_ssl: (( config_from_diego.bbs.require_ssl || nil ))
+
+# The keys below should not be included in the final stub
+config_from_cf: (( merge ))
+config_from_diego: (( merge ))
+property_overrides: (( merge ))
+iaas_settings: (( merge ))
+instance_count_overrides: (( merge ))
