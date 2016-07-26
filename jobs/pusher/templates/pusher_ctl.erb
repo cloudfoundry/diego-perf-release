@@ -44,17 +44,18 @@ case $1 in
       -skip-ssl-validation=<%= p("pusher.skip_ssl_validation") %> \
       -app-path=${APP_PATH} \
       -cf-logs-directory=${LOG_DIR} \
+      -space-name="space-<%= spec.name %>-<%= spec.index %>-<%= spec.id %>" \
+      -pusher-id="<%= spec.name %>-<%= spec.index %>-<%= spec.id %>" \
       2> >(tee -a $LOG_DIR/pusher.stderr.log | logger -p user.error -t vcap.pusher) \
       1> >(tee -a $LOG_DIR/pusher.stdout.log | logger -p user.info -t vcap.pusher) &
 
     echo $! > $PIDFILE
-    ;;
 
+    ;;
   stop)
     kill_and_wait $PIDFILE
 
     ;;
-
   *)
     echo "Usage: pusher_ctl {start|stop}"
 
