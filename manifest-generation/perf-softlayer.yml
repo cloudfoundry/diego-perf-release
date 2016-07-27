@@ -99,6 +99,9 @@ properties:
       client_key: (( config_from_diego.bbs.client_key ))
       require_ssl: (( config_from_diego.bbs.require_ssl || nil ))
 
+  performance_tests:
+    num_cells: (( property_overrides.num_cells || nil ))
+
 # The keys below should not be included in the final stub
 config_from_cf: (( merge ))
 config_from_diego: (( merge ))

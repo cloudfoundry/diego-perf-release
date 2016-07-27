@@ -11,6 +11,8 @@ files:
   - code.cloudfoundry.org/diego-stress-tests/pusher/*.go # gosub
   - code.cloudfoundry.org/lager/*.go # gosub
   - github.com/hashicorp/consul/api/*.go # gosub
+  - github.com/hashicorp/consul/vendor/github.com/hashicorp/go-cleanhttp/*.go # gosub
+  - github.com/hashicorp/consul/vendor/github.com/hashicorp/serf/coordinate/*.go # gosub
   - github.com/satori/go.uuid/*.go # gosub
   - github.com/tedsuo/ifrit/*.go # gosub
   - github.com/tedsuo/ifrit/grouper/*.go # gosub

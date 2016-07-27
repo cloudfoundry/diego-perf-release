@@ -7,6 +7,8 @@ LOG_DIR=/var/vcap/sys/log/fezzik
 export GOROOT=/var/vcap/packages/golang
 export GOPATH=/var/vcap/packages/fezzik
 
+export TMPDIR=/var/vcap/data/tmp
+
 export PATH=$GOROOT/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
 export PATH=/var/vcap/packages/cf-cli/bin:$PATH
@@ -15,7 +17,7 @@ export PATH=/var/vcap/packages/ginkgo/bin:$PATH
 cd /var/vcap/packages/fezzik/src/code.cloudfoundry.org/fezzik
 
 # not guaranteed to work on non-Ubuntu stemcells
-publicly_accessible_ip=`hostname -I`
+publicly_accessible_ip=`hostname -I | cut -d' ' -f1`
 
 ulimit -n 16384
 
@@ -40,5 +42,5 @@ ginkgo -v -progress -- \
   --bbs-address=${bbs_api_url} \
   --consul-address=${consul_address} \
   --publicly-accessible-ip=$publicly_accessible_ip \
-  --num-cells=<%= properties.performance_tests.num_cells %>
+  --num-cells=<%= p("performance_tests.num_cells") %>
 
