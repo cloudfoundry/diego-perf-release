@@ -60,6 +60,10 @@ jobs:
     resource_pool: orchestrator
     networks:
       - name: perf
+        static_ips: (( static_ips(0) ))
+    properties:
+      orchestrator:
+        listen_addr: (( jobs.orchestrator.networks.perf.static_ips.[0] ":2702" ))
 
 properties:
   consul:
