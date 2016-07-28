@@ -14,3 +14,12 @@ pkg/
 # gosub
 src/github.com/vito/gosub
 src/github.com/codegangsta/cli
+
+# go tools
+src/github.com/dougm/
+src/github.com/golang/
+src/github.com/kisielk/
+src/github.com/mdempsky/
+src/github.com/nsf/
+src/github.com/rogpeppe/
+src/golang.org/x/tools/
