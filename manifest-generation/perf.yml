@@ -50,6 +50,8 @@ jobs:
       - name: perf
   - name: orchestrator
     templates:
+      - name: orchestrator
+        release: diego-perf-release
       - name: consul_agent
         release: cf
       - name: fezzik
@@ -82,6 +84,9 @@ properties:
     skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
     batch_size: (( property_overrides.pusher.batch_size || nil ))
     batches: (( property_overrides.pusher.batches || nil ))
+
+  orchestrator:
+    pusher_instances: (( instance_count_overrides.pusher.instances || 1 ))
 
   fezzik:
     bbs:
