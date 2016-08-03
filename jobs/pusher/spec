@@ -20,9 +20,9 @@ properties:
   pusher.skip_ssl_validation:
     description: Toggles cli verification of the Elastic Runtime API SSL certificate
     default: false
-  pusher.batch_size:
-    description: Number of parallel pushes to run
-    default: 10
+  pusher.concurrent_pushes_per_cell:
+    description: Number of parallel pushes to run per cell
+    default: 2
   pusher.batches:
     description: Number of push batches to run
     default: 10

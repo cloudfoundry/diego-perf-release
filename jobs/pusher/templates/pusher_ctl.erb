@@ -39,7 +39,7 @@ case $1 in
       -admin-user=<%= p("pusher.admin_user") %> \
       -admin-password=<%= p("pusher.admin_password") %> \
       -apps-domain=<%= p("pusher.apps_domain") %> \
-      -batch-size=<%= p("pusher.batch_size") %> \
+      -concurrent-pushes-per-cell=<%= p("pusher.concurrent_pushes_per_cell") %> \
       -batches=<%= p("pusher.batches") %> \
       -skip-ssl-validation=<%= p("pusher.skip_ssl_validation") %> \
       -app-path=${APP_PATH} \

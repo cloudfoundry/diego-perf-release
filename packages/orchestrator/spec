@@ -1,0 +1,19 @@
+---
+name: orchestrator
+
+dependencies:
+  - golang
+
+files:
+  - github.com/tedsuo/ifrit/http_server/*.go #gosub
+  - github.com/tedsuo/rata/*.go #gosub
+  - code.cloudfoundry.org/cflager/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/orchestrator/*.go # gosub
+  - code.cloudfoundry.org/lager/*.go # gosub
+  - github.com/bmizerany/pat/*.go # gosub
+  - github.com/hashicorp/consul/api/*.go # gosub
+  - github.com/tedsuo/ifrit/*.go # gosub
+  - github.com/tedsuo/ifrit/grouper/*.go # gosub
+  - github.com/tedsuo/ifrit/http_server/*.go # gosub
+  - github.com/tedsuo/rata/*.go # gosub
+  - golang.org/x/net/context/*.go # gosub
