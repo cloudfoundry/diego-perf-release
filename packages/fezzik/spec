@@ -12,6 +12,7 @@ files:
   - code.cloudfoundry.org/bbs/models/*.go # gosub
   - code.cloudfoundry.org/cfhttp/*.go # gosub
   - code.cloudfoundry.org/cfhttp/unix_transport/*.go # gosub
+  - code.cloudfoundry.org/cflager/*.go # gosub
   - code.cloudfoundry.org/clock/*.go # gosub
   - code.cloudfoundry.org/consuladapter/*.go # gosub
   - code.cloudfoundry.org/fezzik/*.go # gosub
@@ -19,7 +20,6 @@ files:
   - code.cloudfoundry.org/fezzik/viz/*.go # gosub
   - code.cloudfoundry.org/gunk/workpool/*.go # gosub
   - code.cloudfoundry.org/lager/*.go # gosub
-  - code.cloudfoundry.org/lager/lagertest/*.go # gosub
   - code.cloudfoundry.org/locket/*.go # gosub
   - code.cloudfoundry.org/runtimeschema/metric/*.go # gosub
   - github.com/GaryBoone/GoStats/stats/*.go # gosub
@@ -51,7 +51,6 @@ files:
   - github.com/onsi/ginkgo/types/*.go # gosub
   - github.com/onsi/gomega/*.go # gosub
   - github.com/onsi/gomega/format/*.go # gosub
-  - github.com/onsi/gomega/gbytes/*.go # gosub
   - github.com/onsi/gomega/ghttp/*.go # gosub
   - github.com/onsi/gomega/internal/assertion/*.go # gosub
   - github.com/onsi/gomega/internal/asyncassertion/*.go # gosub
