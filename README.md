@@ -16,6 +16,17 @@ testing.
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
 1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
+### TO Run Proof of Concept of a single Pusher
+
+1. Make sure your targeting a default diego enabled backend CF deployment
+1. Target a chosen org and space
+1. cd src/cedar
+1. run the following to start a test
+```bash
+N=10 ginkgo
+```
+Where N is the number of desired apps that will be seeded.
+
 ### To Run Stress Tests
 
 1. Simultaneously `bosh ssh stress_tests n`, where `n` is the index of the
