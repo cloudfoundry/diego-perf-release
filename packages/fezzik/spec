@@ -12,7 +12,6 @@ files:
   - code.cloudfoundry.org/bbs/models/*.go # gosub
   - code.cloudfoundry.org/cfhttp/*.go # gosub
   - code.cloudfoundry.org/cfhttp/unix_transport/*.go # gosub
-  - code.cloudfoundry.org/cflager/*.go # gosub
   - code.cloudfoundry.org/clock/*.go # gosub
   - code.cloudfoundry.org/consuladapter/*.go # gosub
   - code.cloudfoundry.org/fezzik/*.go # gosub
