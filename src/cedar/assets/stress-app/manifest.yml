@@ -1,0 +1,13 @@
+---
+applications:
+
+- name: light-master
+  instances: 1
+  buildpack: binary_buildpack
+  command: ./stress-app
+  memory: 32M
+  disk_quota: 100M
+  env:
+    ENDPOINT_TO_HIT: http://light-master.bosh-lite.com
+    LOGS_PER_SECOND: 0
+    REQUEST_PER_SECOND: 1

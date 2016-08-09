@@ -7,6 +7,9 @@ config/private.yml
 config/dev.yml
 bosh-lite/deployments/perf.yml
 
+# Binaries
+src/cedar/assets/stress-app/stress-app
+
 # GOPATH
 bin/
 pkg/
