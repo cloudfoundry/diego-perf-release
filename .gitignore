@@ -9,6 +9,7 @@ bosh-lite/deployments/perf.yml
 
 # Binaries
 src/cedar/assets/stress-app/stress-app
+src/cedar/cedar
 
 # GOPATH
 bin/

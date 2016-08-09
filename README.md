@@ -16,16 +16,17 @@ testing.
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
 1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
-### TO Run Proof of Concept of a single Pusher
+### To Run Cedar (single pusher stress test)
 
-1. Make sure your targeting a default diego enabled backend CF deployment
+1. Make sure you're targeting a default diego enabled backend CF deployment
 1. Target a chosen org and space
 1. cd src/cedar
-1. run the following to start a test
+1. Build the binary with `go build`
+1. Run the following to start a test
 ```bash
-N=10 ginkgo
+./cedar -n 10 [-domain <your-app-domain>]
 ```
-Where N is the number of desired apps that will be seeded.
+Where n is the number of desired apps that will be seeded. Domain if not specified will default to `bosh-lite.com`.
 
 ### To Run Stress Tests
 
