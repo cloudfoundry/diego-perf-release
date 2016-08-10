@@ -70,26 +70,26 @@ func cf(logger lager.Logger, args ...string) error {
 	return nil
 }
 
-func (a *cfApp) PushMaster(logger lager.Logger) {
+func (a *cfApp) PushMaster(logger lager.Logger, manifestPath string) {
 	// push master
 	logger = logger.Session("push", lager.Data{"app": a.appName})
 	logger.Info("started")
 	defer logger.Info("completed")
 
-	err := cf(logger, "push", a.appName, "-p", "assets/stress-app", "-f", "assets/stress-app/manifest.yml", "--no-start")
+	err := cf(logger, "push", a.appName, "-p", "assets/stress-app", "-f", manifestPath, "--no-start")
 	if err != nil {
 		logger.Error("failed-to-push", err)
 		os.Exit(1)
 	}
 }
 
-func (a *cfApp) Push(logger lager.Logger) {
+func (a *cfApp) Push(logger lager.Logger, manifestPath string) {
 	// push dummy app
 	logger = logger.Session("push", lager.Data{"app": a.appName})
 	logger.Info("started")
 	defer logger.Info("completed")
 
-	err := cf(logger, "push", a.appName, "-p", "assets/temp-app", "-f", "assets/temp-app/manifest.yml", "--no-start")
+	err := cf(logger, "push", a.appName, "-p", "assets/temp-app", "-f", manifestPath, "--no-start")
 	if err != nil {
 		logger.Error("failed-to-push", err)
 		os.Exit(1)

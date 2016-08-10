@@ -14,6 +14,8 @@ var (
 	numCopies        = flag.Int("n", 0, "number of copies to seed")
 	domain           = flag.String("domain", "bosh-lite.com", "app domain")
 	maxPollingErrors = flag.Int("max-polling-errors", 1, "max number of curl failures")
+	manifestPath     = flag.String("manifest", "assets/stress-app/manifest.yml", "path of the manifest file")
+	appPrefix        = flag.String("app-prefix", "light", "name of the copied applications")
 )
 
 var masterApp *cfApp
@@ -57,8 +59,8 @@ func pushMaster(logger lager.Logger) {
 	logger.Info("started")
 	defer logger.Info("completed")
 
-	masterApp = newCfApp(logger, "light-master", *domain, *maxPollingErrors)
-	masterApp.PushMaster(logger)
+	masterApp = newCfApp(logger, fmt.Sprintf("%s-master", *appPrefix), *domain, *maxPollingErrors)
+	masterApp.PushMaster(logger, *manifestPath)
 }
 
 func pushTargetApps(logger lager.Logger) {
@@ -67,14 +69,16 @@ func pushTargetApps(logger lager.Logger) {
 	defer logger.Info("completed")
 
 	for i := 0; i < *numCopies; i++ {
-		tempApp := newCfApp(logger, fmt.Sprintf("light-copy-%d", i), *domain, *maxPollingErrors)
-		tempApp.Push(logger)
+		tempApp := newCfApp(logger, fmt.Sprintf("%s-copy-%d", *appPrefix, i), *domain, *maxPollingErrors)
+		tempApp.Push(logger, *manifestPath)
 		tempApps = append(tempApps, tempApp)
 	}
 }
 
 func copySeedBits(logger lager.Logger) {
 	logger = logger.Session("copying-seed-bits")
+	logger.Info("started")
+	defer logger.Info("completed")
 	for i := 0; i < *numCopies; i++ {
 		masterApp.CopyBitsTo(logger, tempApps[i])
 	}

@@ -24,9 +24,28 @@ testing.
 1. Build the binary with `go build`
 1. Run the following to start a test
 ```bash
-./cedar -n 10 [-domain <your-app-domain>]
+./cedar -n 10 [-domain <your-app-domain>] [-manifest <path to application manifest file>] [-app-prefix <app-name-prefix>]
 ```
-Where n is the number of desired apps that will be seeded. Domain if not specified will default to `bosh-lite.com`.
+Where n is the number of desired apps that will be seeded.
+Domain if not specified will default to `bosh-lite.com`.
+Manifest if not specified uses `assets/stress-app/manifest.yml`.
+`AppPrefix` if not specified will default to `light`
+
+A sample `manifest.yml` is below:
+
+```yaml
+---
+applications:
+
+- instances: 1
+  buildpack: binary_buildpack
+  command: ./stress-app
+  memory: 32M
+  disk_quota: 100M
+  env:
+    LOGS_PER_SECOND: 0
+    REQUEST_PER_SECOND: 1
+```
 
 ### To Run Stress Tests
 
