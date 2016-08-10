@@ -24,9 +24,11 @@ testing.
 1. Build the binary with `go build`
 1. Run the following to start a test
 ```bash
-./cedar -n 2 [-domain <your-app-domain>]
+./cedar -n 2 -k 2 [-domain <your-app-domain>]
 ```
-Where n is the number of desired batches of apps described in the [performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications) that will be seeded.
+Where n is the number of desired batches of apps described in the 
+[performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications) 
+that will be seeded and k is max number of cf operations in flight.
 Domain if not specified will default to `bosh-lite.com`.
 
 ### To Run Stress Tests

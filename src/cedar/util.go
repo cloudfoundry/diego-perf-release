@@ -23,9 +23,10 @@ type cfApp struct {
 	failedCurls    int
 	domain         string
 	maxFailedCurls int
+	manifestPath   string
 }
 
-func newCfApp(logger lager.Logger, appName string, domain string, maxFailedCurls int) *cfApp {
+func newCfApp(logger lager.Logger, appName string, domain string, maxFailedCurls int, manifestPath string) *cfApp {
 	logger = logger.Session("creating-new-cf-app", lager.Data{"app": appName})
 	logger.Debug("started")
 	defer logger.Debug("completed")
@@ -41,6 +42,7 @@ func newCfApp(logger lager.Logger, appName string, domain string, maxFailedCurls
 		appRoute:       *appUrl,
 		domain:         domain,
 		maxFailedCurls: maxFailedCurls,
+		manifestPath:   manifestPath,
 	}
 }
 
@@ -70,39 +72,27 @@ func cf(logger lager.Logger, args ...string) error {
 	return nil
 }
 
-func (a *cfApp) Push(logger lager.Logger, manifestPath string) {
+func (a *cfApp) Push(logger lager.Logger) error {
 	// push dummy app
 	logger = logger.Session("push", lager.Data{"app": a.appName})
 	logger.Info("started")
 	defer logger.Info("completed")
 
-	err := cf(logger, "push", a.appName, "-p", "assets/temp-app", "-f", manifestPath, "--no-start")
+	err := cf(logger, "push", a.appName, "-p", "assets/temp-app", "-f", a.manifestPath, "--no-start")
 	if err != nil {
-		logger.Error("failed-to-push", err)
-		os.Exit(1)
+		return err
 	}
 	endpointToHit := fmt.Sprintf(AppRoutePattern, a.appName, a.domain)
 	err = cf(logger, "set-env", a.appName, "ENDPOINT_TO_HIT", endpointToHit)
 	if err != nil {
 		logger.Error("failed-to-set-env", err)
-		os.Exit(1)
+		return err
 	}
 	logger.Debug("successful-set-env", lager.Data{"ENDPOINT_TO_HIT": endpointToHit})
+	return nil
 }
 
-func (a *cfApp) CopyBitsTo(logger lager.Logger, target *cfApp) {
-	logger = logger.Session("copy-source", lager.Data{"from": a.appName, "to": target.appName})
-	logger.Info("started")
-	defer logger.Info("completed")
-
-	err := cf(logger, "copy-source", a.appName, target.appName, "--no-restart")
-	if err != nil {
-		logger.Error("failed-to-copy-source", err)
-		os.Exit(1)
-	}
-}
-
-func (a *cfApp) Start(logger lager.Logger) {
+func (a *cfApp) Start(logger lager.Logger) error {
 	logger = logger.Session("start", lager.Data{"app": a.appName})
 	logger.Info("started")
 	defer logger.Info("completed")
@@ -110,15 +100,16 @@ func (a *cfApp) Start(logger lager.Logger) {
 	err := cf(logger, "start", a.appName)
 	if err != nil {
 		logger.Error("failed-to-start", err)
-		os.Exit(1)
+		return err
 	}
 
 	response, err := a.Curl("")
 	if err != nil {
 		logger.Error("failed-curling-app", err)
-		os.Exit(1)
+		return err
 	}
 	logger.Debug("successful-response", lager.Data{"response": response})
+	return nil
 }
 
 func (a *cfApp) Curl(endpoint string) (string, error) {
