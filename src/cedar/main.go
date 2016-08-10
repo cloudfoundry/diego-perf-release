@@ -69,7 +69,7 @@ func pushApps(logger lager.Logger) {
 		appDefinition{manifestPath: "assets/manifests/manifest-crashing.yml", appCount: 2, appNamePrefix: "crashing"},
 	}
 
-	for i := 1; i <= *numBatches; i++ {
+	for i := 0; i < *numBatches; i++ {
 		for _, appDef := range appTypes {
 			for j := 0; j < appDef.appCount; j++ {
 				tempApp := newCfApp(logger, fmt.Sprintf("%s-batch%d-%d", appDef.appNamePrefix, i, j), *domain, *maxPollingErrors)
