@@ -15,7 +15,7 @@ var (
 	domain           = flag.String("domain", "bosh-lite.com", "app domain")
 	maxPollingErrors = flag.Int("max-polling-errors", 1, "max number of curl failures")
 	manifestPath     = flag.String("manifest", "assets/stress-app/manifest.yml", "path of the manifest file")
-	appPrefix        = flag.String("app-prefix", "light", "name of the copied applications")
+	appPrefix        = flag.String("app-prefix", "light", "name prefix of the applications")
 )
 
 var masterApp *cfApp
@@ -31,10 +31,8 @@ func main() {
 	defer logger.Info("exited")
 
 	compileApp(logger)
-	pushMaster(logger)
-	pushTargetApps(logger)
-	copySeedBits(logger)
-	startSeedApps(logger)
+	pushApps(logger)
+	startApps(logger)
 }
 
 func compileApp(logger lager.Logger) {
@@ -45,7 +43,7 @@ func compileApp(logger lager.Logger) {
 	os.Setenv("GOOS", "linux")
 	os.Setenv("GOARCH", "amd64")
 	os.Chdir("assets/stress-app")
-	buildCmd := exec.Command("go", "build", ".")
+	buildCmd := exec.Command("go", "build", "-o", "../temp-app/stress-app")
 	err := buildCmd.Run()
 	if err != nil {
 		logger.Error("failed-building-test-app", err)
@@ -54,37 +52,19 @@ func compileApp(logger lager.Logger) {
 	os.Chdir("../..")
 }
 
-func pushMaster(logger lager.Logger) {
-	logger = logger.Session("pushing-master-apps")
-	logger.Info("started")
-	defer logger.Info("completed")
-
-	masterApp = newCfApp(logger, fmt.Sprintf("%s-master", *appPrefix), *domain, *maxPollingErrors)
-	masterApp.PushMaster(logger, *manifestPath)
-}
-
-func pushTargetApps(logger lager.Logger) {
-	logger = logger.Session("pushing-target-apps")
+func pushApps(logger lager.Logger) {
+	logger = logger.Session("pushing-apps")
 	logger.Info("started")
 	defer logger.Info("completed")
 
 	for i := 0; i < *numCopies; i++ {
-		tempApp := newCfApp(logger, fmt.Sprintf("%s-copy-%d", *appPrefix, i), *domain, *maxPollingErrors)
+		tempApp := newCfApp(logger, fmt.Sprintf("%s-%d", *appPrefix, i), *domain, *maxPollingErrors)
 		tempApp.Push(logger, *manifestPath)
 		tempApps = append(tempApps, tempApp)
 	}
 }
 
-func copySeedBits(logger lager.Logger) {
-	logger = logger.Session("copying-seed-bits")
-	logger.Info("started")
-	defer logger.Info("completed")
-	for i := 0; i < *numCopies; i++ {
-		masterApp.CopyBitsTo(logger, tempApps[i])
-	}
-}
-
-func startSeedApps(logger lager.Logger) {
+func startApps(logger lager.Logger) {
 	logger = logger.Session("starting-apps")
 	logger.Info("started")
 	defer logger.Info("completed")
