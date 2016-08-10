@@ -16,7 +16,6 @@ var (
 	maxInFlight      = flag.Int("k", 1, "max number of cf operations in flight")
 	domain           = flag.String("domain", "bosh-lite.com", "app domain")
 	maxPollingErrors = flag.Int("max-polling-errors", 1, "max number of curl failures")
-	cfRetries        = flag.Int("cf-retries", 3, "maximum number of tries for a single cf command")
 )
 
 var tempApps []*cfApp
@@ -79,7 +78,6 @@ func pushApps(logger lager.Logger) {
 	logger.Info("started")
 	defer logger.Info("complete")
 
-	errChan := make(chan error, *numBatches*totalAppCount)
 	wg := sync.WaitGroup{}
 	rateLimiter := make(chan struct{}, *maxInFlight)
 
@@ -97,26 +95,14 @@ func pushApps(logger lager.Logger) {
 						wg.Done()
 					}()
 
-					var err error
-					for tries := *cfRetries; tries > 0; tries-- {
-
-						err = tempApp.Push(logger)
-
-						if err != nil {
-							logger.Error("failed-pushing-app", err, lager.Data{"attempt": *cfRetries - tries + 1})
-							continue
-						}
-
-						tempApps = append(tempApps, tempApp)
-						logger.Debug("successful-push")
-						break
-					}
+					err := tempApp.Push(logger)
 
 					if err != nil {
-						logger.Error("giving-up-pushing-app", nil)
-						errChan <- err
+						logger.Error("failed-pushing-app", err)
 						os.Exit(1)
 					}
+
+					tempApps = append(tempApps, tempApp)
 				}()
 			}
 		}
@@ -129,7 +115,6 @@ func startApps(logger lager.Logger) {
 	logger.Info("started")
 	defer logger.Info("completed")
 
-	errChan := make(chan error, *numBatches*totalAppCount)
 	wg := sync.WaitGroup{}
 	rateLimiter := make(chan struct{}, *maxInFlight)
 
@@ -145,23 +130,10 @@ func startApps(logger lager.Logger) {
 				wg.Done()
 			}()
 
-			var err error
-			for tries := *cfRetries; tries > 0; tries-- {
-
-				err = appToPush.Start(logger)
-
-				if err != nil {
-					logger.Error("failed-starting-app", err, lager.Data{"attempt": *cfRetries - tries + 1})
-					continue
-				}
-
-				logger.Debug("successful-start")
-				break
-			}
+			err := appToPush.Start(logger)
 
 			if err != nil {
-				logger.Error("giving-up-starting-app", nil)
-				errChan <- err
+				logger.Error("failed-starting-app", err)
 				os.Exit(1)
 			}
 		}()
