@@ -24,12 +24,47 @@ testing.
 1. Build the binary with `go build`
 1. Run the following to start a test
 ```bash
-./cedar -n 2 -k 2 [-domain <your-app-domain>]
+./cedar -n 2 -k 2 [-config <path-to-config.json-file>] [-domain <your-app-domain>]
 ```
-Where n is the number of desired batches of apps described in the 
-[performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications) 
-that will be seeded and k is max number of cf operations in flight.
+Where n is the number of desired batches of apps described by the config file that will be seeded and k is the max number of cf operations in flight.
+Config if not specified will default to `./config.json` which reflects the mix of apps specified in the [performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications).
 Domain if not specified will default to `bosh-lite.com`.
+
+Example `config.json` file:
+```json
+[
+  {
+    "manifestPath": "assets/manifests/manifest-light.yml",
+    "appCount": 9,
+    "appNamePrefix": "light"
+  },
+  {
+    "manifestPath": "assets/manifests/manifest-light-group.yml",
+    "appCount": 1,
+    "appNamePrefix": "light-group"
+  },
+  {
+    "manifestPath": "assets/manifests/manifest-medium.yml",
+    "appCount": 7,
+    "appNamePrefix": "medium"
+  },
+  {
+    "manifestPath": "assets/manifests/manifest-medium-group.yml",
+    "appCount": 1,
+    "appNamePrefix": "medium-group"
+  },
+  {
+    "manifestPath": "assets/manifests/manifest-heavy.yml",
+    "appCount": 1,
+    "appNamePrefix": "heavy"
+  },
+  {
+    "manifestPath": "assets/manifests/manifest-crashing.yml",
+    "appCount": 2,
+    "appNamePrefix": "crashing"
+  }
+]
+```
 
 ### To Run Stress Tests
 
