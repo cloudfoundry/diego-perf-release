@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"math"
 	"os"
 	"sync"
 
@@ -18,6 +19,7 @@ var (
 	maxPollingErrors = flag.Int("max-polling-errors", 1, "max number of curl failures")
 	configFile       = flag.String("config", "config.json", "path to cedar config file")
 	appPayload       = flag.String("payload", "assets/temp-app", "directory containing the stress-app payload to push")
+	tolerance        = flag.Float64("tolerance", 1.0, "fractional failure tolerance")
 )
 
 type appDefinition struct {
@@ -28,6 +30,8 @@ type appDefinition struct {
 
 var seedApps []*cfApp
 var appTypes *[]appDefinition
+var totalAppCount int
+var maxFailures int
 
 func main() {
 	cflager.AddFlags(flag.CommandLine)
@@ -40,12 +44,22 @@ func main() {
 
 	readConfig(logger)
 
-	pushApps(logger)
-	startApps(logger)
+	totalAppCount = 0
+
+	for _, appDef := range *appTypes {
+		totalAppCount += appDef.AppCount
+	}
+	totalAppCount = *numBatches * totalAppCount
+	maxFailures = int(math.Ceil(*tolerance * float64(totalAppCount)))
+
+	errChan := make(chan error, maxFailures)
+
+	pushApps(logger, errChan)
+	startApps(logger, errChan)
 }
 
-func pushApps(logger lager.Logger) {
-	logger = logger.Session("pushing-apps")
+func pushApps(logger lager.Logger, errChan chan error) {
+	logger = logger.Session("pushing-apps", lager.Data{"max-failures": maxFailures})
 	logger.Info("started")
 	defer logger.Info("complete")
 
@@ -69,8 +83,13 @@ func pushApps(logger lager.Logger) {
 					err := seedApp.Push(logger, *appPayload)
 
 					if err != nil {
-						logger.Error("failed-pushing-app", err)
-						os.Exit(1)
+						logger.Error("failed-pushing-app", err, lager.Data{"total-errors": len(errChan)})
+						select {
+						case errChan <- err:
+						default:
+							logger.Error("failure-tolerance-reached", nil)
+							os.Exit(1)
+						}
 					}
 
 					seedApps = append(seedApps, seedApp)
@@ -81,8 +100,8 @@ func pushApps(logger lager.Logger) {
 	wg.Wait()
 }
 
-func startApps(logger lager.Logger) {
-	logger = logger.Session("starting-apps")
+func startApps(logger lager.Logger, errChan chan error) {
+	logger = logger.Session("starting-apps", lager.Data{"max-failures": maxFailures})
 	logger.Info("started")
 	defer logger.Info("completed")
 
