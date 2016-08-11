@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"os/exec"
 	"sync"
 
 	"code.cloudfoundry.org/cflager"
@@ -18,6 +17,7 @@ var (
 	domain           = flag.String("domain", "bosh-lite.com", "app domain")
 	maxPollingErrors = flag.Int("max-polling-errors", 1, "max number of curl failures")
 	configFile       = flag.String("config", "config.json", "path to cedar config file")
+	appPayload       = flag.String("payload", "assets/temp-app", "directory containing the stress-app payload to push")
 )
 
 type appDefinition struct {
@@ -26,7 +26,7 @@ type appDefinition struct {
 	AppCount      int    `json:"appCount"`
 }
 
-var tempApps []*cfApp
+var seedApps []*cfApp
 var appTypes *[]appDefinition
 
 func main() {
@@ -40,26 +40,8 @@ func main() {
 
 	readConfig(logger)
 
-	compileApp(logger)
 	pushApps(logger)
 	startApps(logger)
-}
-
-func compileApp(logger lager.Logger) {
-	logger = logger.Session("precompiling-test-app-binary")
-	logger.Info("started")
-	defer logger.Info("completed")
-
-	os.Setenv("GOOS", "linux")
-	os.Setenv("GOARCH", "amd64")
-	os.Chdir("assets/stress-app")
-	buildCmd := exec.Command("go", "build", "-o", "../temp-app/stress-app")
-	err := buildCmd.Run()
-	if err != nil {
-		logger.Error("failed-building-test-app", err)
-		os.Exit(1)
-	}
-	os.Chdir("../..")
 }
 
 func pushApps(logger lager.Logger) {
@@ -73,7 +55,7 @@ func pushApps(logger lager.Logger) {
 	for i := 0; i < *numBatches; i++ {
 		for _, appDef := range *appTypes {
 			for j := 0; j < appDef.AppCount; j++ {
-				tempApp := newCfApp(logger, fmt.Sprintf("%s-batch%d-%d", appDef.AppNamePrefix, i, j), *domain, *maxPollingErrors, appDef.ManifestPath)
+				seedApp := newCfApp(logger, fmt.Sprintf("%s-batch%d-%d", appDef.AppNamePrefix, i, j), *domain, *maxPollingErrors, appDef.ManifestPath)
 
 				wg.Add(1)
 
@@ -84,14 +66,14 @@ func pushApps(logger lager.Logger) {
 						wg.Done()
 					}()
 
-					err := tempApp.Push(logger)
+					err := seedApp.Push(logger, *appPayload)
 
 					if err != nil {
 						logger.Error("failed-pushing-app", err)
 						os.Exit(1)
 					}
 
-					tempApps = append(tempApps, tempApp)
+					seedApps = append(seedApps, seedApp)
 				}()
 			}
 		}
@@ -107,8 +89,8 @@ func startApps(logger lager.Logger) {
 	wg := sync.WaitGroup{}
 	rateLimiter := make(chan struct{}, *maxInFlight)
 
-	for i := 0; i < len(tempApps); i++ {
-		appToPush := tempApps[i]
+	for i := 0; i < len(seedApps); i++ {
+		appToPush := seedApps[i]
 
 		wg.Add(1)
 
