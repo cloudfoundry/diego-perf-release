@@ -26,12 +26,15 @@ testing.
 1. Build the cedar binary with `go build`
 1. Run the following to start a test
 ```bash
-./cedar -n 2 -k 2 [-config <path-to-config.json-file>] [-payload <path-to-dir-containing-app-payload>] [-domain <your-app-domain>]
+./cedar -n 2 -k 2 [-config <path-to-config.json-file>] [-payload <path-to-dir-containing-app-payload>] [-domain <your-app-domain>] [-tolerance <tolerance-factor>]
 ```
-Where n is the number of desired batches of apps described by the config file that will be seeded and k is the max number of cf operations in flight.
-Config if not specified will default to `./config.json` which reflects the mix of apps specified in the [performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications).
-Payload if not specified will default to `assets/temp-app` which should only contain the precompiled binary generated above.
-Domain if not specified will default to `bosh-lite.com`.
+Where:
+- `n` is the number of desired batches of apps described by the config file that will be seeded
+- `k` is the max number of cf operations in flight.
+- `config` if not specified will default to `./config.json` which reflects the mix of apps specified in the [performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications).
+- `payload` if not specified will default to `assets/temp-app` which should only contain the precompiled binary generated above.
+- `domain` if not specified will default to `bosh-lite.com`.
+- `tolerance` is the ratio of apps the are allowed to fail, before Cedar terminates. If not specified, it defaults to `1.0`, i.e. deploys all apps and does not fail due to app failures.
 
 Example `config.json` file:
 ```json
