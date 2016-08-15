@@ -20,7 +20,7 @@ testing.
 
 1. Make sure you're targeting a default diego enabled backend CF deployment
 1. Target a chosen org and space
-1. cd src/cedar/assets/stress-app
+1. cd src/code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app
 1. Precompile the stress-app to `assets/temp-app` by running `GOOS=linux GOARCH=amd64 go build -o ../temp-app/stress-app`
 1. cd back to src/cedar
 1. Build the cedar binary with `go build`
