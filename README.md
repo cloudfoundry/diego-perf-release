@@ -35,6 +35,8 @@ Where:
 - `payload` if not specified will default to `assets/temp-app` which should only contain the precompiled binary generated above.
 - `domain` if not specified will default to `bosh-lite.com`.
 - `tolerance` is the ratio of apps the are allowed to fail, before Cedar terminates. If not specified, it defaults to `1.0`, i.e. deploys all apps and does not fail due to app failures.
+- `timeout` is the amount of time to wait for each cf command to succeed when pushing and starting apps. The default value is `30 seconds`
+- `output` is the path to the file where the report output from `cedar` will be stored. The default location is `$PWD/output.json`
 
 Example `config.json` file:
 ```json
