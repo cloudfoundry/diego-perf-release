@@ -1,31 +1,40 @@
 ---
-name: pusher
+name: cedar
 templates:
-  pusher_ctl.erb: bin/pusher_ctl
+  cedar_script.erb: bin/cedar_script
 
 packages:
 - cf-cli
-- pusher
+- cedar
 - pid_utils
 
 properties:
-  pusher.api:
+  cedar.api:
     description: The Elastic Runtime API endpoint URL
-  pusher.apps_domain:
+  cedar.domain:
     description: The Elastic Runtime Appliction Domain
-  pusher.admin_user:
+  cedar.admin_user:
     description: The Elastic Runtime API admin user
-  pusher.admin_password:
+  cedar.admin_password:
     description: The Elastic Runtime API admin user's password
-  pusher.skip_ssl_validation:
+  cedar.skip_ssl_validation:
     description: Toggles cli verification of the Elastic Runtime API SSL certificate
     default: false
-  pusher.concurrent_pushes_per_cell:
+  cedar.max_in_flight:
     description: Number of parallel pushes to run per cell
-    default: 2
-  pusher.batches:
+    default: 10
+  cedar.batches:
     description: Number of push batches to run
     default: 10
-  pusher.log_level:
+  cedar.max_polling_errors:
+    description: Max number of curl failures for the deployed apps
+    default: 1
+  cedar.tolerance:
+    description: Fractional failure tolerance
+    default: 1.0
+  cedar.timeout:
+    description: Timeout in seconds allowed for cf operations
+    default: 30
+  cedar.log_level:
     description: Lager log level
     default: debug

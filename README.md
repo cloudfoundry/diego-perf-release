@@ -16,7 +16,16 @@ testing.
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
 1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
-### To Run Cedar (single pusher stress test)
+### Run Cedar from a Bosh deployment (single pusher stress test)
+
+1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest
+1. Do a `bosh ssh` into the `diego-perf` deployment
+1. Run `sudo su` and navigate to `/var/vcap/packages/cedar`
+1. Run `/var/vcap/jobs/cedar/bin/cedar_script`
+1. Find the logs in `/var/vcap/sys/log/cedar/cedar.stdout.log`
+1. (Optional) edit the script under `/var/vcap/jobs/cedar/bin/cedar_script` to pass in custom flags to cedar
+
+### Run Cedar locally (single pusher stress test)
 
 1. Make sure you're targeting a default diego enabled backend CF deployment
 1. Target a chosen org and space

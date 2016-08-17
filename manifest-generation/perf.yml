@@ -9,7 +9,7 @@ releases:
 
 compilation:
   workers: 6
-  network: perf
+  network: cedar
   reuse_compilation_vms: true
   cloud_properties: (( iaas_settings.compilation_cloud_properties ))
 
@@ -21,76 +21,37 @@ update:
   serial: false
 
 networks:
-  - name: perf
+  - name: cedar
     type: manual
-    subnets: (( iaas_settings.subnet_configs.perf.subnets ))
+    subnets: (( iaas_settings.subnet_configs.cedar.subnets ))
 
 resource_pools:
-  - name: pusher
-    network: perf
+  - name: cedar
+    network: cedar
     stemcell: (( iaas_settings.stemcell ))
-    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.pusher.cloud_properties ))
-
-  - name: orchestrator
-    network: perf
-    stemcell: (( iaas_settings.stemcell ))
-    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.orchestrator.cloud_properties ))
+    cloud_properties: (( iaas_settings.resource_pool_cloud_properties.cedar.cloud_properties ))
 
 jobs:
-  - name: pusher
+  - name: cedar
     templates:
-      - name: consul_agent
-        release: cf
-      - name: pusher
+      - name: cedar
         release: diego-perf-release
-    instances: (( instance_count_overrides.pusher.instances || 1 ))
-    persistent_disk: 4096
-    resource_pool: pusher
-    networks:
-      - name: perf
-  - name: orchestrator
-    templates:
-      - name: orchestrator
-        release: diego-perf-release
-      - name: consul_agent
-        release: cf
       - name: fezzik
         release: diego-perf-release
-    instances: 1
-    resource_pool: orchestrator
+    instances: (( instance_count_overrides.cedar.instances || 1 ))
+    persistent_disk: 4096
+    resource_pool: cedar
     networks:
-      - name: perf
-        static_ips: (( static_ips(0) ))
-    properties:
-      orchestrator:
-        listen_addr: (( jobs.orchestrator.networks.perf.static_ips.[0] ":2702" ))
+      - name: cedar
 
 properties:
-  consul:
-    agent:
-      domain: (( config_from_cf.consul.domain ))
-      log_level: (( config_from_cf.consul.log_level ))
-      servers:
-        lan: (( config_from_cf.consul.lan_servers ))
-    ca_cert: (( config_from_cf.consul.ca_cert ))
-    agent_cert: (( config_from_cf.consul.agent_cert ))
-    agent_key: (( config_from_cf.consul.agent_key ))
-    encrypt_keys: (( config_from_cf.consul.encrypt_keys ))
-    require_ssl: (( config_from_cf.consul.require_ssl ))
-    server_cert: (( config_from_cf.consul.server_cert ))
-    server_key: (( config_from_cf.consul.server_key ))
-
-  pusher:
+  cedar:
     api: (( config_from_cf.cc.api_uri ))
-    apps_domain: (( config_from_cf.first_app_domain ))
+    domain: (( config_from_cf.first_app_domain ))
     admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
     admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
     skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
-    batch_size: (( property_overrides.pusher.batch_size || nil ))
-    batches: (( property_overrides.pusher.batches || nil ))
-
-  orchestrator:
-    pusher_instances: (( instance_count_overrides.pusher.instances || 1 ))
+    batches: (( property_overrides.cedar.batches || nil ))
 
   fezzik:
     bbs:

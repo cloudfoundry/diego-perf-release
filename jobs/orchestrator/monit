@@ -1,5 +1,0 @@
-check process orchestrator
-  with pidfile /var/vcap/sys/run/orchestrator/orchestrator.pid
-  start program "/var/vcap/jobs/orchestrator/bin/orchestrator_ctl start"
-  stop program "/var/vcap/jobs/orchestrator/bin/orchestrator_ctl stop"
-  group vcap

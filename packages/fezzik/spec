@@ -17,7 +17,6 @@ files:
   - code.cloudfoundry.org/fezzik/*.go # gosub
   - code.cloudfoundry.org/fezzik/matryoshka/*.go # gosub
   - code.cloudfoundry.org/fezzik/viz/*.go # gosub
-  - code.cloudfoundry.org/gunk/workpool/*.go # gosub
   - code.cloudfoundry.org/lager/*.go # gosub
   - code.cloudfoundry.org/locket/*.go # gosub
   - code.cloudfoundry.org/runtimeschema/metric/*.go # gosub

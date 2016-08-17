@@ -1,0 +1,15 @@
+---
+name: cedar
+
+dependencies:
+  - golang
+
+files:
+  - code.cloudfoundry.org/diego-stress-tests/cedar/assets/**/*
+  - code.cloudfoundry.org/diego-stress-tests/cedar/*.json
+
+  - code.cloudfoundry.org/cflager/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/cedar/*.go # gosub
+  - code.cloudfoundry.org/lager/*.go # gosub
+  - github.com/satori/go.uuid/*.go # gosub
+  - golang.org/x/net/context/*.go # gosub

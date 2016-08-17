@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -x
+set -e
+
+export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+export PATH=/var/vcap/packages/cedar/bin:$PATH
+
+LOG_DIR=/var/vcap/sys/log/cedar
+
+APP_BIN_PATH=/var/vcap/packages/cedar/assets/temp-app
+CONFIG_PATH=/var/vcap/packages/cedar/config.json
+
+cedar -api=<%= p("cedar.api") %> \
+  -admin-user=<%= p("cedar.admin_user") %> \
+  -admin-password=<%= p("cedar.admin_password") %> \
+  -skip-ssl-validation=<%= p("cedar.skip_ssl_validation") %> \
+  -space="space-<%= spec.name %>-<%= spec.index %>-<%= spec.id %>" \
+  -n=<%= p("cedar.batches") %> \
+  -k=<%= p("cedar.max_in_flight")%> \
+  -domain=<%= p("cedar.domain") %> \
+  -payload=$APP_BIN_PATH \
+  -config=$CONFIG_PATH \
+  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+  -tolerance=<%= p("cedar.tolerance")%> \
+  -timeout=<%= p("cedar.timeout")%> \
+  2> >(tee -a $LOG_DIR/cedar.stderr.log | logger -p user.error -t vcap.cedar) \
+  1> >(tee -a $LOG_DIR/cedar.stdout.log | logger -p user.info -t vcap.cedar) &
+
+
