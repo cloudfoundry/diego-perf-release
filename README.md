@@ -31,21 +31,51 @@ testing.
 1. Target a chosen org and space
 1. cd src/code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app
 1. Precompile the stress-app to `assets/temp-app` by running `GOOS=linux GOARCH=amd64 go build -o ../temp-app/stress-app`
-1. cd back to src/cedar
+1. cd back to src/code.cloudfoundry.org/diego-stress-tests/cedar
 1. Build the cedar binary with `go build`
 1. Run the following to start a test
 ```bash
-./cedar -n 2 -k 2 [-config <path-to-config.json-file>] [-payload <path-to-dir-containing-app-payload>] [-domain <your-app-domain>] [-tolerance <tolerance-factor>]
+./cedar -n <number_of_batches> -k <max_in_flight> -domain <your-app-domain> [-tolerance <tolerance-factor>]
 ```
-Where:
-- `n` is the number of desired batches of apps described by the config file that will be seeded
-- `k` is the max number of cf operations in flight.
-- `config` if not specified will default to `./config.json` which reflects the mix of apps specified in the [performance protocol](https://github.com/cloudfoundry/diego-dev-notes/blob/master/proposals/measuring_performance.md#experiment-2-launching-and-running-many-cf-applications).
-- `payload` if not specified will default to `assets/temp-app` which should only contain the precompiled binary generated above.
-- `domain` if not specified will default to `bosh-lite.com`.
-- `tolerance` is the ratio of apps the are allowed to fail, before Cedar terminates. If not specified, it defaults to `1.0`, i.e. deploys all apps and does not fail due to app failures.
-- `timeout` is the amount of time to wait for each cf command to succeed when pushing and starting apps. The default value is `30 seconds`
-- `output` is the path to the file where the report output from `cedar` will be stored. The default location is `$PWD/output.json`
+
+Cedar has the following usage options:
+
+```
+  -admin-password string
+    uaa admin password (default "admin")
+  -admin-user string
+    uaa admin user (default "admin")
+  -api string
+    location of the cloud controller api (default "api.bosh-lite.com")
+  -config string
+    path to cedar config file (default "config.json")
+  -domain string
+    app domain (default "bosh-lite.com")
+  -k int
+    max number of cf operations in flight (default 1)
+  -logLevel string
+    log level: debug, info, error or fatal (default "info")
+  -max-polling-errors int
+    max number of curl failures (default 1)
+  -n int
+    number of batches to seed (default 1)
+  -org string
+    organization to use for stress tests (default "stress-tests-org")
+  -output string
+    path to cedar metric results file (default "output.json")
+  -payload string
+    directory containing the stress-app payload to push (default "assets/temp-app")
+  -prefix string
+    the naming prefix for cedar generated apps (default "cedarapp")
+  -skip-ssl-validation
+    skip ssl validation (default true)
+  -space string
+    space to use for stress tests (default "stress-tests-space")
+  -timeout int
+    time allowed for a push or start operation , in seconds (default 30)
+  -tolerance float
+    fractional failure tolerance (default 1)
+```
 
 Example `config.json` file:
 ```json
@@ -82,6 +112,30 @@ Example `config.json` file:
   }
 ]
 ```
+
+### Using perfchug to convert logs to InfluxDB records
+
+`perfchug` is a tool that ships with the diego-perf-release. It takes log
+output from cedar, among other things, processes it, and converts it into
+something that can be fed into InfluxDB.
+
+A `perfchug` binary is provided as part of the BOSH release. To use `perfchug`
+locally:
+
+1. `cd <path>/diego-perf-release/src/code.cloudfoundry.org/diego-stress-tests/perfchug`
+1. Run `go build` to build the executable
+1. Move the executable into your `$PATH`
+
+Once it's in your path, you can use `perfchug` by piping log output into it.
+For example:
+
+```
+./cedar -n 2 -k 2 | perfchug
+```
+
+will spit influxdb-friendly metrics to stdout.
+
+
 
 ### To Run Stress Tests
 
