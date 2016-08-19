@@ -9,17 +9,8 @@ packages:
 - pid_utils
 
 properties:
-  cedar.api:
-    description: The Elastic Runtime API endpoint URL
   cedar.domain:
     description: The Elastic Runtime Appliction Domain
-  cedar.admin_user:
-    description: The Elastic Runtime API admin user
-  cedar.admin_password:
-    description: The Elastic Runtime API admin user's password
-  cedar.skip_ssl_validation:
-    description: Toggles cli verification of the Elastic Runtime API SSL certificate
-    default: false
   cedar.max_in_flight:
     description: Number of parallel pushes to run per cell
     default: 10
