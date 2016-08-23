@@ -16,34 +16,41 @@ testing.
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
 1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
-### Run Cedar from a Bosh deployment (single pusher stress test)
+### Run Cedar from a BOSH deployment (single pusher stress test)
 
-1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest
-1. Do a `bosh ssh` into the `diego-perf` deployment
-1. Run `sudo su`
-1. Follow the steps below:
+Run the example below to push apps on a BOSH-Lite installation:
 
-```bash
-/var/vcap/packages/tmux/bin/tmux
+1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest.
+1. Run `bosh ssh` to SSH to the `cedar` VM in the `cf-warden-diego-perf` deployment.
+1. Run `sudo su`.
+1. Run the following commands to run `cedar` from a tmux session:
+  ```bash
+  # start a new tmux session
+  /var/vcap/packages/tmux/bin/tmux new -s cedar
 
-export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+  # put the CF CLI on the PATH
+  export PATH=/var/vcap/packages/cf-cli/bin:$PATH
 
-cf api api.bosh-lite.com --skip-ssl-validation
-cf auth admin admin
-cf t -o o -s cedar
+  # target CF and create an org and space for the apps
+  cf api api.bosh-lite.com --skip-ssl-validation
+  cf auth admin admin
+  cf create-org o
+  cf create-space cedar -o o
+  cf target -o o -s cedar
 
-cd /var/vcap/packages/cedar
+  cd /var/vcap/packages/cedar
 
-/var/vcap/packages/cedar/bin/cedar \
-  -n 1 \
-  -k 2 \
-  -payload /var/vcap/packages/cedar/assets/temp-app \
-  -config /var/vcap/packages/cedar/config.json \
-  -domain bosh-lite.com \
-  &
+  /var/vcap/packages/cedar/bin/cedar \
+    -n 1 \
+    -k 2 \
+    -payload /var/vcap/packages/cedar/assets/temp-app \
+    -config /var/vcap/packages/cedar/config.json \
+    -domain bosh-lite.com \
+    &
+  ```
+1. To detach from the `tmux` session, send `Ctrl-b d`.
+1. To reattach to the `tmux` session, run `/var/vcap/packages/tmux/bin/tmux attach -t cedar`.
 
-/var/vcap/packages/tmux/bin/tmux a
-```
 ### Run Cedar locally (single pusher stress test)
 
 1. Target a default diego enabled CF deployment
