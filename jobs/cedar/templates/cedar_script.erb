@@ -7,16 +7,12 @@ export PATH=/var/vcap/packages/cf-cli/bin:$PATH
 export PATH=/var/vcap/packages/cedar/bin:$PATH
 
 LOG_DIR=/var/vcap/sys/log/cedar
+mkdir -p $LOG_DIR
 
 APP_BIN_PATH=/var/vcap/packages/cedar/assets/temp-app
 CONFIG_PATH=/var/vcap/packages/cedar/config.json
 
-cedar -api=<%= p("cedar.api") %> \
-  -admin-user=<%= p("cedar.admin_user") %> \
-  -admin-password=<%= p("cedar.admin_password") %> \
-  -skip-ssl-validation=<%= p("cedar.skip_ssl_validation") %> \
-  -space="space-<%= spec.name %>-<%= spec.index %>-<%= spec.id %>" \
-  -n=<%= p("cedar.batches") %> \
+cedar -n=<%= p("cedar.batches") %> \
   -k=<%= p("cedar.max_in_flight")%> \
   -domain=<%= p("cedar.domain") %> \
   -payload=$APP_BIN_PATH \

@@ -16,18 +16,44 @@ testing.
 1. Run `/var/vcap/jobs/caddy/bin/1_fezzik` multiple times.
 1. Output is stored in `/var/vcap/packages/fezzik/src/github.com/cloudfoundry-incubator/fezzik/reports.json`
 
-### Run Cedar from a Bosh deployment (single pusher stress test)
+### Run Cedar from a BOSH deployment (single pusher stress test)
 
-1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest
-1. Do a `bosh ssh` into the `diego-perf` deployment
-1. Run `sudo su` and navigate to `/var/vcap/packages/cedar`
-1. Run `/var/vcap/jobs/cedar/bin/cedar_script`
-1. Find the logs in `/var/vcap/sys/log/cedar/cedar.stdout.log`
-1. (Optional) edit the script under `/var/vcap/jobs/cedar/bin/cedar_script` to pass in custom flags to cedar
+Run the example below to push apps on a BOSH-Lite installation:
+
+1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest.
+1. Run `bosh ssh` to SSH to the `cedar` VM in the `cf-warden-diego-perf` deployment.
+1. Run `sudo su`.
+1. Run the following commands to run `cedar` from a tmux session:
+  ```bash
+  # start a new tmux session
+  /var/vcap/packages/tmux/bin/tmux new -s cedar
+
+  # put the CF CLI on the PATH
+  export PATH=/var/vcap/packages/cf-cli/bin:$PATH
+
+  # target CF and create an org and space for the apps
+  cf api api.bosh-lite.com --skip-ssl-validation
+  cf auth admin admin
+  cf create-org o
+  cf create-space cedar -o o
+  cf target -o o -s cedar
+
+  cd /var/vcap/packages/cedar
+
+  /var/vcap/packages/cedar/bin/cedar \
+    -n 1 \
+    -k 2 \
+    -payload /var/vcap/packages/cedar/assets/temp-app \
+    -config /var/vcap/packages/cedar/config.json \
+    -domain bosh-lite.com \
+    &
+  ```
+1. To detach from the `tmux` session, send `Ctrl-b d`.
+1. To reattach to the `tmux` session, run `/var/vcap/packages/tmux/bin/tmux attach -t cedar`.
 
 ### Run Cedar locally (single pusher stress test)
 
-1. Make sure you're targeting a default diego enabled backend CF deployment
+1. Target a default diego enabled CF deployment
 1. Target a chosen org and space
 1. cd src/code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app
 1. Precompile the stress-app to `assets/temp-app` by running `GOOS=linux GOARCH=amd64 go build -o ../temp-app/stress-app`
@@ -41,40 +67,26 @@ testing.
 Cedar has the following usage options:
 
 ```
-  -admin-password string
-    uaa admin password (default "admin")
-  -admin-user string
-    uaa admin user (default "admin")
-  -api string
-    location of the cloud controller api (default "api.bosh-lite.com")
-  -config string
-    path to cedar config file (default "config.json")
-  -domain string
-    app domain (default "bosh-lite.com")
-  -k int
-    max number of cf operations in flight (default 1)
-  -logLevel string
-    log level: debug, info, error or fatal (default "info")
-  -max-polling-errors int
-    max number of curl failures (default 1)
-  -n int
-    number of batches to seed (default 1)
-  -org string
-    organization to use for stress tests (default "stress-tests-org")
-  -output string
-    path to cedar metric results file (default "output.json")
-  -payload string
-    directory containing the stress-app payload to push (default "assets/temp-app")
-  -prefix string
-    the naming prefix for cedar generated apps (default "cedarapp")
-  -skip-ssl-validation
-    skip ssl validation (default true)
-  -space string
-    space to use for stress tests (default "stress-tests-space")
-  -timeout int
-    time allowed for a push or start operation , in seconds (default 30)
-  -tolerance float
-    fractional failure tolerance (default 1)
+-config string
+  path to cedar config file (default "config.json")
+-domain string
+  app domain (default "bosh-lite.com")
+-k int
+  max number of cf operations in flight (default 1)
+-max-polling-errors int
+  max number of curl failures (default 1)
+-n int
+  number of batches to seed (default 1)
+-output string
+  path to cedar metric results file (default "output.json")
+-payload string
+  directory containing the stress-app payload to push (default "assets/temp-app")
+-prefix string
+  the naming prefix for cedar generated apps (default "cedarapp")
+-timeout int
+  time allowed for a push or start operation , in seconds (default 30)
+-tolerance float
+  fractional failure tolerance (default 1)
 ```
 
 Example `config.json` file:
