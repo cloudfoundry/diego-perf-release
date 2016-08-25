@@ -1,0 +1,13 @@
+---
+name: arborist
+
+dependencies:
+  - golang
+
+files:
+  - code.cloudfoundry.org/cflager/*.go # gosub
+  - code.cloudfoundry.org/clock/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/arborist/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/arborist/parser/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/arborist/watcher/*.go # gosub
+  - code.cloudfoundry.org/lager/*.go # gosub
