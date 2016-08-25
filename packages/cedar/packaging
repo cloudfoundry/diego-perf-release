@@ -13,6 +13,7 @@ cp -a \
   $BOSH_INSTALL_TARGET/assets
 
 cp -a $GOPATH/src/code.cloudfoundry.org/diego-stress-tests/cedar/config.json $BOSH_INSTALL_TARGET
+cp -a $GOPATH/src/code.cloudfoundry.org/diego-stress-tests/cedar/config_baseline.json $BOSH_INSTALL_TARGET
 
 pushd $BOSH_INSTALL_TARGET/assets/stress-app
   go build -o $BOSH_INSTALL_TARGET/assets/temp-app/stress-app
