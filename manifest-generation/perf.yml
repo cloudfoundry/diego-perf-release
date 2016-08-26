@@ -34,6 +34,8 @@ resource_pools:
 jobs:
   - name: cedar
     templates:
+      - name: arborist
+        release: diego-perf-release
       - name: cedar
         release: diego-perf-release
       - name: fezzik
