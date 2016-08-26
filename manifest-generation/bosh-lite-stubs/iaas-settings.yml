@@ -3,7 +3,7 @@ iaas_settings:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
     version: latest
   subnet_configs:
-    - name: cedar
+    - name: perf
       type: manual
       subnets:
       - cloud_properties: {}
