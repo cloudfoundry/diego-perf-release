@@ -12,9 +12,9 @@ files:
   - code.cloudfoundry.org/diego-stress-tests/cedar/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/cli/*.go # gosub
-  - code.cloudfoundry.org/diego-stress-tests/cedar/cli/clifakes/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/cedar/cli/fakes/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/config/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/seeder/*.go # gosub
-  - code.cloudfoundry.org/diego-stress-tests/cedar/seeder/seederfakes/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/cedar/seeder/fakes/*.go # gosub
   - code.cloudfoundry.org/lager/*.go # gosub
   - golang.org/x/net/context/*.go # gosub
