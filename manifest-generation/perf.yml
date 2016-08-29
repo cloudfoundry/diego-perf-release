@@ -42,9 +42,9 @@ jobs:
         release: diego-perf-release
     instances: (( instance_count_overrides.cedar.instances || 1 ))
     persistent_disk: 4096
-    resource_pool: cedar
+    resource_pool: perf
     networks:
-      - name: cedar
+      - name: perf
 
 properties:
   cedar:
