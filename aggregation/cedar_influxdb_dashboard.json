@@ -1352,256 +1352,256 @@
       "height": "250px",
       "panels": [
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "Missing and Extra Actual LRPs",
           "error": false,
-          "fill": 1,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 27,
+          "targets": [
+            {
+              "refId": "A",
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "measurement": "cf.bbs.LRPsExtra"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "B",
+              "measurement": "cf.bbs.LRPsMissing"
+            }
+          ],
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
+          "xaxis": {
+            "show": true
+          },
           "grid": {
             "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 27,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
           },
           "lines": true,
+          "fill": 1,
           "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
           "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 6,
+          "pointradius": 5,
+          "bars": false,
           "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
           "steppedLine": false,
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.bbs.LRPsExtra",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.bbs.LRPsMissing",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
           "timeFrom": null,
           "timeShift": null,
-          "title": "Missing and Extra Actual LRPs",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "show": true
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         },
         {
-          "aliasColors": {},
-          "bars": true,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "Cell: Remaining Containers",
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 28,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 6,
-          "stack": true,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 28,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "1m"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "ip"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.rep.CapacityRemainingContainers",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.rep.CapacityRemainingContainers"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Cell: Remaining Containers",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": false,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
       "title": "New row"
@@ -2127,125 +2127,125 @@
           ]
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "System Load",
           "error": false,
-          "fill": 1,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 34,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 3,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 34,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "job"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "index"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bosh-hm-forwarder.system.load.1m",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bosh-hm-forwarder.system.load.1m"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "System Load",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
-      "showTitle": true,
-      "title": "Bosh CPU"
+      "title": "Bosh CPU",
+      "showTitle": true
     },
     {
       "collapse": false,
@@ -2370,603 +2370,603 @@
           ]
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "System Mem (KB)",
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 35,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 4,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 35,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "job"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "index"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bosh-hm-forwarder.system.mem.kb",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bosh-hm-forwarder.system.mem.kb"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "System Mem (KB)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "System Swap (KB)",
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 36,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 4,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 36,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "job"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "index"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bosh-hm-forwarder.system.swap.kb",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bosh-hm-forwarder.system.swap.kb"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "System Swap (KB)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
-      "showTitle": true,
-      "title": "Bosh Memory"
+      "title": "Bosh Memory",
+      "showTitle": true
     },
     {
-      "collapse": false,
-      "editable": true,
+      "title": "Bosh Disk",
       "height": "250px",
+      "editable": true,
+      "collapse": false,
       "panels": [
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
-          "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 37,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 4,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "job"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.bosh-hm-forwarder.system.disk.ephemeral.percent",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Disk: Ephemeral %",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "show": true
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 38,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 4,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 37,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "job"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "index"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bosh-hm-forwarder.system.disk.persistent.percent",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bosh-hm-forwarder.system.disk.ephemeral.percent"
             }
           ],
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
+          "xaxis": {
+            "show": true
+          },
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
           "timeFrom": null,
           "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
           "title": "Disk: Persistent %",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "show": true
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 39,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 4,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 38,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
-                  "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
+                  "type": "tag",
                   "params": [
                     "job"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "tag",
+                  "params": [
+                    "index"
+                  ]
+                },
+                {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bosh-hm-forwarder.system.disk.system.percent",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bosh-hm-forwarder.system.disk.persistent.percent"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Disk: System %",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false,
+            "hideEmpty": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Disk: System %",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 39,
+          "targets": [
+            {
+              "refId": "A",
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "index"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "job"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "measurement": "cf.bosh-hm-forwarder.system.disk.system.percent"
+            }
+          ],
+          "datasource": "$Source",
+          "renderer": "flot",
           "yaxes": [
             {
-              "format": "short",
               "label": null,
+              "show": true,
               "logBase": 1,
-              "max": null,
               "min": null,
-              "show": true
+              "max": null,
+              "format": "short"
             },
             {
-              "format": "short",
               "label": null,
+              "show": true,
               "logBase": 1,
-              "max": null,
               "min": null,
-              "show": true
+              "max": null,
+              "format": "short"
             }
-          ]
+          ],
+          "xaxis": {
+            "show": true
+          },
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
-      "showTitle": true,
-      "title": "Bosh Disk"
+      "showTitle": true
     },
     {
       "collapse": false,
@@ -3079,145 +3079,145 @@
           ]
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "Convergence Duration",
           "error": false,
-          "fill": 1,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 25,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 6,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 25,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bbs.ConvergenceLRPDuration",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.bbs.ConvergenceLRPDuration"
             },
             {
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.bbs.ConvergenceTaskDuration",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "refId": "B",
+              "measurement": "cf.bbs.ConvergenceTaskDuration"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Convergence Duration",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "ns",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "ns",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
       "showTitle": true,
@@ -3341,2721 +3341,2759 @@
           ]
         },
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "Route Counts",
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 33,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 6,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 33,
           "targets": [
             {
+              "refId": "A",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "ip"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.route_emitter.RoutesTotal",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "measurement": "cf.route_emitter.RoutesTotal"
             },
             {
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "ip"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
-              "measurement": "cf.gorouter.total_routes",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
+              "refId": "B",
+              "measurement": "cf.gorouter.total_routes"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Route Counts",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
       "title": "New row"
     },
     {
-      "collapse": false,
-      "editable": true,
+      "title": "Golang Stats",
       "height": "250px",
+      "editable": true,
+      "collapse": false,
       "panels": [
         {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
+          "title": "Golang: Go Routines",
           "error": false,
-          "fill": 0,
-          "grid": {
-            "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
-            "threshold2": null,
-            "threshold2Color": "rgba(234, 112, 112, 0.22)"
-          },
-          "id": 30,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
           "span": 3,
-          "stack": false,
-          "steppedLine": false,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 30,
           "targets": [
             {
-              "alias": "",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "ip"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "A",
               "measurement": "cf.auctioneer.numGoRoutines",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.auctioneer.memoryStats.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": false,
-              "refId": "A",
+              "alias": "auctioneer {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "B",
               "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.bbs.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "B",
+              "alias": "bbs"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "C",
               "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.cc_uploader.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "C",
+              "alias": "cc_uploader {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "D",
               "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.file_server.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "D",
+              "alias": "file_server {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "E",
               "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.garden-linux.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "E",
+              "alias": "garden-linux {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "F",
               "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.nsync_bulker.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "F",
+              "alias": "nsync_bulker {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "G",
               "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.nsync_listener.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "G",
+              "alias": "nsync_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "H",
               "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.rep.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "H",
+              "alias": "rep {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "I",
               "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.route_emitter.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "I",
+              "alias": "route_emitter {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "J",
               "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.ssh-proxy.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "J",
+              "alias": "ssh-proxy {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "K",
               "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.stager.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "K",
+              "alias": "stager {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "L",
               "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.tps_listener.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "L",
+              "alias": "tps_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "M",
               "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.tps_watcher.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "M",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
+              "alias": "tps_watcher {ip: $tag_ip}"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Golang: Go Routines",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
-          "error": false,
-          "fill": 0,
           "grid": {
             "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "id": 29,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
           "lines": true,
+          "fill": 0,
           "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
           "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 3,
+          "pointradius": 5,
+          "bars": false,
           "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
           "steppedLine": false,
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.auctioneer.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "D",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "E",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "F",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "G",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "H",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "I",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "J",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "K",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "L",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "refId": "M",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
           "timeFrom": null,
           "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
           "title": "Golang: Allocated Stack (Bytes)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
+          "error": false,
+          "span": 3,
+          "editable": true,
           "type": "graph",
+          "isNew": true,
+          "id": 29,
+          "targets": [
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "A",
+              "measurement": "cf.auctioneer.memoryStats.numBytesAllocatedStack",
+              "alias": "auctioneer {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "B",
+              "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
+              "alias": "bbs {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "C",
+              "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
+              "alias": "cc_uploader {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "D",
+              "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
+              "alias": "file_server {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "E",
+              "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
+              "alias": "garden-linux {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "F",
+              "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
+              "alias": "nsync_bulker {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "G",
+              "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
+              "alias": "nsync_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "H",
+              "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
+              "alias": "rep {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "I",
+              "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
+              "alias": "route_emitter {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "J",
+              "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
+              "alias": "ssh-proxy {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "K",
+              "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
+              "alias": "stager {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "L",
+              "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
+              "alias": "tps_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "M",
+              "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
+              "alias": "tps_watcher {ip: $tag_ip}"
+            }
+          ],
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "bytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "bytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
-          "error": false,
-          "fill": 0,
           "grid": {
             "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "id": 31,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
           "lines": true,
+          "fill": 0,
           "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
           "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 3,
+          "pointradius": 5,
+          "bars": false,
           "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
           "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Golang: GC Pause (NS)",
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "graph",
+          "isNew": true,
+          "id": 31,
           "targets": [
             {
-              "alias": "auctioneer {ip: $tag_ip}",
+              "policy": "default",
               "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
               "groupBy": [
                 {
+                  "type": "time",
                   "params": [
                     "$interval"
-                  ],
-                  "type": "time"
+                  ]
                 },
                 {
+                  "type": "tag",
                   "params": [
                     "ip"
-                  ],
-                  "type": "tag"
+                  ]
                 },
                 {
+                  "type": "fill",
                   "params": [
                     "null"
-                  ],
-                  "type": "fill"
+                  ]
                 }
               ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "A",
               "measurement": "cf.auctioneer.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.auctioneer.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "A",
+              "alias": "auctioneer {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "bbs {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "B",
               "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.bbs.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "B",
+              "alias": "bbs {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "cc_uploader {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "C",
               "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.cc_uploader.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "C",
+              "alias": "cc_uploader {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "file_server: {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "D",
               "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.file_server.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "D",
+              "alias": "file_server: {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "garden-linux {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "E",
               "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.garden-linux.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "E",
+              "alias": "garden-linux {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "nsync_bulker {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "F",
               "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.nsync_bulker.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "F",
+              "alias": "nsync_bulker {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "nsync_listener {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "G",
               "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.nsync_listener.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "G",
+              "alias": "nsync_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "rep {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "H",
               "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.rep.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "H",
+              "alias": "rep {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "route_emitter {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "I",
               "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.route_emitter.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "I",
+              "alias": "route_emitter {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "ssh-proxy {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "J",
               "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.ssh-proxy.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "J",
+              "alias": "ssh-proxy {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "stager {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "K",
               "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.stager.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "K",
+              "alias": "stager {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "tps_listener {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "L",
               "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.tps_listener.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "L",
+              "alias": "tps_listener {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
               "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "mean",
+                    "params": []
                   }
                 ]
               ],
-              "tags": []
-            },
-            {
-              "alias": "tps_watcher {ip: $tag_ip}",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
+              "refId": "M",
               "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
               "query": "SELECT mean(\"value\") FROM \"cf.tps_watcher.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
               "rawQuery": true,
-              "refId": "M",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
+              "alias": "tps_watcher {ip: $tag_ip}"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Golang: GC Pause (NS)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "ns",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "ns",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "$Source",
-          "editable": true,
-          "error": false,
-          "fill": 0,
           "grid": {
             "threshold1": null,
-            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "id": 32,
-          "isNew": true,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
           "lines": true,
+          "fill": 0,
           "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
           "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 3,
+          "pointradius": 5,
+          "bars": false,
           "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
           "steppedLine": false,
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.auctioneer.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.auctioneer.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.bbs.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "B",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.cc_uploader.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.file_server.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "D",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.garden-linux.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "E",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.nsync_bulker.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "F",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.nsync_listener.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "G",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.rep.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "H",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.route_emitter.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "I",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.ssh-proxy.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "J",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.stager.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "K",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.tps_listener.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "L",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "ip"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
-              "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.tps_watcher.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
-              "rawQuery": true,
-              "refId": "M",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
           "timeFrom": null,
           "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
           "title": "Golang: Allocated Heap (Bytes)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
-          },
+          "error": false,
+          "span": 3,
+          "editable": true,
           "type": "graph",
+          "isNew": true,
+          "id": 32,
+          "targets": [
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "A",
+              "measurement": "cf.auctioneer.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.auctioneer.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "rawQuery": true,
+              "alias": "auctioneer {ip: $tag_ip}"
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "B",
+              "measurement": "cf.bbs.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.bbs.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "bbs {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "C",
+              "measurement": "cf.cc_uploader.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.cc_uploader.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "cc_uploader {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "D",
+              "measurement": "cf.file_server.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.file_server.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "file_server {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "E",
+              "measurement": "cf.garden-linux.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.garden-linux.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "garden-linux {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "F",
+              "measurement": "cf.nsync_bulker.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.nsync_bulker.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "nsync_bulker {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "G",
+              "measurement": "cf.nsync_listener.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.nsync_listener.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "nsync_listener {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "H",
+              "measurement": "cf.rep.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.rep.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "rep {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "I",
+              "measurement": "cf.route_emitter.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.route_emitter.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "route_emitter {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "J",
+              "measurement": "cf.ssh-proxy.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.ssh-proxy.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "ssh-proxy {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "K",
+              "measurement": "cf.stager.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.stager.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "stager {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "L",
+              "measurement": "cf.tps_listener.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.tps_listener.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "tps_listener {ip: $tag_ip}",
+              "rawQuery": true
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [],
+              "groupBy": [
+                {
+                  "type": "time",
+                  "params": [
+                    "$interval"
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "params": [
+                    "ip"
+                  ]
+                },
+                {
+                  "type": "fill",
+                  "params": [
+                    "null"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "mean",
+                    "params": []
+                  }
+                ]
+              ],
+              "refId": "M",
+              "measurement": "cf.tps_watcher.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.tps_watcher.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time($interval), \"ip\" fill(null)",
+              "alias": "tps_watcher {ip: $tag_ip}",
+              "rawQuery": true
+            }
+          ],
+          "datasource": "$Source",
+          "renderer": "flot",
+          "yaxes": [
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            },
+            {
+              "label": null,
+              "show": true,
+              "logBase": 1,
+              "min": null,
+              "max": null,
+              "format": "short"
+            }
+          ],
           "xaxis": {
             "show": true
           },
-          "yaxes": [
-            {
-              "format": "bytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "bytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
+          "grid": {
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true,
+            "msResolution": false
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
         }
       ],
-      "showTitle": true,
-      "title": "Golang Stats"
+      "showTitle": true
     }
   ],
   "time": {
@@ -6111,6 +6149,17 @@
         "refresh": 1,
         "regex": "",
         "type": "datasource"
+      }
+    ]
+  },
+  "annotations": {
+    "list": [
+      {
+        "datasource": "$Source",
+        "enable": false,
+        "iconColor": "rgb(5, 0, 255)",
+        "name": "BBS Master Elections",
+        "query": "SELECT value FROM \"cf.bbs.BBSMasterElected\" WHERE $timeFilter"
       }
     ]
   },
