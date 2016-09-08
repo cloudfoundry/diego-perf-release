@@ -1185,14 +1185,14 @@
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "sum"
+                    "type": "min",
+                    "params": []
                   }
                 ]
               ],
@@ -1298,14 +1298,14 @@
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "sum"
+                    "type": "min",
+                    "params": []
                   }
                 ]
               ],
@@ -1318,7 +1318,7 @@
           "tooltip": {
             "msResolution": false,
             "shared": true,
-            "value_type": "cumulative"
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -1326,7 +1326,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "mbytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1536,7 +1536,7 @@
                     ]
                   },
                   {
-                    "type": "mean",
+                    "type": "min",
                     "params": []
                   }
                 ]
@@ -1546,6 +1546,18 @@
           ],
           "datasource": "$Source",
           "renderer": "flot",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Cell: Remaining Containers",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "show": true
+          },
           "yaxes": [
             {
               "label": null,
@@ -6153,15 +6165,7 @@
     ]
   },
   "annotations": {
-    "list": [
-      {
-        "datasource": "$Source",
-        "enable": false,
-        "iconColor": "rgb(5, 0, 255)",
-        "name": "BBS Master Elections",
-        "query": "SELECT value FROM \"cf.bbs.BBSMasterElected\" WHERE $timeFilter"
-      }
-    ]
+    "list": []
   },
   "refresh": "1m",
   "schemaVersion": 12,
