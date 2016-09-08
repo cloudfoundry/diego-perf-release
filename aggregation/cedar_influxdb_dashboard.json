@@ -2469,7 +2469,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "kbytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -3202,7 +3202,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "ns",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -4766,7 +4766,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "bytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -5420,7 +5420,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "ns",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -6074,7 +6074,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "bytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -6157,6 +6157,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 2,
+  "version": 7,
   "links": []
 }
