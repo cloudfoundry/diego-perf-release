@@ -225,7 +225,7 @@
                   {
                     "type": "derivative",
                     "params": [
-                      "10s"
+                      "1s"
                     ]
                   }
                 ]
@@ -235,7 +235,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "BBS Req/10sec",
+          "title": "BBS Req/s",
           "tooltip": {
             "msResolution": true,
             "shared": true,
@@ -1769,7 +1769,7 @@
                   {
                     "type": "derivative",
                     "params": [
-                      "10s"
+                      "1s"
                     ]
                   }
                 ]
@@ -1812,7 +1812,7 @@
                   {
                     "type": "derivative",
                     "params": [
-                      "10s"
+                      "1s"
                     ]
                   }
                 ]
@@ -1822,7 +1822,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Metron -> Doppler loss/10s",
+          "title": "Metron -> Doppler loss/s",
           "tooltip": {
             "msResolution": false,
             "shared": true,
