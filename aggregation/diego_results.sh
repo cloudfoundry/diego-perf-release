@@ -5,7 +5,7 @@
 #     1. You have port 8086 forwarded on the local machine to influxdb
 #        ssh -L 8086:PRIVATE_IP_OF_INFLUX:8086 -i keypair -N vcap@HOST_OF_BOSH_DIRECTOR &
 #     2. You are bosh targeted to the right environment
-#     3. You ran `bosh deployment` to set the deployment manifest to perf.yml
+#     3. You ran `bosh deployment` to set the deployment manifest to diego.yml
 # ### Generating percentiles for a given batch
 #     1. Create batch-<start>-<end> directory (.e.g batch-1-20, batch-21-40, etc.)
 #     2. From that directory run `/path/to/cedar_results.sh <min> <max> output.json`
@@ -46,15 +46,16 @@ function getlogs {
 }
 
 function download_logs {
+    jobName=$1
     vms=$(bosh vms)
-    for job in $(echo "$vms" | grep cedar | awk '{print $2}'); do
+    for job in $(echo "$vms" | grep $jobName | awk '{print $2}'); do
         getlogs $job
     done
 }
 
 function generate_metrics {
     find . -name *.gz -exec gunzip {} \;
-    veritas chug-unify -min $min -max $max **/**/*.log* > unified.log
+    veritas chug-unify -min $min -max $max brain*/auctioneer*/*.log* > unified.log
     cat unified.log | perfchug > influx-input.log
 }
 
@@ -83,18 +84,19 @@ function query_metrics {
     where_clause="where time > ${min}000000000 AND time < ${max}000000000"
 
     # pending story https://www.pivotaltracker.com/story/show/126888429
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarSuccessfulStart\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarSuccessfulStart\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarFailedStart\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarFailedStart\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarSuccessfulPush\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarSuccessfulPush\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarFailedPush\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarFailedPush\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles from \"cf.diego.RequestLatency\" $where_clause"
+    query_influxdb "cfperf" "select count(value) from \"cf.diego.RequestLatency\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles from \"cf.diego.AuctionScheduleDuration\" $where_clause"
+    query_influxdb "cfperf" "select count(value) from \"cf.diego.AuctionScheduleDuration\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles from \"cf.diego.TaskLifecycle\" $where_clause"
+    query_influxdb "cfperf" "select count(value) from \"cf.diego.TaskLifecycle\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles from \"cf.diego.LRPLifecycle\" $where_clause"
+    query_influxdb "cfperf" "select count(value) from \"cf.diego.LRPLifecycle\" $where_clause"
 
 }
 
-download_logs
+download_logs brain
+download_logs database
 generate_metrics
 load_metrics
 query_metrics
