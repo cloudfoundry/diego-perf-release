@@ -134,3 +134,7 @@
 	path = src/code.cloudfoundry.org/gunk
 	url = https://github.com/cloudfoundry/gunk
 	branch = master
+[submodule "src/github.com/glycerine/rbuf"]
+	path = src/github.com/glycerine/rbuf
+	url = https://github.com/glycerine/rbuf
+	branch = master
