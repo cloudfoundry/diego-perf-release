@@ -14,7 +14,9 @@ files:
   - code.cloudfoundry.org/diego-stress-tests/cedar/cli/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/cli/fakes/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/config/*.go # gosub
+  - code.cloudfoundry.org/diego-stress-tests/cedar/config/fakes/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/seeder/*.go # gosub
   - code.cloudfoundry.org/diego-stress-tests/cedar/seeder/fakes/*.go # gosub
   - code.cloudfoundry.org/lager/*.go # gosub
+  - github.com/glycerine/rbuf/*.go # gosub
   - golang.org/x/net/context/*.go # gosub
