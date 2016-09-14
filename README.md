@@ -207,20 +207,22 @@ Worth noting that there is a tmux binary installed on the errand VM at
 1. Run `sudo su`.
 1. Run `cd /var/vcap/jobs/cedar/bin`
 1. Run the following command to run the experiment:
+  ```
+  ./cedar_script
+  ```
+  
+  To delete the spaces from a previous experiment before running the experiment, run the script as:
+  ```
+  DELETE_SPACES="yes" ./cedar_script
+  ```
+  
+  To resume the experiment from the `n`th batch (where `n` is a number from `1` to `10`), add `n` as an argument to the script. For example, to run from the fourth batch:
+  ```
+  ./cedar_script 4
+  ```
+  
+  To see the results of the experiment, see the file `/var/vcap/data/sys/log/arborist/arborist-output.json`.
 
-```
-./cedar_script
-```
-
-To delete the spaces from a previous experiment before running the experiment, run the script as:
-```
-DELETE_SPACES="yes" ./cedar_script
-```
-
-To resume the experiment from the `n`th batch (where `n` is a number from `1` to `10`), add `n` as an argument to the script. For example, to run from the fourth batch:
-```
-./cedar_script 4
-```
 
 ## Development
 
