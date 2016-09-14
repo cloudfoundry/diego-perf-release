@@ -9,7 +9,7 @@ releases:
 
 compilation:
   workers: 6
-  network: cedar
+  network: perf
   reuse_compilation_vms: true
   cloud_properties: (( iaas_settings.compilation_cloud_properties ))
 
@@ -21,13 +21,13 @@ update:
   serial: false
 
 networks:
-  - name: cedar
+  - name: perf
     type: manual
-    subnets: (( iaas_settings.subnet_configs.cedar.subnets ))
+    subnets: (( iaas_settings.subnet_configs.perf.subnets ))
 
 resource_pools:
-  - name: cedar
-    network: cedar
+  - name: perf
+    network: perf
     stemcell: (( iaas_settings.stemcell ))
     cloud_properties: (( iaas_settings.resource_pool_cloud_properties.cedar.cloud_properties ))
 
@@ -42,9 +42,9 @@ jobs:
         release: diego-perf-release
     instances: (( instance_count_overrides.cedar.instances || 1 ))
     persistent_disk: 4096
-    resource_pool: cedar
+    resource_pool: perf
     networks:
-      - name: cedar
+      - name: perf
 
 properties:
   cedar:
@@ -53,7 +53,7 @@ properties:
     admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
     admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
     skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
-    batches: (( property_overrides.cedar.batches || nil ))
+    batches: (( property_overrides.perf.batches || nil ))
 
   fezzik:
     bbs:
