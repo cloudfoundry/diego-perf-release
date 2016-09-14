@@ -2,7 +2,13 @@
 property_overrides:
   cc_admin_user: admin
   cc_admin_password: admin
+  org: perf_org
   num_cells: 1
   cedar:
     batches: 1
-    batch_size: 2
+    max_in_flight: 40
+    timeout: 10m
+    tolerance: 0.05
+  arborist:
+    duration: 5m
+    request_interval: 1m

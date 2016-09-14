@@ -20,3 +20,4 @@ files:
   - code.cloudfoundry.org/lager/*.go # gosub
   - github.com/glycerine/rbuf/*.go # gosub
   - golang.org/x/net/context/*.go # gosub
+  - github.com/glycerine/rbuf/*.go # gosub

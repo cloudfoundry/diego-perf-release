@@ -9,20 +9,34 @@ packages:
 - pid_utils
 
 properties:
+  cedar.admin_password:
+    description: The password for cf user with org-manager privileges
+  cedar.admin_user:
+    description: The cf user with org-manager privileges
+  cedar.api:
+    description: The target cf api for cedar
   cedar.domain:
     description: The Elastic Runtime Appliction Domain
   cedar.max_in_flight:
     description: Number of parallel pushes to run per cell
-    default: 10
-  cedar.batches:
-    description: Number of push batches to run
-    default: 10
+    default: 40
   cedar.max_polling_errors:
     description: Max number of curl failures for the deployed apps
     default: 1
-  cedar.tolerance:
-    description: Fractional failure tolerance
-    default: 1.0
+  cedar.num_batches:
+    description: Number of push batches to run
+    default: 10
+  cedar.org:
+    description: The organization for deploying cedar cf apps
   cedar.timeout:
     description: Timeout in seconds allowed for cf operations
-    default: 30
+    default: 3m
+  cedar.tolerance:
+    description: Fractional failure tolerance
+    default: 0.05
+  arborist.duration:
+    description: The maximum amount of time to test cedar deployed apps with arborist
+    default: 10m
+  arborist.request_interval:
+    description: The interval time in seconds at which to make requests to each individual app
+    default: 1m

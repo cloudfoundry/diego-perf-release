@@ -9,18 +9,118 @@ export PATH=/var/vcap/packages/cedar/bin:$PATH
 LOG_DIR=/var/vcap/sys/log/cedar
 mkdir -p $LOG_DIR
 
+DATA_DIR=/var/vcap/data/cedar
+mkdir -p $DATA_DIR
+
 APP_BIN_PATH=/var/vcap/packages/cedar/assets/temp-app
 CONFIG_PATH=/var/vcap/packages/cedar/config.json
 
-cedar -n=<%= p("cedar.batches") %> \
-  -k=<%= p("cedar.max_in_flight")%> \
-  -domain=<%= p("cedar.domain") %> \
-  -payload=$APP_BIN_PATH \
-  -config=$CONFIG_PATH \
-  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
-  -tolerance=<%= p("cedar.tolerance")%> \
-  -timeout=<%= p("cedar.timeout")%> \
-  2> >(tee -a $LOG_DIR/cedar.stderr.log | logger -p user.error -t vcap.cedar) \
-  1> >(tee -a $LOG_DIR/cedar.stdout.log | logger -p user.info -t vcap.cedar) &
+cf api <%= p("cedar.api") %> --skip-ssl-validation
+cf auth <%= p("cedar.admin_user") %> <%= p("cedar.admin_password") %>
 
+cf create-org <%= p("cedar.org") %>
+cf update-quota default -m 100000G
+cf t -o <%= p("cedar.org") %>
 
+CEDAR_SPACE_PREFIX=cedar-space
+ARBORIST_SPACE=arborist-space
+CEDAR_APP_PREFIX=cedar-app
+ARBORIST_APP_PREFIX=cedar-arborist
+
+delete_all_spaces() {
+		for counter in {1..10}; do
+				space=$CEDAR_SPACE_PREFIX-$counter
+				echo "# deleting space $space"
+				cf delete-space -f $space
+		done
+		cf delete-space -f $ARBORIST_SPACE
+}
+
+create_spaces() {
+		for i in {1..10}; do
+			cf create-space -o <%= p("cedar.org") %> $CEDAR_SPACE_PREFIX-$i
+		done
+		cf create-space -o <%= p("cedar.org") %> $ARBORIST_SPACE
+}
+
+seed_apps() {
+	 	space_counter=1
+		if [ ! -z "$1" ]; then
+			 space_counter=$1
+		fi
+
+		for counter in `seq $space_counter 10`; do
+
+				space=$CEDAR_SPACE_PREFIX-$counter
+
+				echo "# Running cedar with space: $space"
+				cf t -s $space
+				min=$(date -u +'%s')
+				/var/vcap/packages/cedar/bin/cedar \
+					-n=<%= p("cedar.num_batches") %> \
+					-k=<%= p("cedar.max_in_flight")%> \
+					-domain=<%= p("cedar.domain") %> \
+					-payload=$APP_BIN_PATH \
+					-config=$CONFIG_PATH \
+					-max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+					-tolerance=<%= p("cedar.tolerance")%> \
+					-timeout=<%= p("cedar.timeout")%> \
+					-prefix=$CEDAR_APP_PREFIX-$counter \
+					2> >(tee -a $LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
+					1> >(tee -a $LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
+				max=$(date -u +'%s')
+				echo $min > $DATA_DIR/min-$counter.json
+				echo $max > $DATA_DIR/max-$counter.json
+				echo "# cedar exited with $? exit code. min=$min, max=$max"
+		done
+		echo "# Completed seeding the apps"
+}
+
+deploy_arborist_apps() {
+   cf t -s $ARBORIST_SPACE
+
+   /var/vcap/packages/cedar/bin/cedar \
+		  -n=1 \
+		  -k=<%= p("cedar.max_in_flight")%> \
+		  -domain=<%= p("cedar.domain") %> \
+		  -payload=/var/vcap/packages/cedar/assets/temp-app \
+		  -config=/var/vcap/packages/cedar/config_extra.json \
+		  -timeout=<%= p("cedar.timeout")%> \
+		  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+		  -prefix=$ARBORIST_APP_PREFIX \
+		  -output=/var/vcap/sys/log/cedar/cedar-arborist-output.json \
+		  1> /var/vcap/sys/log/cedar/cedar.stdout-arborist.log \
+		  2> /var/vcap/sys/log/cedar/cedar.stderr-arborist.log
+}
+
+run_arborist_batch() {
+   /var/vcap/packages/arborist/bin/arborist \
+		  -app-file=/var/vcap/sys/log/cedar/cedar-arborist-output.json \
+		  -result-file=/var/vcap/sys/log/arborist/arborist-output.json \
+		  -domain=<%= p("cedar.domain") %> \
+		  -duration=<%= p("arborist.duration") %> \
+		  -request-interval=<%= p("arborist.request_interval") %> \
+		  1> /var/vcap/sys/log/arborist/arborist.stdout.log \
+		  2> /var/vcap/sys/log/arborist/arborist.stderr.log
+}
+
+if [ "x$DELETE_SPACES" = 'xyes' ]; then
+ echo "Going to delete all spaces"
+ delete_all_spaces
+fi
+
+pushd /var/vcap/packages/cedar > /dev/null
+  echo "Preparing spaces for cedar run"
+  create_spaces
+
+  echo "Seeding apps and starting from batch $1"
+  seed_apps $1
+
+  echo "Deploying apps for arborist health checks"
+  deploy_arborist_apps
+
+  echo "Running arborist health checks"
+  run_arborist_batch
+popd > /dev/null
+
+echo "# done"

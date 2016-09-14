@@ -52,8 +52,14 @@ properties:
     domain: (( config_from_cf.first_app_domain ))
     admin_user: (( property_overrides.cc_admin_user || "" )) # unfortunate hack because we can't get it from cf manifest
     admin_password: (( property_overrides.cc_admin_password || "" ))  # unfortunate hack because we can't get it from cf manifest
-    skip_ssl_validation: (( config_from_cf.skip_ssl_validation ))
-    batches: (( property_overrides.perf.batches || nil ))
+    org: (( property_overrides.org ))
+    num_batches: (( property_overrides.cedar.num_batches || nil ))
+    max_in_flight: (( property_overrides.cedar.max_in_flight || nil ))
+    tolerance:  (( property_overrides.cedar.tolerance || nil ))
+    timeout:  (( property_overrides.cedar.timeout || nil ))
+  arborist:
+    duration:  (( property_overrides.arborist.duration || nil ))
+    request_interval:  (( property_overrides.arborist.request_interval || nil ))
 
   fezzik:
     bbs:
