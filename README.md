@@ -200,6 +200,28 @@ the errand VM.
 Worth noting that there is a tmux binary installed on the errand VM at
 `/var/vcap/packages/tmux/bin/tmux` if you need fancier shelling.
 
+### To Run CF-based experiment
+
+1. Run `./scripts/generate-deployment-manifest` and deploy `diego-perf-release` with the generated manifest. If on bosh-lite, you can use `./scripts/generate-bosh-lite-manifests`.
+1. Run `bosh ssh` to SSH to the cedar VM in the diego-perf deployment.
+1. Run `sudo su`.
+1. Run `cd /var/vcap/jobs/cedar/bin`
+1. Run the following command to run the experiment:
+
+```
+./cedar_script
+```
+
+To delete the spaces from a previous experiment before running the experiment, run the script as:
+```
+DELETE_SPACES="yes" ./cedar_script
+```
+
+To resume the experiment from the `n`th batch (where `n` is a number from `1` to `10`), add `n` as an argument to the script. For example, to run from the fourth batch:
+```
+./cedar_script 4
+```
+
 ## Development
 
 These tests are meant to be run against a real IaaS. However, it is possible to
