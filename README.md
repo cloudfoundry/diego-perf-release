@@ -101,27 +101,57 @@ The script will also output the min/max timestamp for each batch in
 `/var/vcap/data/cedar/min-<batch#>.json` and
 `/var/vcap/data/cedar/max-<batch#>.json`.
 
-### Using perfchug to convert logs to InfluxDB records
+### Aggregating results
+
+#### Preprocessing using perfchug
 
 `perfchug` is a tool that ships with the diego-perf-release. It takes log
-output from cedar, among other things, processes it, and converts it into
+output from cedar, bbs and auctioneer, processes it, and converts it into
 something that can be fed into InfluxDB.
 
-A `perfchug` binary is provided as part of the BOSH release. To use `perfchug`
-locally:
+To use `perfchug` locally:
 
 1. `cd <path>/diego-perf-release/src/code.cloudfoundry.org/diego-stress-tests/perfchug`
-1. Run `go build` to build the executable
+1. Run `go install` to build the executable
 1. Move the executable into your `$PATH`
 
 Once it's in your path, you can use `perfchug` by piping log output into it.
+
 For example:
 
 ```
-./cedar -n 2 -k 2 | perfchug
+cat /var/vcap/sys/log/cedar/cedar.stdout.log | perfchug
 ```
 
 will spit influxdb-friendly metrics to stdout.
+
+#### Automatic downloading and aggregation
+
+We wrote a script to automate the entire process. The script does the following:
+
+1. Download brain, bbs & cedar job logs using bosh
+1. Reduce the logs to the start/end timestamps of the experiments ran
+1. Merge the logs from all jobs together
+1. Run perfchug on the resulting log file
+1. Insert the output of perfchug into influxdb
+1. Run a fixed set of queries to get percentiles of requests latency among other interesting metrics
+
+In order to use the script, you need to do the following:
+
+1. You are on a jump box inside the deployment, e.g. director
+1. You are bosh targeted to the right environment
+1. You have perfchug, veritas and bosh on your PATH
+1. Create a new directory and `cd` into it. This will be used as the working
+   directory for the script. Bosh logs will be downloaded in this directory.
+1. From that directory run:
+```/path/to/cedar_results.sh http://url.to.influxdb:8086 <cedar_data_directory> /path/to/diego/manifest /path/to/perf/manifest [/path/to/output/file]```
+
+`cedar_data_directory` is the directory containing the min/max timestamps of
+each batch, most probably `/var/vcap/data/cedar`.
+
+The output file will contain one line per query. All query results are valid
+json. If there are no data points in InfluxDB, e.g. no failures, InfluxDB will
+result an empty result, e.g. `{"results":[]}`
 
 ## Development
 

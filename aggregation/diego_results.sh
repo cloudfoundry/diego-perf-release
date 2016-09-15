@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
 
-# ## How to use this script
-# ### Assumptions:
-#     1. You are on a jump box inside the deployment, e.g. director
-#     2. You are bosh targeted to the right environment
-#     3. You have perfchug, veritas and bosh on your PATH
-# ### Generating percentiles for a given batch
-#     1. Create batch-<start>-<end> directory (.e.g batch-1-20, batch-21-40, etc.)
-#     2. From that directory run `/path/to/cedar_results.sh http://url.to.influxdb:8086 <cedar_data_directory> /path/to/diego/manifest /path/to/perf/manifest [/path/to/output/file]`
-#     3. Repeat 10 times
-
 set -e
 
 if [ $# -lt 2 ]; then
