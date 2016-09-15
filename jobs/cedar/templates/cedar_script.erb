@@ -6,8 +6,11 @@ set -e
 export PATH=/var/vcap/packages/cf-cli/bin:$PATH
 export PATH=/var/vcap/packages/cedar/bin:$PATH
 
-LOG_DIR=/var/vcap/sys/log/cedar
-mkdir -p $LOG_DIR
+CEDAR_LOG_DIR=/var/vcap/sys/log/cedar
+mkdir -p $CEDAR_LOG_DIR
+
+ARBORIST_LOG_DIR=/var/vcap/sys/log/arborist
+mkdir -p $ARBORIST_LOG_DIR
 
 DATA_DIR=/var/vcap/data/cedar
 mkdir -p $DATA_DIR
@@ -31,7 +34,7 @@ delete_all_spaces() {
 		for counter in {1..10}; do
 				space=$CEDAR_SPACE_PREFIX-$counter
 				echo "# deleting space $space"
-				cf delete-space -f $space
+				cf delete-space -f $space || echo "Skipping missing space $space"
 		done
 		cf delete-space -f $ARBORIST_SPACE
 }
@@ -66,8 +69,9 @@ seed_apps() {
 					-tolerance=<%= p("cedar.tolerance")%> \
 					-timeout=<%= p("cedar.timeout")%> \
 					-prefix=$CEDAR_APP_PREFIX-$counter \
-					2> >(tee -a $LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
-					1> >(tee -a $LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
+					-output=$CEDAR_LOG_DIR/cedar-$counter-output.json \
+					2> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
+					1> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
 				max=$(date -u +'%s')
 				echo $min > $DATA_DIR/min-$counter.json
 				echo $max > $DATA_DIR/max-$counter.json
@@ -80,28 +84,28 @@ deploy_arborist_apps() {
    cf t -s $ARBORIST_SPACE
 
    /var/vcap/packages/cedar/bin/cedar \
-		  -n=1 \
-		  -k=<%= p("cedar.max_in_flight")%> \
-		  -domain=<%= p("cedar.domain") %> \
-		  -payload=/var/vcap/packages/cedar/assets/temp-app \
-		  -config=/var/vcap/packages/cedar/config_extra.json \
-		  -timeout=<%= p("cedar.timeout")%> \
-		  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
-		  -prefix=$ARBORIST_APP_PREFIX \
-		  -output=/var/vcap/sys/log/cedar/cedar-arborist-output.json \
-		  1> /var/vcap/sys/log/cedar/cedar.stdout-arborist.log \
-		  2> /var/vcap/sys/log/cedar/cedar.stderr-arborist.log
+	  -n=<%= (p("cedar.num_batches").to_f/25).ceil %> \
+	  -k=<%= p("cedar.max_in_flight")%> \
+	  -domain=<%= p("cedar.domain") %> \
+	  -payload=/var/vcap/packages/cedar/assets/temp-app \
+	  -config=/var/vcap/packages/cedar/config_extra.json \
+	  -timeout=<%= p("cedar.timeout")%> \
+	  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+	  -prefix=$ARBORIST_APP_PREFIX \
+	  -output=$CEDAR_LOG_DIR/cedar-arborist-output.json \
+	  1> $CEDAR_LOG_DIR/cedar.stdout-arborist.log \
+	  2> $CEDAR_LOG_DIR/cedar.stderr-arborist.log
 }
 
 run_arborist_batch() {
    /var/vcap/packages/arborist/bin/arborist \
-		  -app-file=/var/vcap/sys/log/cedar/cedar-arborist-output.json \
-		  -result-file=/var/vcap/sys/log/arborist/arborist-output.json \
+		  -app-file=$CEDAR_LOG_DIR/cedar-arborist-output.json \
+		  -result-file=$ARBORIST_LOG_DIR/arborist-output.json \
 		  -domain=<%= p("cedar.domain") %> \
 		  -duration=<%= p("arborist.duration") %> \
 		  -request-interval=<%= p("arborist.request_interval") %> \
-		  1> /var/vcap/sys/log/arborist/arborist.stdout.log \
-		  2> /var/vcap/sys/log/arborist/arborist.stderr.log
+		  1> $ARBORIST_LOG_DIR/arborist.stdout.log \
+		  2> $ARBORIST_LOG_DIR/arborist.stderr.log
 }
 
 if [ "x$DELETE_SPACES" = 'xyes' ]; then

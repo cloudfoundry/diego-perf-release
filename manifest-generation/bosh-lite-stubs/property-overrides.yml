@@ -5,7 +5,7 @@ property_overrides:
   org: perf_org
   num_cells: 1
   cedar:
-    batches: 1
+    num_batches: 1
     max_in_flight: 40
     timeout: 10m
     tolerance: 0.05
