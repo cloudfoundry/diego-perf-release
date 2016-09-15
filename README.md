@@ -80,6 +80,67 @@ spaces. Details below on how to run it:
   ./cedar_script
   ```
 
+### Run Arborist from a BOSH deployment
+
+Note: Arborist is dependant on a successful `cedar` as it uses the output file from
+`cedar` as input.
+
+Run the example below to monitor apps on a BOSH-Lite installation:
+
+1. Run `./scripts/generate-bosh-lite-manifests` and deploy `diego-perf-release` with the generated manifest.
+1. Run `bosh ssh` to SSH to the `cedar` VM in the `cf-warden-diego-perf` deployment.
+1. Run `sudo su`.
+1. Run the following commands to run `arborist` from a tmux session:
+  ```bash
+  # start a new tmux session
+  /var/vcap/packages/tmux/bin/tmux new -s arborist
+
+  cd /var/vcap/packages/arborist
+
+  /var/vcap/packages/arborist/bin/arborist \
+    -app-file <cedar-output-file> \
+    -domain bosh-lite.com \
+    -duration 10m \
+    -logLevel info \
+    -request-interval 10s \
+    -result-file output.json &
+  ```
+1. To detach from the `tmux` session, send `Ctrl-b d`.
+1. To reattach to the `tmux` session, run `/var/vcap/packages/tmux/bin/tmux attach -t arborist`.
+
+### Run Arborist locally
+
+1. cd to src/code.cloudfoundry.org/diego-stress-tests/arborist
+1. Build the arborist binary with `go build`
+1. Run the following to start a test
+```bash
+./arborist -app-file <cedar-output-file> \
+    -domain bosh-lite.com \
+    -duration 10m \
+    -logLevel info \
+    -request-interval 10s \
+    -result-file output.json
+```
+
+Arborist has the following usage options:
+
+```
+  -app-file string
+        path to json application file
+  -domain string
+        domain where the applications are deployed (default "bosh-lite.com")
+  -duration duration
+        total duration to check routability of applications (default 10m0s)
+  -logLevel string
+        log level: debug, info, error or fatal (default "info")
+  -request-interval duration
+        interval in seconds at which to make requests to each individual app (default 1m0s)
+  -result-file string
+        path to result file (default "output.json")
+```
+
+### Using perfchug to convert logs to InfluxDB records
+
   To delete the spaces from a previous experiment before running the experiment, run the script as:
   ```
   DELETE_SPACES="yes" ./cedar_script
