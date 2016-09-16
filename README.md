@@ -19,29 +19,46 @@ testing.
 
 ### Running Cedar
 
-#### Running Cedar locally
+#### Automatically Running 10 Batches of Cedar (Preferred)
 
-1. Target a default diego enabled CF deployment
-1. Target a chosen org and space
-1. cd src/code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app
-1. Precompile the stress-app to `assets/temp-app` by running `GOOS=linux GOARCH=amd64 go build -o ../temp-app/stress-app`
-1. cd back to src/code.cloudfoundry.org/diego-stress-tests/cedar
-1. Build the cedar binary with `go build`
-1. Run the following to start a test
-```bash
-./cedar -n <number_of_batches> -k <max_in_flight> -domain <your-app-domain> [-tolerance <tolerance-factor>]
-```
+The steps mentioned in the previous section are automated by the
+`./cedar_script`. The script will push 10 batches of apps each in its own
+spaces. Details below on how to run it:
 
-You can always run `./cedar -h` to see the list of options you can provide to
-cedar. Worth noting one of Cedar's options is a config file that provides the
-manifest paths for the different apps being pushed. The default `config.json`
-can be found
-[here](https://github.com/cloudfoundry/diego-stress-tests/blob/master/cedar/config.json)
+1. Run `cd /var/vcap/jobs/cedar/bin`.
+1. Run the following command to run the experiment:
+    ```bash
+    ./cedar_script
+    ```
+
+1. To delete the spaces from a previous experiment before running the experiment, run the script as:
+  ```bash
+  DELETE_SPACES="yes" ./cedar_script
+  ```
+
+1. To resume the experiment from the `n`th batch (where `n` is a number from `1`
+  to `10`), add `n` as an argument to the script. For example, to run from the
+  fourth batch:
+  ```bash
+  ./cedar_script 4
+  ```
+
+This script also then pushes an extra batch of apps via `cedar`
+and monitors them with `arborist`. The file
+`/var/vcap/sys/log/cedar/cedar-arborist-output.json`
+contains the results from that `cedar` run, and the file
+`/var/vcap/sys/log/arborist/arborist-output.json`
+contains the `arborist` results.
+
+The script will also output the min/max timestamp for each batch in
+`/var/vcap/data/cedar/min-<batch#>.json` and
+`/var/vcap/data/cedar/max-<batch#>.json`.
+
 
 #### Running Cedar from a BOSH deployment
 
 1. Run `./scripts/generate-deployment-manifest` and deploy `diego-perf-release`
-   with the generated manifest. If on bosh-lite, you can use
+   with the generated manifest. If on BOSH-Lite, you can use
    `./scripts/generate-bosh-lite-manifests`.
 1. Run `bosh ssh` to SSH to the `cedar` VM in the `cf-warden-diego-perf` deployment.
 1. Run `sudo su`.
@@ -68,22 +85,30 @@ can be found
      &
    ```
 
-#### Automatically Running 10 batches of Cedar (Preferred)
+#### Running Cedar Locally
 
-The steps mentioned in the previous section are automated by the
-`./cedar_script`. The script will push 10 batches of apps each in its own
-spaces. Details below on how to run it:
+1. Target a CF deployment.
+1. Target a chosen org and space.
+1. From the root of this repo, run `cd src/code.cloudfoundry.org/diego-stress-tests/cedar/assets/stress-app`.
+1. Precompile the stress-app to `assets/temp-app` by running `GOOS=linux GOARCH=amd64 go build -o ../temp-app/stress-app`.
+1. Run `cd ../..` to change back to `src/code.cloudfoundry.org/diego-stress-tests/cedar`.
+1. Run `go build` to build the `cedar` binary.
+1. Run the following to start a test:
+  ```bash
+  ./cedar -n <number_of_batches> -k <max_in_flight> [-tolerance <tolerance-factor>]
+  ```
 
-1. Run `cd /var/vcap/jobs/cedar/bin`
-1. Run the following command to run the experiment:
-  ```
-  ./cedar_script
-  ```
+Run `./cedar -h` to see the list of options you can provide to cedar.
+One of the most important options is a JSON-encoded config file that
+provides the manifest paths for the different apps being pushed. The
+default `config.json` can be found
+[here](https://github.com/cloudfoundry/diego-stress-tests/blob/master/cedar/config.json).
+
 
 ### Run Arborist from a BOSH deployment
 
-Note: Arborist is dependant on a successful `cedar` as it uses the output file from
-`cedar` as input.
+Note: Arborist depends on a successful `cedar` run, as it uses the output file from
+`cedar` as an input.
 
 Run the example below to monitor apps on a BOSH-Lite installation:
 
@@ -108,19 +133,21 @@ Run the example below to monitor apps on a BOSH-Lite installation:
 1. To detach from the `tmux` session, send `Ctrl-b d`.
 1. To reattach to the `tmux` session, run `/var/vcap/packages/tmux/bin/tmux attach -t arborist`.
 
-### Run Arborist locally
+### Run Arborist Locally
 
-1. cd to src/code.cloudfoundry.org/diego-stress-tests/arborist
-1. Build the arborist binary with `go build`
-1. Run the following to start a test
-```bash
-./arborist -app-file <cedar-output-file> \
+1. cd to `src/code.cloudfoundry.org/diego-stress-tests/arborist`
+1. Build the arborist binary with `go build`.
+
+1. Run the following to start a test:
+  ```bash
+  ./arborist \
+    -app-file <cedar-output-file> \
     -domain bosh-lite.com \
     -duration 10m \
     -logLevel info \
     -request-interval 10s \
     -result-file output.json
-```
+  ```
 
 Arborist has the following usage options:
 
@@ -139,28 +166,6 @@ Arborist has the following usage options:
         path to result file (default "output.json")
 ```
 
-### Using perfchug to convert logs to InfluxDB records
-
-  To delete the spaces from a previous experiment before running the experiment, run the script as:
-  ```
-  DELETE_SPACES="yes" ./cedar_script
-  ```
-
-  To resume the experiment from the `n`th batch (where `n` is a number from `1`
-  to `10`), add `n` as an argument to the script. For example, to run from the
-  fourth batch:
-  ```
-  ./cedar_script 4
-  ```
-
-To see the results of the experiment, see the file
-`/var/vcap/sys/log/arborist/arborist-output.json`. The json file should list
-all the apps pushed and started and whether they were pushed/started
-successfully or not.
-
-The script will also output the min/max timestamp for each batch in
-`/var/vcap/data/cedar/min-<batch#>.json` and
-`/var/vcap/data/cedar/max-<batch#>.json`.
 
 ### Aggregating results
 
@@ -172,19 +177,19 @@ something that can be fed into InfluxDB.
 
 To use `perfchug` locally:
 
-1. `cd <path>/diego-perf-release/src/code.cloudfoundry.org/diego-stress-tests/perfchug`
-1. Run `go install` to build the executable
-1. Move the executable into your `$PATH`
+1. `cd <path>/diego-perf-release/src/code.cloudfoundry.org/diego-stress-tests/perfchug`.
+1. Run `go install` to build the executable.
+1. Move the executable into your `$PATH`.
 
-Once it's in your path, you can use `perfchug` by piping log output into it.
+Once on the `$PATH`, supply lager-formatted logs to `perfchug` on its stdin.
 
 For example:
 
-```
+```bash
 cat /var/vcap/sys/log/cedar/cedar.stdout.log | perfchug
 ```
 
-will spit influxdb-friendly metrics to stdout.
+will emit influxdb-formatted metrics to stdout.
 
 #### Automatic downloading and aggregation
 
@@ -204,8 +209,16 @@ In order to use the script, you need to do the following:
 1. You have perfchug, veritas and bosh on your PATH
 1. Create a new directory and `cd` into it. This will be used as the working
    directory for the script. Bosh logs will be downloaded in this directory.
+
 1. From that directory run:
-```/path/to/cedar_results.sh http://url.to.influxdb:8086 <cedar_data_directory> /path/to/diego/manifest /path/to/perf/manifest [/path/to/output/file]```
+  ```bash
+  /path/to/cedar_results.sh \
+    http://url.to.influxdb:8086 \
+    <cedar-data-directory> \
+    /path/to/diego/manifest \
+    /path/to/perf/manifest \
+    [/path/to/output/file]\
+  ```
 
 `cedar_data_directory` is the directory containing the min/max timestamps of
 each batch, most probably `/var/vcap/data/cedar`.
