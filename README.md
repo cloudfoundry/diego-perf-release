@@ -208,11 +208,11 @@ In order to use the script, you need to do the following:
 1. You are bosh targeted to the right environment
 1. You have perfchug, veritas and bosh on your PATH
 1. Create a new directory and `cd` into it. This will be used as the working
-   directory for the script. Bosh logs will be downloaded in this directory.
+   directory for the script. BOSH logs will be downloaded in this directory.
 
 1. From that directory run:
   ```bash
-  /path/to/cedar_results.sh \
+  /path/to/diego_results.sh \
     http://url.to.influxdb:8086 \
     <cedar-data-directory> \
     /path/to/diego/manifest \
