@@ -99,7 +99,6 @@ run_arborist_batch() {
    /var/vcap/packages/arborist/bin/arborist \
 		  -app-file=$CEDAR_LOG_DIR/cedar-arborist-output.json \
 		  -result-file=$ARBORIST_LOG_DIR/arborist-output.json \
-		  -domain=<%= p("cedar.domain") %> \
 		  -duration=<%= p("arborist.duration") %> \
 		  -request-interval=<%= p("arborist.request_interval") %> \
 		  1> $ARBORIST_LOG_DIR/arborist.stdout.log \
