@@ -12,9 +12,6 @@ mkdir -p $CEDAR_LOG_DIR
 ARBORIST_LOG_DIR=/var/vcap/sys/log/arborist
 mkdir -p $ARBORIST_LOG_DIR
 
-DATA_DIR=/var/vcap/data/cedar
-mkdir -p $DATA_DIR
-
 APP_BIN_PATH=/var/vcap/packages/cedar/assets/temp-app
 CONFIG_PATH=/var/vcap/packages/cedar/config.json
 
@@ -73,8 +70,8 @@ seed_apps() {
 					2> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
 					1> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
 				max=$(date -u +'%s')
-				echo $min > $DATA_DIR/min-$counter.json
-				echo $max > $DATA_DIR/max-$counter.json
+				echo $min > $CEDAR_LOG_DIR/min-$counter.json
+				echo $max > $CEDAR_LOG_DIR/max-$counter.json
 				echo "# cedar exited with $? exit code. min=$min, max=$max"
 		done
 		echo "# Completed seeding the apps"
