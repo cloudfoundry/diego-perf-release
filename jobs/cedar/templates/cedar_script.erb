@@ -19,7 +19,8 @@ cf api <%= p("cedar.api") %> --skip-ssl-validation
 cf auth <%= p("cedar.admin_user") %> <%= p("cedar.admin_password") %>
 
 cf create-org <%= p("cedar.org") %>
-cf update-quota default -m 100000G -r 10000000
+cf create-quota perf -m 100T -r 10000000
+cf set-quota <%= p("cedar.org") %> perf
 cf t -o <%= p("cedar.org") %>
 
 CEDAR_SPACE_PREFIX=cedar-space
