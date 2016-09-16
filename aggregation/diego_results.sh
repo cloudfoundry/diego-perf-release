@@ -3,7 +3,7 @@
 set -e
 
 if [ $# -lt 2 ]; then
-    echo "Usage: $0 /path/to/cedar_output_dir /path/to/diego/manifest /path/to/perf/manifest [output-file]"
+    echo "Usage: $0 influxdb_url /path/to/diego/manifest /path/to/perf/manifest [output-file]"
     exit 1
 fi
 
@@ -11,9 +11,8 @@ influxdb_url=$1
 if [[ $influxdb_url != */ ]]; then
     influxdb_url=${influxdb_url}/
 fi
-cedar_dir=$2
-diego_manifest=$3
-perf_manifest=$4
+diego_manifest=$2
+perf_manifest=$3
 
 export output=""
 if [ $# -gt 4 ]; then
@@ -104,6 +103,7 @@ function query_metrics {
 
 function generate_metrics_for_all_batches {
     counter=1
+    cedar_dir=./cedar-0/cedar
     while true; do
         min_file=$cedar_dir/min-$counter.json
         max_file=$cedar_dir/max-$counter.json

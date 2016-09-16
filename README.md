@@ -214,14 +214,10 @@ In order to use the script, you need to do the following:
   ```bash
   /path/to/diego_results.sh \
     http://url.to.influxdb:8086 \
-    <cedar-data-directory> \
     /path/to/diego/manifest \
     /path/to/perf/manifest \
     [/path/to/output/file]\
   ```
-
-`cedar_data_directory` is the directory containing the min/max timestamps of
-each batch, most probably `/var/vcap/data/cedar`.
 
 The output file will contain one line per query. All query results are valid
 json. If there are no data points in InfluxDB, e.g. no failures, InfluxDB will
