@@ -2,7 +2,7 @@
 
 set -e
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
     echo "Usage: $0 influxdb_url /path/to/diego/manifest /path/to/perf/manifest [output-file]"
     exit 1
 fi
@@ -15,8 +15,8 @@ diego_manifest=$2
 perf_manifest=$3
 
 export output=""
-if [ $# -gt 4 ]; then
-    output=$5
+if [ $# -gt 3 ]; then
+    output=$4
     [ -x $output ] && rm $output
 fi
 
