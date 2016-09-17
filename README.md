@@ -124,7 +124,6 @@ Run the example below to monitor apps on a BOSH-Lite installation:
 
   /var/vcap/packages/arborist/bin/arborist \
     -app-file <cedar-output-file> \
-    -domain bosh-lite.com \
     -duration 10m \
     -logLevel info \
     -request-interval 10s \
@@ -142,7 +141,6 @@ Run the example below to monitor apps on a BOSH-Lite installation:
   ```bash
   ./arborist \
     -app-file <cedar-output-file> \
-    -domain bosh-lite.com \
     -duration 10m \
     -logLevel info \
     -request-interval 10s \
