@@ -1,0 +1,12 @@
+---
+name: logrotate_cron_options
+
+templates:
+  pre-start.erb: bin/pre-start
+
+packages:
+
+properties:
+  diego.logrotate_options.value:
+    description: "value to set in the logrotate cron file"
+    default: "0 * * * * root /usr/bin/logrotate-cron"
