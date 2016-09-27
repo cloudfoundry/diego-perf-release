@@ -2509,7 +2509,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Metron -> Doppler loss/s",
+          "title": "Metron messages sent/received",
           "tooltip": {
             "msResolution": false,
             "shared": true,
@@ -2578,10 +2578,16 @@
                   {
                     "type": "max",
                     "params": []
+                  },
+                  {
+                    "type": "derivative",
+                    "params": [
+                      "1s"
+                    ]
                   }
                 ]
               ],
-              "measurement": "cf.DopplerServer.TruncatingBuffer.DroppedMessages"
+              "measurement": "cf.DopplerServer.TruncatingBuffer.totalDroppedMessages"
             }
           ],
           "datasource": "influxdb",
@@ -2641,7 +2647,8 @@
           "timeShift": null,
           "aliasColors": {},
           "seriesOverrides": [],
-          "links": []
+          "links": [],
+          "interval": ">5m"
         }
       ]
     }
@@ -2707,6 +2714,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 4,
+  "version": 5,
   "links": []
 }
