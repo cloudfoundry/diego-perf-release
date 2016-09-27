@@ -47,6 +47,7 @@
           "pointradius": 1,
           "points": false,
           "renderer": "flot",
+          "seriesOverrides": [],
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -1065,7 +1066,7 @@
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
           "id": 14,
-          "interval": "",
+          "interval": ">5m",
           "isNew": true,
           "legend": {
             "avg": false,
@@ -1095,7 +1096,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "$interval"
                   ],
                   "type": "time"
                 },
@@ -1140,7 +1141,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "$interval"
                   ],
                   "type": "time"
                 },
@@ -2593,6 +2594,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 14,
+  "version": 2,
   "links": []
 }
