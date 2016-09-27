@@ -28,7 +28,7 @@
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
           "id": 1,
-          "interval": "10s",
+          "interval": ">1m",
           "isNew": true,
           "legend": {
             "avg": false,
@@ -47,15 +47,6 @@
           "pointradius": 1,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "cf.bbs.RequestLatency.moving_average",
-              "bars": false,
-              "fill": 0,
-              "lines": true,
-              "linewidth": 2
-            }
-          ],
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -88,33 +79,6 @@
                   {
                     "params": [],
                     "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [],
-              "target": ""
-            },
-            {
-              "alias": "",
-              "dsType": "influxdb",
-              "groupBy": [],
-              "measurement": "cf.bbs.RequestLatency",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [
-                      10
-                    ],
-                    "type": "moving_average"
                   }
                 ]
               ],
