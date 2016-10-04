@@ -30,15 +30,6 @@ ARBORIST_SPACE=arborist-space
 CEDAR_APP_PREFIX=cedar-app
 ARBORIST_APP_PREFIX=cedar-arborist
 
-delete_all_spaces() {
-		for counter in {1..10}; do
-				space=$CEDAR_SPACE_PREFIX-$counter
-				echo "# deleting space $space"
-				cf delete-space -f $space || echo "Skipping missing space $space"
-		done
-		cf delete-space -f $ARBORIST_SPACE
-}
-
 create_spaces() {
 		for i in {1..10}; do
 			cf create-space -o <%= p("cedar.org") %> $CEDAR_SPACE_PREFIX-$i
@@ -106,11 +97,6 @@ run_arborist_batch() {
 		  1> $ARBORIST_LOG_DIR/arborist.stdout.log \
 		  2> $ARBORIST_LOG_DIR/arborist.stderr.log
 }
-
-if [ "x$DELETE_SPACES" = 'xyes' ]; then
- echo "Going to delete all spaces"
- delete_all_spaces
-fi
 
 pushd /var/vcap/packages/cedar > /dev/null
   echo "Preparing spaces for cedar run"

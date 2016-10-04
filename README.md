@@ -30,18 +30,14 @@ spaces. Details below on how to run it:
     ```bash
     ./cedar_script
     ```
-
-1. To delete the spaces from a previous experiment before running the experiment, run the script as:
-  ```bash
-  DELETE_SPACES="yes" ./cedar_script
-  ```
-
 1. To resume the experiment from the `n`th batch (where `n` is a number from `1`
   to `10`), add `n` as an argument to the script. For example, to run from the
   fourth batch:
   ```bash
   ./cedar_script 4
-  ```
+
+ _ ***Note*** : if the spaces of the same name are already present, the script would not fail and continue to push to the existing ones. You would have to manually delete spaces if required _
+
 
 This script also then pushes an extra batch of apps via `cedar`
 and monitors them with `arborist`. The file
