@@ -35,8 +35,11 @@ spaces. Details below on how to run it:
   fourth batch:
   ```bash
   ./cedar_script 4
+  ```
 
- _ ***Note*** : if the spaces of the same name are already present, the script would not fail and continue to push to the existing ones. You would have to manually delete spaces if required _
+ **Note**: if the spaces are already present from a previous run of the script,
+ the script will not fail and will instead continue to push to those existing
+ spaces. Manually delete spaces or the entire CF org if required.
 
 
 This script also then pushes an extra batch of apps via `cedar`
