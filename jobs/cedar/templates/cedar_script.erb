@@ -3,19 +3,115 @@
 set -x
 set -e
 
-ulimit -n 308612
-
-export PATH=/var/vcap/packages/cf-cli/bin:$PATH
-export PATH=/var/vcap/packages/cedar/bin:$PATH
-
-CEDAR_LOG_DIR=/var/vcap/sys/log/cedar
-mkdir -p $CEDAR_LOG_DIR
-
-ARBORIST_LOG_DIR=/var/vcap/sys/log/arborist
-mkdir -p $ARBORIST_LOG_DIR
-
 APP_BIN_PATH=/var/vcap/packages/cedar/assets/temp-app
 CONFIG_PATH=/var/vcap/packages/cedar/config.json
+
+CEDAR_LOG_DIR=/var/vcap/sys/log/cedar
+ARBORIST_LOG_DIR=/var/vcap/sys/log/arborist
+
+CEDAR_SPACE_PREFIX=cedar-space
+ARBORIST_SPACE=arborist-space
+CEDAR_APP_PREFIX=cedar-app
+ARBORIST_APP_PREFIX=cedar-arborist
+
+usage() {
+	set +x
+	echo "$0 [batch-number]"
+	echo "  where batch-number is an optional argument that indicates which app batch to start from. Default is 0 (i.e., it assumes no batches have already been deployed)"
+	set -x
+	exit 1
+}
+
+create_spaces() {
+	for i in {1..10}; do
+		cf create-space -o <%= p("cedar.org") %> $CEDAR_SPACE_PREFIX-$i
+	done
+	cf create-space -o <%= p("cedar.org") %> $ARBORIST_SPACE
+}
+
+seed_apps() {
+	space_counter=1
+	if [ ! -z "$1" ]; then
+		space_counter=$1
+	fi
+
+	for counter in `seq $space_counter 10`; do
+
+		space=$CEDAR_SPACE_PREFIX-$counter
+
+		echo "# Running cedar with space: $space"
+		cf t -s $space
+		min=$(date -u +'%s')
+		/var/vcap/packages/cedar/bin/cedar \
+			-n=<%= p("cedar.num_batches") %> \
+			-k=<%= p("cedar.max_in_flight")%> \
+			-domain=<%= p("cedar.domain") %> \
+			-payload=$APP_BIN_PATH \
+			-config=$CONFIG_PATH \
+			-max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+			-tolerance=<%= p("cedar.tolerance")%> \
+			-timeout=<%= p("cedar.timeout")%> \
+			-prefix=$CEDAR_APP_PREFIX-$counter \
+			-output=$CEDAR_LOG_DIR/cedar-$counter-output.json \
+			2> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
+			1> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
+		max=$(date -u +'%s')
+		echo $min > $CEDAR_LOG_DIR/min-$counter.json
+		echo $max > $CEDAR_LOG_DIR/max-$counter.json
+		echo "# cedar exited with $? exit code. min=$min, max=$max"
+	done
+	echo "# Completed seeding the apps"
+}
+
+deploy_arborist_apps() {
+	cf t -s $ARBORIST_SPACE
+
+	/var/vcap/packages/cedar/bin/cedar \
+		-n=<%= (p("cedar.num_batches").to_f/25).ceil %> \
+		-k=<%= p("cedar.max_in_flight")%> \
+		-domain=<%= p("cedar.domain") %> \
+		-payload=/var/vcap/packages/cedar/assets/temp-app \
+		-config=/var/vcap/packages/cedar/config_extra.json \
+		-timeout=<%= p("cedar.timeout")%> \
+		-max-polling-errors=<%= p("cedar.max_polling_errors") %> \
+		-prefix=$ARBORIST_APP_PREFIX \
+		-output=$CEDAR_LOG_DIR/cedar-arborist-output.json \
+	1> $CEDAR_LOG_DIR/cedar.stdout-arborist.log \
+	2> $CEDAR_LOG_DIR/cedar.stderr-arborist.log
+}
+
+run_arborist_batch() {
+	/var/vcap/packages/arborist/bin/arborist \
+		-app-file=$CEDAR_LOG_DIR/cedar-arborist-output.json \
+		-result-file=$ARBORIST_LOG_DIR/arborist-output.json \
+		-duration=<%= p("arborist.duration") %> \
+		-request-interval=<%= p("arborist.request_interval") %> \
+	1> $ARBORIST_LOG_DIR/arborist.stdout.log \
+	2> $ARBORIST_LOG_DIR/arborist.stderr.log
+}
+
+if [ $# -gt 2 ]; then
+	usage
+fi
+
+if [ "x$1" = "xhelp" ]; then
+	usage
+fi
+
+if [ "x$1" = "x--help" ]; then
+	usage
+	fi
+
+if [ "x$1" = "x-h" ]; then
+	usage
+fi
+
+ulimit -n 308612
+
+export PATH=/var/vcap/packages/cf-cli/bin:/var/vcap/packages/cedar/bin:$PATH
+
+mkdir -p $CEDAR_LOG_DIR
+mkdir -p $ARBORIST_LOG_DIR
 
 cf api <%= p("cedar.api") %> --skip-ssl-validation
 cf auth <%= p("cedar.admin_user") %> <%= p("cedar.admin_password") %>
@@ -25,91 +121,18 @@ cf create-quota perf -m 100T -r 10000000
 cf set-quota <%= p("cedar.org") %> perf
 cf t -o <%= p("cedar.org") %>
 
-CEDAR_SPACE_PREFIX=cedar-space
-ARBORIST_SPACE=arborist-space
-CEDAR_APP_PREFIX=cedar-app
-ARBORIST_APP_PREFIX=cedar-arborist
-
-create_spaces() {
-		for i in {1..10}; do
-			cf create-space -o <%= p("cedar.org") %> $CEDAR_SPACE_PREFIX-$i
-		done
-		cf create-space -o <%= p("cedar.org") %> $ARBORIST_SPACE
-}
-
-seed_apps() {
-	 	space_counter=1
-		if [ ! -z "$1" ]; then
-			 space_counter=$1
-		fi
-
-		for counter in `seq $space_counter 10`; do
-
-				space=$CEDAR_SPACE_PREFIX-$counter
-
-				echo "# Running cedar with space: $space"
-				cf t -s $space
-				min=$(date -u +'%s')
-				/var/vcap/packages/cedar/bin/cedar \
-					-n=<%= p("cedar.num_batches") %> \
-					-k=<%= p("cedar.max_in_flight")%> \
-					-domain=<%= p("cedar.domain") %> \
-					-payload=$APP_BIN_PATH \
-					-config=$CONFIG_PATH \
-					-max-polling-errors=<%= p("cedar.max_polling_errors") %> \
-					-tolerance=<%= p("cedar.tolerance")%> \
-					-timeout=<%= p("cedar.timeout")%> \
-					-prefix=$CEDAR_APP_PREFIX-$counter \
-					-output=$CEDAR_LOG_DIR/cedar-$counter-output.json \
-					2> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stderr.log | logger -p user.error -t vcap.cedar) \
-					1> >(tee -a $CEDAR_LOG_DIR/cedar-$counter.stdout.log | logger -p user.info -t vcap.cedar)
-				max=$(date -u +'%s')
-				echo $min > $CEDAR_LOG_DIR/min-$counter.json
-				echo $max > $CEDAR_LOG_DIR/max-$counter.json
-				echo "# cedar exited with $? exit code. min=$min, max=$max"
-		done
-		echo "# Completed seeding the apps"
-}
-
-deploy_arborist_apps() {
-   cf t -s $ARBORIST_SPACE
-
-   /var/vcap/packages/cedar/bin/cedar \
-	  -n=<%= (p("cedar.num_batches").to_f/25).ceil %> \
-	  -k=<%= p("cedar.max_in_flight")%> \
-	  -domain=<%= p("cedar.domain") %> \
-	  -payload=/var/vcap/packages/cedar/assets/temp-app \
-	  -config=/var/vcap/packages/cedar/config_extra.json \
-	  -timeout=<%= p("cedar.timeout")%> \
-	  -max-polling-errors=<%= p("cedar.max_polling_errors") %> \
-	  -prefix=$ARBORIST_APP_PREFIX \
-	  -output=$CEDAR_LOG_DIR/cedar-arborist-output.json \
-	  1> $CEDAR_LOG_DIR/cedar.stdout-arborist.log \
-	  2> $CEDAR_LOG_DIR/cedar.stderr-arborist.log
-}
-
-run_arborist_batch() {
-   /var/vcap/packages/arborist/bin/arborist \
-		  -app-file=$CEDAR_LOG_DIR/cedar-arborist-output.json \
-		  -result-file=$ARBORIST_LOG_DIR/arborist-output.json \
-		  -duration=<%= p("arborist.duration") %> \
-		  -request-interval=<%= p("arborist.request_interval") %> \
-		  1> $ARBORIST_LOG_DIR/arborist.stdout.log \
-		  2> $ARBORIST_LOG_DIR/arborist.stderr.log
-}
-
 pushd /var/vcap/packages/cedar > /dev/null
-  echo "Preparing spaces for cedar run"
-  create_spaces
+	echo "Preparing spaces for cedar run"
+	create_spaces
 
-  echo "Seeding apps and starting from batch $1"
-  seed_apps $1
+	echo "Seeding apps and starting from batch $1"
+	seed_apps $1
 
-  echo "Deploying apps for arborist health checks"
-  deploy_arborist_apps
+	echo "Deploying apps for arborist health checks"
+	deploy_arborist_apps
 
-  echo "Running arborist health checks"
-  run_arborist_batch
+	echo "Running arborist health checks"
+	run_arborist_batch
 popd > /dev/null
 
 echo "# done"
