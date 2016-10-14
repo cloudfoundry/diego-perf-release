@@ -51,3 +51,15 @@ properties:
     description: Maximum amount of app push and start failures for cedar to tolerate, as a fraction of the total number of apps to push.
     default: 0.05
 
+  cedar.storage_upload_id:
+    description: the ID of the account we are using to upload data to cloud storage.
+    default: ''
+
+  cedar.storage_upload_key:
+    description: the key or token of the account we are using to upload data to cloud storage.
+    default: ''
+
+  cedar.storage_upload_uri:
+    description: the path to the cloud storage resource where data is being uploaded.
+    default: ''
+

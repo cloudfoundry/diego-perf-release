@@ -14,6 +14,13 @@ ARBORIST_SPACE=arborist-space
 CEDAR_APP_PREFIX=cedar-app
 ARBORIST_APP_PREFIX=cedar-arborist
 
+set +x
+export AWS_ACCESS_KEY_ID=<%= p("cedar.storage_upload_id")%>
+export AWS_SECRET_ACCESS_KEY=<%= p("cedar.storage_upload_key")%>
+export AWS_S3_URI=<%= p("cedar.storage_upload_uri")%>
+export CEDAR_RUN_FOLDER=`date +%Y%m%d-%H%m%s`
+set -x
+
 usage() {
 	set +x
 	echo "$0 [batch-number]"
@@ -134,5 +141,16 @@ pushd /var/vcap/packages/cedar > /dev/null
 	echo "Running arborist health checks"
 	run_arborist_batch
 popd > /dev/null
+
+
+set +x
+if [[ -n $AWS_ACCESS_KEY_ID ]]
+then
+  curl https://bootstrap.pypa.io/get-pip.py | python 2>&1 1>/dev/null
+  pip install awscli 2>&1 1>/dev/null
+
+  aws s3 cp /var/vcap/sys/log/arborist/arborist-output.json ${AWS_S3_URI}/${CEDAR_RUN_FOLDER}/arborist-output.json
+fi
+set -x
 
 echo "# done"

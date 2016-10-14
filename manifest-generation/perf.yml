@@ -55,6 +55,9 @@ properties:
     org: (( property_overrides.org ))
     num_batches: (( property_overrides.cedar.num_batches || nil ))
     max_in_flight: (( property_overrides.cedar.max_in_flight || nil ))
+    storage_upload_id: (( property_overrides.cedar.storage_upload_id || nil ))
+    storage_upload_key: (( property_overrides.cedar.storage_upload_key || nil ))
+    storage_upload_uri: (( property_overrides.cedar.storage_upload_uri || nil ))
     tolerance:  (( property_overrides.cedar.tolerance || nil ))
     timeout:  (( property_overrides.cedar.timeout || nil ))
   arborist:
