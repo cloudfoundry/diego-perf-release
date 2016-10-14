@@ -1,0 +1,55 @@
+#!/bin/bash -l
+
+set -e
+set -x
+
+LOG_DIR=/var/vcap/sys/log/post-process
+mkdir -p $LOG_DIR
+chown -R vcap:vcap $LOG_DIR
+
+export GOROOT=$(readlink -nf /var/vcap/packages/golang)
+export PATH=${GOROOT}/bin:${PATH}
+export PATH=/var/vcap/packages/ruby-2.3/bin:${PATH}
+
+export RUN_DIR=/var/vcap/run/post-process
+mkdir -p $RUN_DIR
+pushd $RUN_DIR
+
+gem install bosh_cli --no-ri --no-rdoc
+
+export HOME=/root
+#BOSH_USER="<%= p("post-process.gcp.username") %>" BOSH_PASSWORD="<%= p("post-process.gcp.password") %>" bosh target "<%= p("post-process.gcp.target") %>"
+bosh target "<%= p("post-process.gcp.target") %>"
+bosh login "<%= p("post-process.gcp.username") %>" "<%= p("post-process.gcp.password") %>"
+
+apt-get install git -y
+
+if [ ! -d diego-perf-release ]; then
+	git clone https://github.com/cloudfoundry/diego-perf-release
+fi
+
+pushd diego-perf-release
+git pull && git submodule update --recursive --init
+popd
+
+export GOPATH=$PWD/diego-perf-release
+pushd diego-perf-release/aggregation
+
+	# install veritas
+	wget https://github.com/pivotal-cf-experimental/veritas/releases/download/latest/veritas -O ./veritas
+	chmod +x ./veritas
+
+	# build perfchug
+	go build code.cloudfoundry.org/diego-stress-tests/perfchug
+	export PATH=$PATH:$PWD
+
+  rm -rf diego.yml perf.yml
+	bosh download manifest gcp-diego diego.yml
+	bosh download manifest gcp-diego-perf perf.yml
+
+	./diego_results.sh $INFLUXDB_URL "$PWD/diego.yml" "$PWD/perf.yml" "$PWD/cedar_metrics.json"
+
+#aws s3 cp cedar_metrics.json s3://diego-perf-reports/cedar_metrics.`date +%s`.json
+popd
+
+popd

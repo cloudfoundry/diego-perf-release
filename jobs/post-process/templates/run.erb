@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LOG_DIR=/var/vcap/sys/log/post-process
+mkdir -p $LOG_DIR
+chown -R vcap:vcap $LOG_DIR
+
+/var/vcap/jobs/post-process/bin/run_internal 1> >(tee -a $LOG_DIR/post-process.stdout.log) 
+

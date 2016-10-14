@@ -45,6 +45,15 @@ jobs:
     resource_pool: perf
     networks:
       - name: perf
+  - name: post-process
+    templates:
+    - name: post-process
+      release: diego-perf-release
+    instances: 1
+    lifecycle: errand
+    networks:
+      - name: perf
+    resource_pool: perf
 
 properties:
   cedar:
@@ -70,6 +79,12 @@ properties:
       require_ssl: (( config_from_diego.bbs.require_ssl || nil ))
   performance_tests:
     num_cells: (( property_overrides.num_cells || nil ))
+  post-process:
+    gcp:
+      username: (( property_overrides.post-process.gcp.username || nil ))
+      password: (( property_overrides.post-process.gcp.password || nil ))
+      target: (( property_overrides.post-process.gcp.target || nil ))
+    influxdb_url: (( property_overrides.post-process.influxdb_url || nil ))
 
 # The keys below should not be included in the final stub
 config_from_cf: (( merge ))

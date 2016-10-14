@@ -12,3 +12,9 @@ property_overrides:
   arborist:
     duration: 5m
     request_interval: 1m
+  post-process:
+    gcp:
+      username: 
+      password: 
+      target: 
+    influxdb_url: 

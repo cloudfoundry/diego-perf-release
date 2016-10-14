@@ -1,0 +1,20 @@
+---
+name: post-process
+packages:
+  - golang
+  - ruby-2.3
+
+templates:
+  run.erb: bin/run
+  run_internal.erb: bin/run_internal
+
+properties:
+  post-process.gcp.username:
+    description: "username"
+  post-process.gcp.password:
+    description: "password"
+  post-process.gcp.target:
+    description: "location of the GCP bosh director"
+  post-process.influxdb_url:
+    description: "location of the InfluxDB endpoint"
+
