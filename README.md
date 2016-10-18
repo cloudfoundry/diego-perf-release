@@ -220,6 +220,26 @@ The output file will contain one line per query. All query results are valid
 json. If there are no data points in InfluxDB, e.g. no failures, InfluxDB will
 result an empty result, e.g. `{"results":[]}`
 
+#### Snapshotting and Restoring Influxdb (GCP Only)
+
+##### Snapshotting
+
+1. Go to the google cloud platform dashboard, and find the influxdb instance.
+1. Find the 'additional disks' section, and click on the disk to be snapshotted.
+1. Click 'Create Snapshot' at the top of the window that opens up.
+1. Name the snapshot and click 'Create'.
+
+##### Restoring a snapshotted InfluxDB
+
+1. Go to the google cloud platform dashboard, and find the influxdb instance.
+1. Click edit at the top of the page.
+1. Find the 'additional disks' section, and add a disk from the snapshot.
+1. Click save at the bottom of the page. The new disk will appear as /dev/sd[a-z] (where [a-z] is the next available letter for a disk name).
+1. Edit `/etc/mtab` on the influxdb vm to add the new filesystem from `/dev/sd[a-z]` to `/var/vcap/store2`.
+1. Run `mkdir -p /var/vcap/store2 && cd /var/vcap/store2 && mount /dev/sd[a-z]1`.
+1. Edit all references to `/var/vcap/store` -> `/var/vcap/store2` in `/var/vcap/jobs/influxdb`.
+1. Restart influxdb with `monit restart influxdb`.
+
 ## Development
 
 These tests are meant to be run against a real IaaS. However, it is possible to
