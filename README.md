@@ -220,6 +220,11 @@ The output file will contain one line per query. All query results are valid
 json. If there are no data points in InfluxDB, e.g. no failures, InfluxDB will
 result an empty result, e.g. `{"results":[]}`
 
+If the output file parameter is provided, `diego_results.sh` will also trigger
+a post-processing script that condenses the output into `metrics.csv`, a more
+human-readable format.
+
+
 #### Snapshotting and Restoring Influxdb (GCP Only)
 
 ##### Snapshotting
