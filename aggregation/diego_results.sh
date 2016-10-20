@@ -2,6 +2,8 @@
 
 set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 if [ $# -lt 3 ]; then
     echo "Usage: $0 influxdb_url /path/to/diego/manifest /path/to/perf/manifest [output-file]"
     exit 1
@@ -82,23 +84,15 @@ function query_metrics {
     where_clause="where time > ${min}000000000 AND time < ${max}000000000"
 
     # pending story https://www.pivotaltracker.com/story/show/126888429
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.RequestLatency\" $where_clause group by component, request"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.RequestLatency\" $where_clause group by component, request"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.AuctionScheduleDuration\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.AuctionScheduleDuration\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.TaskLifecycle\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.TaskLifecycle\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.LRPLifecycle\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.LRPLifecycle\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.RequestLatency\" $where_clause group by component, request"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.AuctionScheduleDuration\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.TaskLifecycle\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.LRPLifecycle\" $where_clause"
 
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarSuccessfulStart\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarSuccessfulStart\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarFailedStart\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarFailedStart\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarSuccessfulPush\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarSuccessfulPush\" $where_clause"
-    query_influxdb "cfperf" "select $percentiles from \"cf.diego.CedarFailedPush\" $where_clause"
-    query_influxdb "cfperf" "select count(value) from \"cf.diego.CedarFailedPush\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.CedarSuccessfulStart\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.CedarFailedStart\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.CedarSuccessfulPush\" $where_clause"
+    query_influxdb "cfperf" "select $percentiles, count(value) from \"cf.diego.CedarFailedPush\" $where_clause"
 }
 
 function generate_metrics_for_all_batches {
@@ -108,6 +102,7 @@ function generate_metrics_for_all_batches {
         min_file=$cedar_dir/min-$counter.json
         max_file=$cedar_dir/max-$counter.json
         if [ ! -r $min_file -o ! -r $max_file ]; then
+            echo "Missing min file or max file"
             break
         fi
         min=$(cat $min_file)
@@ -124,5 +119,9 @@ download_logs brain $diego_manifest
 download_logs database $diego_manifest
 download_logs cedar $perf_manifest
 generate_metrics_for_all_batches
+
+if [ "x$output" != "x" ]; then
+    $DIR/generate_csv.rb $output
+fi
 
 echo "$@" > cmd-args.txt
