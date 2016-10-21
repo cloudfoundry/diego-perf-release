@@ -7,6 +7,6 @@ templates:
 packages:
 
 properties:
-  diego.logrotate_options.value:
-    description: "value to set in the logrotate cron file"
-    default: "0 * * * * root /usr/bin/logrotate-cron"
+  diego.logrotate_options.log_size_mb:
+    description: "size of log file when we should rotate"
+    default: 15000
