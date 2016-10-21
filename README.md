@@ -164,6 +164,46 @@ Arborist has the following usage options:
 ```
 
 
+### Monitoring the cluster
+
+The team has created three grafana dashboards that include graphs to monitor
+interesting metrics. Below are the names and description of each one of those
+dashboards:
+
+- `aggregation/bosh_influxdb_dashboard.json`
+
+  System metrics (i.e. cpu usage, system load and disk usage) across the entire cluster
+
+- `aggregation/diego_influxdb_dashboard.json`
+
+  Diego metrics, e.g. bbs api latency, bbs requests/s, etc.
+
+- `aggregation/golang_stats_influxdb_dashboard.json`
+
+  Golang metrics (i.e. number of goroutines, gc pause, etc.)
+
+#### Importing dashboard
+
+To import any/all of those dashboards. From the home page:
+
+1. Click on `Home` (or the dashboard search dropdown)
+2. Click on `Import`
+3. Choose a file
+4. Save the dashboard (`CTRL+S` or the drive icon next to the dashboard dropdown)
+
+See [grafana export/import doc] for more info
+
+#### Exporting dashboard
+
+To export a dashboard after editing it, do the following:
+
+1. Go to the dashboard you want to export (by clicking the name in the dashboard dropdown)
+2. Click the `Manage dashboard` button (the gear icon next to the dashboard dropdown)
+3. Click `Export`
+4. Grafan will automatically download the json file
+
+See [grafana export/import doc] for more info
+
 ### Aggregating results
 
 #### Preprocessing using perfchug
@@ -252,3 +292,5 @@ run them against BOSH-Lite during development. A deployment manifest template is
 in `templates/bosh-lite.yml`. Use
 [spiff](https://github.com/cloudfoundry-incubator/spiff) to merge it with a
 `director_uuid` stub.
+
+[grafana export/import doc]: http://docs.grafana.org/reference/export_import/
