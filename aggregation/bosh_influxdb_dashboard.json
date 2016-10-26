@@ -62,12 +62,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "job"
                   ],
                   "type": "tag"
@@ -93,7 +87,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -105,8 +99,8 @@
           "title": "CPU System",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -179,12 +173,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "job"
                   ],
                   "type": "tag"
@@ -210,7 +198,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -222,8 +210,8 @@
           "title": "CPU User",
           "tooltip": {
             "msResolution": true,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -296,12 +284,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "job"
                   ],
                   "type": "tag"
@@ -327,7 +309,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -339,8 +321,8 @@
           "title": "CPU Wait",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -419,12 +401,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "null"
                   ],
                   "type": "fill"
@@ -444,7 +420,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -456,8 +432,8 @@
           "title": "System Load",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -539,12 +515,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "job"
                   ],
                   "type": "tag"
@@ -570,7 +540,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -582,8 +552,8 @@
           "title": "System Memory %",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -662,12 +632,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "null"
                   ],
                   "type": "fill"
@@ -687,7 +651,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -699,8 +663,8 @@
           "title": "System Mem (KB)",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -779,12 +743,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "null"
                   ],
                   "type": "fill"
@@ -804,7 +762,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -816,8 +774,8 @@
           "title": "System Swap (KB)",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -905,12 +863,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "null"
                   ],
                   "type": "fill"
@@ -930,7 +882,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -942,8 +894,8 @@
           "title": "Disk: Ephemeral %",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -1023,12 +975,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "null"
                   ],
                   "type": "fill"
@@ -1048,7 +994,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1060,8 +1006,8 @@
           "title": "Disk: Persistent %",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -1134,12 +1080,6 @@
                 },
                 {
                   "params": [
-                    "index"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
                     "job"
                   ],
                   "type": "tag"
@@ -1165,7 +1105,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1177,8 +1117,8 @@
           "title": "Disk: System %",
           "tooltip": {
             "msResolution": false,
-            "shared": true,
-            "value_type": "cumulative"
+            "shared": false,
+            "value_type": "individual"
           },
           "type": "graph",
           "xaxis": {
@@ -1209,7 +1149,7 @@
     }
   ],
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1269,6 +1209,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 14,
+  "version": 1,
   "links": []
 }
