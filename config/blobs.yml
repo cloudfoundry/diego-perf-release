@@ -3,11 +3,11 @@ tmux/tmux:
   object_id: 68680215-7c66-43cc-9a52-2c89c7419b96
   sha: 000afb1c43feec5924b09cbad0419f30411e8cff
   size: 467144
-golang/go1.6.2.linux-amd64.tar.gz:
-  object_id: af9a022d-423c-46f8-81da-dd153ab0d60d
-  sha: b8318b09de06076d5397e6ec18ebef3b45cd315d
-  size: 84840658
 cf-cli/cf-cli_6.21.1_linux_x86-64.tgz:
   object_id: de57e2d0-6dd1-4176-942c-8e70f079898d
   sha: 7dc397d2a0d93887ef50bc1f852beb686563049e
   size: 6543090
+golang/go1.7.1.linux-amd64.tar.gz:
+  object_id: e47de18c-e14c-45b6-bd84-37e1d73752e7
+  sha: 919ab01305ada0078a9fdf8a12bb56fb0b8a1444
+  size: 81618401
