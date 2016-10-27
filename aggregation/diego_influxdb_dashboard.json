@@ -1,5 +1,5 @@
 {
-  "id": 3,
+  "id": 1,
   "title": "Diego Metrics",
   "originalTitle": "Diego Metrics",
   "tags": [],
@@ -65,21 +65,21 @@
               ],
               "measurement": "cf.bbs.RequestLatency",
               "policy": "default",
-              "query": "SELECT mean(\"value\") FROM \"cf.bbs.RequestLatency\" WHERE $timeFilter GROUP BY time($interval)",
-              "rawQuery": true,
+              "query": "SELECT max(\"value\") FROM \"cf.bbs.RequestLatency\" WHERE $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
                 [
                   {
+                    "type": "field",
                     "params": [
                       "value"
-                    ],
-                    "type": "field"
+                    ]
                   },
                   {
-                    "params": [],
-                    "type": "mean"
+                    "type": "max",
+                    "params": []
                   }
                 ]
               ],
@@ -189,7 +189,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -226,7 +226,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -263,7 +263,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -300,7 +300,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -361,7 +361,7 @@
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
           "id": 9,
-          "interval": "",
+          "interval": ">10s",
           "isNew": true,
           "legend": {
             "avg": false,
@@ -395,7 +395,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "10s"
+                    "$interval"
                   ],
                   "type": "time"
                 }
@@ -534,7 +534,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -616,28 +616,28 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "cf.bbs.LRPsDesired.mean",
+              "alias": "cf.bbs.LRPsDesired.max",
               "color": "#0A50A1",
               "fill": 0,
               "stack": false,
               "zindex": -3
             },
             {
-              "alias": "cf.bbs.CrashedActualLRPs.mean",
+              "alias": "cf.bbs.CrashedActualLRPs.max",
               "color": "#E24D42",
-              "fillBelowTo": "cf.bbs.LRPsUnclaimed.mean",
+              "fillBelowTo": "cf.bbs.LRPsUnclaimed.max",
               "lines": false
             },
             {
-              "alias": "cf.bbs.LRPsRunning.mean",
+              "alias": "cf.bbs.LRPsRunning.max",
               "color": "#7EB26D"
             },
             {
-              "alias": "cf.bbs.LRPsClaimed.mean",
+              "alias": "cf.bbs.LRPsClaimed.max",
               "color": "#F4D598"
             },
             {
-              "alias": "cf.bbs.LRPsMissing.mean",
+              "alias": "cf.bbs.LRPsMissing.max",
               "color": "#F9934E"
             }
           ],
@@ -670,7 +670,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -701,7 +701,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -732,7 +732,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -764,7 +764,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -796,7 +796,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -871,19 +871,19 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "cf.bbs.TasksRunning.mean",
+              "alias": "cf.bbs.TasksRunning.max",
               "color": "#7EB26D"
             },
             {
-              "alias": "cf.bbs.TasksPending.mean",
+              "alias": "cf.bbs.TasksPending.max",
               "color": "#EAB839"
             },
             {
-              "alias": "cf.bbs.TasksCompleted.mean",
+              "alias": "cf.bbs.TasksCompleted.max",
               "color": "#65C5DB"
             },
             {
-              "alias": "cf.bbs.TasksResolving.mean",
+              "alias": "cf.bbs.TasksResolving.max",
               "color": "#0A50A1"
             }
           ],
@@ -916,7 +916,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -948,7 +948,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -980,7 +980,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1012,7 +1012,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1095,28 +1095,28 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "cf.bbs.LRPsDesired.mean",
+              "alias": "cf.bbs.LRPsDesired.max",
               "color": "#0A50A1",
               "fill": 0,
               "stack": false,
               "zindex": -3
             },
             {
-              "alias": "cf.bbs.CrashedActualLRPs.mean",
+              "alias": "cf.bbs.CrashedActualLRPs.max",
               "color": "#E24D42",
-              "fillBelowTo": "cf.bbs.LRPsUnclaimed.mean",
+              "fillBelowTo": "cf.bbs.LRPsUnclaimed.max",
               "lines": false
             },
             {
-              "alias": "cf.bbs.LRPsRunning.mean",
+              "alias": "cf.bbs.LRPsRunning.max",
               "color": "#7EB26D"
             },
             {
-              "alias": "cf.bbs.LRPsClaimed.mean",
+              "alias": "cf.bbs.LRPsClaimed.max",
               "color": "#F4D598"
             },
             {
-              "alias": "cf.bbs.LRPsUnclaimed.mean",
+              "alias": "cf.bbs.LRPsUnclaimed.max",
               "color": "#F9934E"
             }
           ],
@@ -1149,7 +1149,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1181,7 +1181,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1212,7 +1212,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1552,7 +1552,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1588,7 +1588,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1811,7 +1811,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -1924,7 +1924,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -2029,7 +2029,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -2065,7 +2065,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -2291,7 +2291,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -2333,7 +2333,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "max"
                   }
                 ]
               ],
@@ -2827,6 +2827,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 1,
+  "version": 5,
   "links": []
 }
