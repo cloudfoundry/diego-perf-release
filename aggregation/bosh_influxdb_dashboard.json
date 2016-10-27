@@ -56,7 +56,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "30s"
+                    "$interval"
                   ],
                   "type": "time"
                 },
@@ -123,7 +123,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         },
         {
           "aliasColors": {},
@@ -167,7 +168,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "30s"
+                    "$interval"
                   ],
                   "type": "time"
                 },
@@ -234,7 +235,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         },
         {
           "aliasColors": {},
@@ -345,7 +347,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         },
         {
           "aliasColors": {},
@@ -456,7 +459,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         }
       ],
       "showTitle": true,
@@ -576,7 +580,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         },
         {
           "aliasColors": {},
@@ -687,7 +692,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         },
         {
           "aliasColors": {},
@@ -798,7 +804,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         }
       ],
       "showTitle": true,
@@ -1141,7 +1148,8 @@
               "min": null,
               "show": true
             }
-          ]
+          ],
+          "interval": ">30s"
         }
       ],
       "showTitle": true,
@@ -1209,6 +1217,6 @@
   },
   "refresh": "1m",
   "schemaVersion": 12,
-  "version": 1,
+  "version": 4,
   "links": []
 }
