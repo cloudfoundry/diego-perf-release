@@ -46,6 +46,8 @@ seed_apps() {
 			-n=<%= p("cedar.num_batches") %> \
 			-k=<%= p("cedar.max_in_flight")%> \
 			-domain=<%= p("cedar.domain") %> \
+			-use-ssl=<%= p("cedar.use_ssl") %> \
+			-skip-verify-certificate=<%= p("cedar.skip_verify_certificate") %> \
 			-payload=$APP_BIN_PATH \
 			-config=$CONFIG_PATH \
 			-max-polling-errors=<%= p("cedar.max_polling_errors") %> \
@@ -70,6 +72,8 @@ deploy_arborist_apps() {
 		-n=<%= (p("cedar.num_batches").to_f/25).ceil %> \
 		-k=<%= p("cedar.max_in_flight")%> \
 		-domain=<%= p("cedar.domain") %> \
+		-use-ssl=<%= p("cedar.use_ssl") %> \
+		-skip-verify-certificate=<%= p("cedar.skip_verify_certificate") %> \
 		-payload=/var/vcap/packages/cedar/assets/temp-app \
 		-config=/var/vcap/packages/cedar/config_extra.json \
 		-timeout=<%= p("cedar.timeout")%> \
@@ -86,6 +90,7 @@ run_arborist_batch() {
 		-result-file=$ARBORIST_LOG_DIR/arborist-output.json \
 		-duration=<%= p("arborist.duration") %> \
 		-request-interval=<%= p("arborist.request_interval") %> \
+		-skip-verify-certificate=<%= p("cedar.skip_verify_certificate") %> \
 	1> $ARBORIST_LOG_DIR/arborist.stdout.log \
 	2> $ARBORIST_LOG_DIR/arborist.stderr.log
 }
