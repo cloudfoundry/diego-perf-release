@@ -46,7 +46,7 @@ seed_apps() {
 			-n=<%= p("cedar.num_batches") %> \
 			-k=<%= p("cedar.max_in_flight")%> \
 			-domain=<%= p("cedar.domain") %> \
-			-use-ssl=<%= p("cedar.use_ssl") %> \
+			-use-tls=<%= p("cedar.use_tls") %> \
 			-skip-verify-certificate=<%= p("cedar.skip_verify_certificate") %> \
 			-payload=$APP_BIN_PATH \
 			-config=$CONFIG_PATH \
@@ -72,7 +72,7 @@ deploy_arborist_apps() {
 		-n=<%= (p("cedar.num_batches").to_f/25).ceil %> \
 		-k=<%= p("cedar.max_in_flight")%> \
 		-domain=<%= p("cedar.domain") %> \
-		-use-ssl=<%= p("cedar.use_ssl") %> \
+		-use-tls=<%= p("cedar.use_tls") %> \
 		-skip-verify-certificate=<%= p("cedar.skip_verify_certificate") %> \
 		-payload=/var/vcap/packages/cedar/assets/temp-app \
 		-config=/var/vcap/packages/cedar/config_extra.json \

@@ -9,6 +9,8 @@ property_overrides:
     max_in_flight: 40
     timeout: 10m
     tolerance: 0.05
+    use_tls: true
+    skip_verify_certificate: true
   arborist:
     duration: 5m
     request_interval: 1m

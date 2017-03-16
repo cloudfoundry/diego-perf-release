@@ -51,7 +51,7 @@ properties:
     description: Maximum amount of app push and start failures for cedar to tolerate, as a fraction of the total number of apps to push.
     default: 0.05
 
-  cedar.use_ssl:
+  cedar.use_tls:
     description: Whether to use https when curling app endpoints
     default: false
 
