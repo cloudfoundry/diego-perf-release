@@ -36,6 +36,10 @@ properties:
     description: Max number of request failures for cedar to tolerate when verifying an app has started.
     default: 1
 
+  cedar.num_spaces:
+    description: Number of spaces for cedar
+    default: 10
+
   cedar.num_batches:
     description: Number of app batches for each cedar invocation to push.
     default: 10
