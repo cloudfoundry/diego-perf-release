@@ -9,6 +9,7 @@ CONFIG_PATH=/var/vcap/packages/cedar/config.json
 CEDAR_LOG_DIR=/var/vcap/sys/log/cedar
 ARBORIST_LOG_DIR=/var/vcap/sys/log/arborist
 
+CEDAR_NUM_SPACES=<%= p("cedar.num_spaces") %>
 CEDAR_SPACE_PREFIX=cedar-space
 ARBORIST_SPACE=arborist-space
 CEDAR_APP_PREFIX=cedar-app
@@ -23,7 +24,7 @@ usage() {
 }
 
 create_spaces() {
-	for i in {1..10}; do
+	for i in `seq 1 $CEDAR_NUM_SPACES`; do
 		cf create-space -o <%= p("cedar.org") %> $CEDAR_SPACE_PREFIX-$i
 	done
 	cf create-space -o <%= p("cedar.org") %> $ARBORIST_SPACE
@@ -35,7 +36,7 @@ seed_apps() {
 		space_counter=$1
 	fi
 
-	for counter in `seq $space_counter 10`; do
+	for counter in `seq $space_counter $CEDAR_NUM_SPACES`; do
 
 		space=$CEDAR_SPACE_PREFIX-$counter
 
