@@ -1,0 +1,53 @@
+- type: replace
+  path: /instance_groups/-
+  value:
+    azs:
+    - z1
+    instances: 1
+    jobs:
+    - name: arborist
+      properties:
+        arborist:
+          duration: 5m
+          request_interval: 1m
+      release: diego-perf-release
+    - name: cedar
+      properties:
+        cedar:
+          admin_user: admin
+          admin_password: "((cf_admin_password))"
+          api: api.((system_domain))
+          domain: "((system_domain))"
+          max_in_flight: 40
+          max_polling_errors: 1
+          num_batches: 10
+          num_spaces: 10
+          org: perf-org
+          skip_verify_certificate: false
+          use_tls: false
+          tolerance: 0.05
+          timeout: 10m
+      release: diego-perf-release
+    - name: fezzik
+      properties:
+        fezzik:
+          bbs:
+            api_location: "bbs.service.cf.internal:8889"
+            ca_cert: "((service_cf_internal_ca.certificate))"
+            client_cert: "((diego_bbs_client.certificate))"
+            client_key: "((diego_bbs_client.private_key))"
+            require_ssl: true
+        performance_tests:
+          num_cells: 1
+      release: diego-perf-release
+    name: diego-perf
+    networks:
+    - name: default
+    stemcell: default
+    vm_type: minimal
+- type: replace
+  path: /releases/-
+  value:
+    name: diego-perf-release
+    url: file:///home/pivotal/workspace/diego-perf-release
+    version: create

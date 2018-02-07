@@ -4,6 +4,16 @@ This is a release to measure the performance of Diego. See the proposal [here](h
 
 ## Usage
 
+**Note:** To deploy with a cf-deployment style manifest using BOSH 2.0, include the ops file under `operations/add-diego-perf-release.yml`. You will also need to modify the ops file to use your local copy of `diego-perf-release`:
+```
+value:
+  path: /releases/-
+  value:
+    name: diego-perf-release
+    url: file://<path-to-workspace>/diego-perf-release
+    version: create
+```
+
 ### Prerequisites
 
 Deploy diego-release, cf-release.  To deploy this release, create a BOSH
